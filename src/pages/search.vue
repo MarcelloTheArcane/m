@@ -1,6 +1,5 @@
 <template>
   <div>
-    Search
     <div v-if="errorMessage">
       {{ errorMessage }}
     </div>
@@ -9,14 +8,24 @@
       <button :disabled="!query.length" @click="search">
         Search
       </button>
-      <pre>{{ results }}</pre>
+
+      <song-result
+        v-for="(result, index) in results"
+        :key="index"
+        :result="result"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import SongResult from '@/components/SongResult.vue'
+
 export default {
   name: 'SearchPage',
+  components: {
+    SongResult,
+  },
   data () {
     return {
       query: '',

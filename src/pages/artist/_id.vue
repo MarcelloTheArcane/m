@@ -1,27 +1,35 @@
 <template>
   <div>
-    Artist {{ $route.params.id }}
     <div v-if="errorMessage">
       {{ errorMessage }}
     </div>
     <div v-else>
-      <pre>{{ result }}</pre>
+      <song-result
+        v-for="(result, index) in results"
+        :key="index"
+        :result="result"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import SongResult from '@/components/SongResult.vue'
+
 export default {
   name: 'AlbumPage',
+  components: {
+    SongResult,
+  },
   data () {
     return {
-      result: null,
+      results: null,
       errorMessage: null,
     }
   },
   async mounted () {
     try {
-      this.result = await this.$store.dispatch('getTopTracksArtist', {
+      this.results = await this.$store.dispatch('getTopTracksArtist', {
         id: this.$route.params.id,
         type: 'artist',
       })
