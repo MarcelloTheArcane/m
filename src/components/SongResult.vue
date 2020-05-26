@@ -12,16 +12,28 @@
       </div>
     </div>
     <div v-if="expanded" class="mb-2 flex justify-around">
-      <button @click="play">
+      <button
+        @click="play" 
+        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
+      >
         Play
       </button>
-      <button @click="playNext">
+      <button
+        @click="playNext" 
+        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
+      >
         Play next
       </button>
-      <router-link :to="`/artist/${songData.artistId[0]}`">
+      <router-link
+        :to="`/artist/${songData.artistId[0]}`" 
+        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
+      >
         Artist
       </router-link>
-      <router-link :to="`/album/${songData.albumId}`">
+      <router-link
+        :to="`/album/${songData.albumId}`" 
+        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
+      >
         Album
       </router-link>
     </div>
