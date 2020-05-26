@@ -15,14 +15,27 @@
         {{ albumData.annotation }}
       </p>
 
-      <pre>{{ album }}</pre>
+      <button @click="playAll">
+        Play all
+      </button>
+
+      <song-result
+        v-for="(result, index) in album"
+        :key="index"
+        :result="result"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import SongResult from '@/components/SongResult.vue'
+
 export default {
   name: 'AlbumPage',
+  components: {
+    SongResult,
+  },
   data () {
     return {
       album: [],
@@ -46,5 +59,10 @@ export default {
         : {}
     },
   },
+  methods: {
+    playAll () {
+      this.$store.commit('setPlaylist', this.album)
+    }
+  }
 }
 </script>

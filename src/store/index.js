@@ -22,15 +22,20 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     playlist: [],
-    playingIndex: 0,
+    playingIndex: -1,
     isPlaying: false,
   },
   mutations: {
-    setPlaylist ({ playlist }, newList) {
-      playlist.splice(0, playlist.length, ...newList)
+    setPlaylist (state, newList) {
+      state.playlist.splice(0, state.playlist.length, ...newList)
+      state.playingIndex = 0
     },
-    setPlayNext ({ playlist, playingIndex }, newList) {
-      playlist.splice(playingIndex + 1, 0, ...newList)
+    setPlayNow (state, newList) {
+      state.playlist.splice(state.playingIndex + 1, 0, ...newList)
+      state.playingIndex = state.playingIndex + 1
+    },
+    setPlayNext (state, newList) {
+      state.playlist.splice(state.playingIndex + 1, 0, ...newList)
     },
     addToPlaylist ({ playlist }, { newList, index }) {
       playlist.splice(index, 0, ...newList)
