@@ -15,6 +15,8 @@ const proxy = axios.create({
   },
 })
 
+const audioCache = {}
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -43,6 +45,24 @@ export default new Vuex.Store({
   actions: {
     async getNewStationBySearch (_, { type, title }) {
       const { data } = await proxy.get(`/get_new_station_by_search`, {
+        params: {
+          type,
+          title,
+        },
+      })
+      return data.playlist.track
+    },
+    async getNewStationById (_, { type, id }) {
+      const { data } = await proxy.get(`/get_new_station_by_id`, {
+        params: {
+          type,
+          id,
+        },
+      })
+      return data.playlist.track
+    },
+    async getBySearch (_, { type, title }) {
+      const { data } = await proxy.get(`/get_by_search`, {
         params: {
           type,
           title,
@@ -97,6 +117,14 @@ export default new Vuex.Store({
       const { data } = await proxy.get(`/get_listen_now_list/${station}`)
       return data.playlist.track
     },
+    async getDiscographyArtist (_, { id }) {
+      const { data } = await proxy.get(`/get_discography_artist`, {
+        params: {
+          id,
+        }
+      })
+      return data
+    },
     async likeSong (_, { id }) {
       await proxy.get(`/like_song`, {
         params: {
@@ -111,6 +139,7 @@ export default new Vuex.Store({
         },
       })
     },
+
     togglePlaying ({ commit, dispatch, state }) {
       if (state.isPlaying) {
         commit('setIsPlaying', false)
