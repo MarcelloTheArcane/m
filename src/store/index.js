@@ -215,18 +215,18 @@ export default new Vuex.Store({
     previousSong ({ commit }) {
       commit('PREVIOUS_SONG')
     },
-    setPlaylist ({ commit }, newList) {
+    setPlaylist ({ commit, dispatch }, newList) {
       commit('SET_PLAYLIST', newList)
       dispatch('audiocache/preload', newList[0])
     },
-    setPlaylistIndex ({ commit }, index) {
+    setPlaylistIndex ({ state, commit, dispatch }, index) {
       commit('SET_PLAYLIST_INDEX', index)
       const nextSong = state.playlist[index + 1]
       if (nextSong) {
         dispatch('audiocache/preload', nextSong)
       }
     },
-    addToPlaylist ({ commit }, newList) {
+    addToPlaylist ({ commit, dispatch }, newList) {
       commit('ADD_TO_PLAYLIST', newList)
       dispatch('audiocache/preload', newList[0])
     },
