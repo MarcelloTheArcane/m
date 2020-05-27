@@ -6,7 +6,10 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+  error: require('@/assets/defaultimage.png'),
+  loading: require('@/assets/defaultimage.png'),
+})
 
 new Vue({
   router,
