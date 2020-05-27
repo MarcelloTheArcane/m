@@ -48,7 +48,9 @@ export default {
     },
     loadNextSong () {
       const nextSong = this.$store.state.playlist[this.$store.state.playingIndex + 1]
-      this.$store.dispatch('audiocache/preload', nextSong)
+      if (nextSong) {
+        this.$store.dispatch('audiocache/preload', nextSong)
+      }
     },
   },
   watch: {
