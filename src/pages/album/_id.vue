@@ -1,29 +1,33 @@
 <template>
-  <div>
+  <div class="bg-gray-200">
     <div v-if="errorMessage">
       {{ errorMessage }}
     </div>
-    <div v-else>
-      <img :src="albumData.image" class="h-12 w-12">
-      <h1>
+    <div v-else class="flex flex-col items-center">
+      <img v-lazy="albumData.image" class="h-32 w-32 m-5 rounded">
+      <h1 class="text-base text-gray-800">
         {{ albumData.album }}
       </h1>
-      <h2>
+      <h2 class="text-sm text-gray-600">
         {{ albumData.creator }}
       </h2>
-      <p>
-        {{ albumData.annotation }}
-      </p>
 
-      <button @click="playAll">
-        Play all
-      </button>
+      <div class="w-full bg-white rounded-t-lg p-3 mt-5">
+        <button @click="playAll" class="float-right focus:outline-none">
+          <svg viewBox="0 0 24 24" width="32" height="32" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" fill="#e2e8f0"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"  stroke="currentColor" stroke-width="2"></polygon>
+          </svg>
+        </button>
+      </div>
 
-      <song-result
-        v-for="(result, index) in album"
-        :key="index"
-        :result="result"
-      />
+      <div class="w-full bg-white">
+        <song-result
+          v-for="(result, index) in album"
+          :key="index"
+          :result="result"
+        />
+      </div>
     </div>
   </div>
 </template>
