@@ -66,7 +66,7 @@ export default {
   methods: {
     playAll () {
       this.$store.commit('setPlaylist', this.album)
-    }
-  }
+    },
+  },
 }
 </script>
