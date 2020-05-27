@@ -43,7 +43,6 @@ export default {
       this.$refs.audio.appendChild(element)
       element.play()
       element.addEventListener('ended', () => {
-        console.log('dispatching next song')
         this.$store.dispatch('nextSong')
       })
     },
