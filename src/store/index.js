@@ -28,33 +28,33 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setPlaylist (state, newList) {
+    SET_PLAYLIST (state, newList) {
       state.playlist.splice(0, state.playlist.length, ...newList)
       state.playingIndex = 0
     },
-    setPlaylistIndex (state, newIndex) {
+    SET_PLAYLIST_INDEX (state, newIndex) {
       state.playingIndex = newIndex
     },
-    setPlayNow (state, newList) {
+    SET_PLAY_NOW (state, newList) {
       state.playlist.splice(state.playingIndex + 1, 0, ...newList)
       state.playingIndex = state.playingIndex + 1
     },
-    setPlayNext (state, newList) {
+    SET_PLAY_NEXT (state, newList) {
       state.playlist.splice(state.playingIndex + 1, 0, ...newList)
     },
-    addToPlaylist ({ playlist }, { newList, index }) {
+    ADD_TO_PLAYLIST ({ playlist }, { newList, index }) {
       playlist.splice(index, 0, ...newList)
     },
-    removeFromPlaylist (state, index) {
+    REMOVE_FROM_PLAYLIST (state, index) {
       state.playlist.splice(index, 1)
       if (index < state.playingIndex) {
         state.playingIndex = state.playingIndex - 1
       }
     },
-    nextSong (state) {
+    NEXT_SONG (state) {
       state.playingIndex = state.playingIndex + 1
     },
-    previousSong (state) {
+    PREVIOUS_SONG (state) {
       state.playingIndex = state.playingIndex - 1
     },
   },
@@ -180,6 +180,35 @@ export default new Vuex.Store({
     //     },
     //   })
     // },
+    setPlayNow ({ commit }, { newList }) {
+      commit('SET_PLAY_NOW', newList)
+    },
+    setPlayNext ({ commit, dispatch }, { newList }) {
+      commit('SET_PLAY_NEXT', newList)
+      dispatch('audiocache/preload', newList[0])
+    },
+    nextSong ({ commit, dispatch, getters, state }) {
+      if (getters.hasNextSong) {
+        commit('NEXT_SONG')
+        const nextSong = state.playlist[state.playingIndex + 1]
+        dispatch('audiocache/preload', nextSong)
+      }
+    },
+    previousSong ({ commit }) {
+      commit('PREVIOUS_SONG')
+    },
+    setPlaylist ({ commit }, newList) {
+      commit('SET_PLAYLIST', newList)
+    },
+    setPlaylistIndex ({ commit }, index) {
+      commit('SET_PLAYLIST_INDEX', index)
+    },
+    addToPlaylist ({ commit }, newList) {
+      commit('ADD_TO_PLAYLIST', newList)
+    },
+    removeFromPlaylist ({ commit }, index) {
+      commit('REMOVE_FROM_PLAYLIST', index)
+    },
   },
   getters: {
     hasNextSong ({ playlist, playingIndex }) {
