@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     playAll () {
-      this.$store.commit('setPlaylist', this.results)
+      this.$store.dispatch('setPlaylist', this.results)
     },
   },
 }

@@ -77,11 +77,11 @@ export default {
     },
     play () {
       this.handleSelectOption()
-      this.$store.commit('setPlaylistIndex', this.index)
+      this.$store.dispatch('setPlaylistIndex', this.index)
     },
     remove () {
       this.handleSelectOption()
-      this.$store.commit('removeFromPlaylist', this.index)
+      this.$store.dispatch('removeFromPlaylist', this.index)
     },
     handleSelectOption () {
       this.expanded = false

@@ -68,11 +68,11 @@ export default {
     },
     play () {
       this.handleSelectOption()
-      this.$store.commit('setPlayNow', [this.result])
+      this.$store.dispatch('setPlayNow', [this.result])
     },
     playNext () {
       this.handleSelectOption()
-      this.$store.commit('setPlayNext', [this.result])
+      this.$store.dispatch('setPlayNext', [this.result])
     },
     handleSelectOption () {
       this.expanded = false
