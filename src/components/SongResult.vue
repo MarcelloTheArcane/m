@@ -25,14 +25,14 @@
         Play next
       </button>
       <router-link
-        @click.native="$emit('select-option')"
+        @click.native="handleSelectOption()"
         :to="`/artist/${songData.artistId[0]}`" 
         class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
       >
         Artist
       </router-link>
       <router-link
-        @click.native="$emit('select-option')"
+        @click.native="handleSelectOption()"
         :to="`/album/${songData.albumId}`" 
         class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
       >
@@ -67,12 +67,16 @@ export default {
       this.expanded = !this.expanded
     },
     play () {
-      this.$emit('select-option')
+      this.handleSelectOption()
       this.$store.commit('setPlayNow', [this.result])
     },
     playNext () {
-      this.$emit('select-option')
+      this.handleSelectOption()
       this.$store.commit('setPlayNext', [this.result])
+    },
+    handleSelectOption () {
+      this.expanded = false
+      this.$emit('select-option')
     },
   },
 }
