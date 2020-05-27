@@ -16,6 +16,13 @@
         :result="result"
         :index="index"
       />
+
+      <p
+        v-if="$store.state.playlist.length === 0"
+        class="text-center text-gray-700"
+      >
+        Your playlist is empty
+      </p>
     </div>
   </div>
 </template>
