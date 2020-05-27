@@ -1,10 +1,10 @@
 <template>
   <div class="bg-gray-200 p-2">
-    <div v-if="!showingSearch">
-      <router-link to="/" class="inline focus:outline-none">
+    <div v-if="!showingSearch" class="flex flex-row">
+      <router-link to="/" class="focus:outline-none">
         <svg
           v-if="$route.fullPath !== '/'"
-          class="inline m-2"
+          class="m-2"
           viewBox="0 0 24 24"
           width="24"
           height="24"
@@ -18,9 +18,24 @@
         </svg>
       </router-link>
 
+      <span class="flex-1">
+        &nbsp;
+      </span>
+
+      <router-link to="/playlist" class="focus:outline-none">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="m-2">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+        </svg>
+      </router-link>
+
       <svg
         @click="showingSearch = true"
-        class="float-right m-2"
+        class="m-2"
         viewBox="0 0 24 24"
         width="24"
         height="24"
@@ -37,7 +52,7 @@
 
     <label
       v-else
-      class="flex flex-row w-full text-gray-700 bg-gray-300 rounded-full px-3 inline-block"
+      class="flex flex-row w-full text-gray-800 bg-white rounded-full px-3 inline-block"
     >
       <button @click="clearSearch" class="inline focus:outline-none">
         <svg
@@ -56,6 +71,7 @@
       </button>
 
       <input
+        id="search"
         v-model="query"
         type="text"
         class="flex-1 bg-transparent focus:outline-none p-2 block"
