@@ -32,6 +32,9 @@ export default new Vuex.Store({
       state.playlist.splice(0, state.playlist.length, ...newList)
       state.playingIndex = 0
     },
+    setPlaylistIndex (state, newIndex) {
+      state.playingIndex = newIndex
+    },
     setPlayNow (state, newList) {
       state.playlist.splice(state.playingIndex + 1, 0, ...newList)
       state.playingIndex = state.playingIndex + 1
@@ -41,6 +44,12 @@ export default new Vuex.Store({
     },
     addToPlaylist ({ playlist }, { newList, index }) {
       playlist.splice(index, 0, ...newList)
+    },
+    removeFromPlaylist (state, index) {
+      state.playlist.splice(index, 1)
+      if (index < state.playingIndex) {
+        state.playingIndex = state.playingIndex - 1
+      }
     },
     nextSong (state) {
       state.playingIndex = state.playingIndex + 1
