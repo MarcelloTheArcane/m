@@ -23,7 +23,7 @@
 
       <div class="w-full bg-white">
         <song-result
-          v-for="(result, index) in album"
+          v-for="(result, index) in results"
           :key="index"
           :result="result"
         />
@@ -42,13 +42,13 @@ export default {
   },
   data () {
     return {
-      album: [],
+      results: [],
       errorMessage: null,
     }
   },
   async mounted () {
     try {
-      this.album = await this.$store.dispatch('getAlbum', {
+      this.results = await this.$store.dispatch('getAlbum', {
         id: this.$route.params.id,
       })
     } catch (err) {
@@ -58,14 +58,14 @@ export default {
   },
   computed: {
     albumData () {
-      return this.album.length
-        ? this.album[0]
+      return this.results.length
+        ? this.results[0]
         : {}
     },
   },
   methods: {
     playAll () {
-      this.$store.commit('setPlaylist', this.album)
+      this.$store.commit('setPlaylist', this.results)
     },
   },
 }
