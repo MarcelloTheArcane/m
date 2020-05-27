@@ -14,13 +14,8 @@
         </p>
       </div>
     </div>
-    <audio
-      controls
-      autoplay
-      :src="song.location"
-      class="w-full focus:outline-none"
-      ref="audio"
-    />
+    <div ref="audio">
+    </div>
   </div>
 </template>
 
@@ -36,11 +31,40 @@ export default {
       },
     },
   },
+  data () {
+    return {
+      nextSong: null,
+    }
+  },
+  methods: {
+    playCurrentSong () {
+      const element = this.$store.state.audiocache[this.song.location]
+      this.$refs.audio.innerHTML = ''
+      this.$refs.audio.appendChild(element)
+      element.play()
+      element.addEventListener('ended', () => {
+        console.log('dispatching next song')
+        this.$store.dispatch('nextSong')
+      })
+    },
+    loadNextSong () {
+      const nextSong = this.$store.state.playlist[this.$store.state.playingIndex + 1]
+      this.$store.dispatch('audiocache/preload', nextSong)
+    },
+  },
+  watch: {
+    song (newSong) {
+      if (newSong.location) {
+        this.playCurrentSong()
+        this.loadNextSong()
+      }
+    },
+  },
   mounted () {
-    this.$refs.audio.addEventListener('ended', (event) => {
-      event.target.load()
-      this.$store.commit('nextSong')
-    })
+    if (this.song.location) {
+      this.playCurrentSong()
+      this.loadNextSong()
+    }
   },
 }
 </script>
