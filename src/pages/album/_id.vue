@@ -5,7 +5,7 @@
     </div>
     <div v-else class="flex flex-col items-center">
       <img v-lazy="albumData.image" class="h-32 w-32 m-5 rounded">
-      <h1 class="text-base text-gray-800">
+      <h1 class="text-lg text-gray-800">
         {{ albumData.album }}
       </h1>
       <h2 class="text-sm text-gray-600">
@@ -21,7 +21,7 @@
         </button>
       </div>
 
-      <div class="w-full bg-white">
+      <div class="w-full flex-1 bg-white">
         <song-result
           v-for="(result, index) in results"
           :key="index"
