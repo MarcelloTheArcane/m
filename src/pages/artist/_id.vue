@@ -18,7 +18,7 @@
         </button>
       </div>
 
-      <div class="w-full  flex-1 bg-white">
+      <div class="w-full flex-1 bg-white">
         <song-result
           v-for="(result, index) in results"
           :key="index"
