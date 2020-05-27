@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-2">
+  <div class="bg-gray-200 p-2">
     <div v-if="!showingSearch">
       <router-link to="/" class="inline focus:outline-none">
         <svg
