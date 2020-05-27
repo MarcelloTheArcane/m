@@ -13,7 +13,7 @@
         </button>
       </div>
 
-      <div class="w-full bg-white">
+      <div class="w-full flex-1 bg-white">
         <song-result
           v-for="(result, index) in results"
           :key="index"
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     playAll () {
-      this.$store.commit('setPlaylist', this.album)
+      this.$store.commit('setPlaylist', this.results)
     },
   },
 }
