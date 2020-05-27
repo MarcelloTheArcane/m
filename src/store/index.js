@@ -1,29 +1,31 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+// import axios from 'axios'
 
-const baseURL = 'http://ec2-34-247-52-128.eu-west-1.compute.amazonaws.com:9999'
+import cache from './cache.js'
 
-const proxy = axios.create({
-  baseURL,
-  params: {
-    format: 'json',
-    num_tracks: 25,
-  },
-  headers: {
-    accept: 'application/json',
-  },
-})
+// const baseURL = 'http://ec2-34-247-52-128.eu-west-1.compute.amazonaws.com:9999'
 
-const audioCache = {}
+// const proxy = axios.create({
+//   baseURL,
+//   params: {
+//     format: 'json',
+//     num_tracks: 25,
+//   },
+//   headers: {
+//     accept: 'application/json',
+//   },
+// })
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    playlist: [],
-    playingIndex: -1,
-    isPlaying: false,
+  state () {
+    return {
+      playlist: [],
+      playingIndex: -1,
+      isPlaying: false,
+    }
   },
   mutations: {
     setPlaylist (state, newList) {
@@ -48,128 +50,127 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async getNewStationBySearch (_, { type, title }) {
-      const { data } = await proxy.get(`/get_new_station_by_search`, {
+    async getNewStationBySearch ({ dispatch }, { type, title }) {
+      const { data } = await dispatch('cache/get', {
+        path: `/get_new_station_by_search`,
         params: {
           type,
           title,
         },
       })
+
       return data.playlist.track
     },
-    async getNewStationById (_, { type, id }) {
-      const { data } = await proxy.get(`/get_new_station_by_id`, {
+    async getNewStationById ({ dispatch }, { type, id }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_new_station_by_id`,
         params: {
           type,
           id,
         },
       })
+
       return data.playlist.track
     },
-    async getBySearch (_, { type, title }) {
-      const { data } = await proxy.get(`/get_by_search`, {
+    async getBySearch ({ dispatch }, { type, title }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_by_search`,
         params: {
           type,
           title,
         },
-      })
+      }, { root: true })
       return data.playlist.track
     },
-    async getIflStation () {
-      const { data } = await proxy.get(`/get_ifl_station`)
+    async getIflStation ({ dispatch }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_ifl_station`,
+      }, { root: true })
       return data.playlist.track
     },
-    async getAlbum (_, { id }) {
-      const { data } = await proxy.get(`/get_album`, {
+    async getAlbum ({ dispatch }, { id }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_album`,
         params: {
           id,
         },
-      })
+      }, { root: true })
       return data.playlist.track
     },
-    async getSongInfo (_, { id }) {
-      const { data } = await proxy.get(`/get_song_info`, {
+    async getSongInfo ({ dispatch }, { id }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_song_info`,
         params: {
           id,
         },
-      })
+      }, { root: true })
       return data
     },
-    async getTopTracksArtist (_, { id }) {
-      const { data } = await proxy.get(`/get_top_tracks_artist`, {
+    async getTopTracksArtist ({ dispatch }, { id }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_top_tracks_artist`,
         params: {
           id,
         },
       })
+
       return data.playlist.track
     },
-    async getAllStations () {
-      const { data } = await proxy.get(`/get_all_stations`)
+    async getAllStations ({ dispatch }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_all_stations`,
+      }, { root: true })
+
       return data.playlist.track
     },
-    async getTopSongs () {
-      const { data } = await proxy.get(`/get_top_songs`)
+    async getTopSongs ({ dispatch }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_top_songs`,
+      }, { root: true })
+
       return data.playlist.track
     },
-    async getListenNow () {
-      const { data } = await proxy.get('/get_listen_now')
+    async getListenNow ({ dispatch }) {
+      const data = await dispatch('cache/get', {
+        path: '/get_listen_now',
+      }, { root: true })
+
       return data.playlist.track.map(track => ({
         title: track.title,
         station: track.location.match(/\/get_listen_now_list\/(.+)$/)[1],
       }))
     },
-    async getListenNowList (_, { station }) {
-      const { data } = await proxy.get(`/get_listen_now_list/${station}`)
+    async getListenNowList ({ dispatch }, { station }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_listen_now_list/${station}`,
+      }, { root: true })
+
       return data.playlist.track
     },
-    async getDiscographyArtist (_, { id }) {
-      const { data } = await proxy.get(`/get_discography_artist`, {
+    async getDiscographyArtist ({ dispatch }, { id }) {
+      const data = await dispatch('cache/get', {
+        path: `/get_discography_artist`,
         params: {
           id,
         }
-      })
+      }, { root: true })
+
       return data
     },
-    async likeSong (_, { id }) {
-      await proxy.get(`/like_song`, {
-        params: {
-          id,
-        },
-      })
-    },
-    async dislikeSong (_, { id }) {
-      await proxy.get(`/dislike_song`, {
-        params: {
-          id,
-        },
-      })
-    },
-
-    togglePlaying ({ commit, dispatch, state }) {
-      if (state.isPlaying) {
-        commit('setIsPlaying', false)
-        dispatch('pauseAudio')
-      } else {
-        commit('setIsPlaying', true)
-        dispatch('playAudio')
-      }
-    },
-    async playAudio (_, { url }) {
-      if (!audioCache[url]) {
-        audioCache[url] = new Audio(url)
-        audioCache[url].autoplay = false
-        audioCache[url].load()
-
-        audioCache[url].addEventListener('canplaythrough', () => {
-          audioCache[url].play()
-        })
-      } else {
-        audioCache[url].play()
-      }
-    },
-    pauseAudio (_, { url }) {
-      audioCache[url].pause()
-    },
+    // async likeSong (_, { id }) {
+    //   await proxy.get(`/like_song`, {
+    //     params: {
+    //       id,
+    //     },
+    //   })
+    // },
+    // async dislikeSong (_, { id }) {
+    //   await proxy.get(`/dislike_song`, {
+    //     params: {
+    //       id,
+    //     },
+    //   })
+    // },
   },
   getters: {
     hasNextSong ({ playlist, playingIndex }) {
@@ -181,5 +182,8 @@ export default new Vuex.Store({
     nowPlaying ({ playlist, playingIndex }) {
       return playlist[playingIndex]
     },
+  },
+  modules: {
+    cache,
   }
 })
