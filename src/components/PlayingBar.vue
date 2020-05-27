@@ -14,7 +14,13 @@
         </p>
       </div>
     </div>
-    <audio controls autoplay :src="song.location" class="w-full focus:outline-none" />
+    <audio
+      controls
+      autoplay
+      :src="song.location"
+      class="w-full focus:outline-none"
+      ref="audio"
+    />
   </div>
 </template>
 
@@ -29,6 +35,12 @@ export default {
         return {}
       },
     },
+  },
+  mounted () {
+    this.$refs.audio.addEventListener('ended', (event) => {
+      event.target.load()
+      this.$store.commit('nextSong')
+    })
   },
 }
 </script>
