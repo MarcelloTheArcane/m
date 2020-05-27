@@ -198,10 +198,10 @@ export default new Vuex.Store({
     //     },
     //   })
     // },
-    setPlayNow ({ commit }, { newList }) {
+    setPlayNow ({ commit }, newList) {
       commit('SET_PLAY_NOW', newList)
     },
-    setPlayNext ({ commit, dispatch }, { newList }) {
+    setPlayNext ({ commit, dispatch }, newList) {
       commit('SET_PLAY_NEXT', newList)
       dispatch('audiocache/preload', newList[0])
     },
@@ -236,7 +236,7 @@ export default new Vuex.Store({
   },
   getters: {
     hasNextSong ({ playlist, playingIndex }) {
-      return playlist.length < (playingIndex + 1)
+      return playlist.length > (playingIndex + 1)
     },
     hasPreviousSong ({ playingIndex }) {
       return playingIndex > 0
