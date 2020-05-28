@@ -1,6 +1,6 @@
 <template>
-  <div class="p-2" style="background-color: #f1f3f4;">
-    <div class="flex flex-row" v-if="song.location">
+  <div class="p-2 flex md:flex-row flex-col" style="background-color: #f1f3f4;">
+    <div class="flex flex-row lg:flex-1 lg:pl-6 md:pl-3" v-if="song.location">
       <img v-lazy="song.image" class="w-12 h-12 my-1">
       <div class="mx-2 flex-1 min-w-0">
         <p class="text-sm text-gray-800 truncate w-full">
@@ -14,7 +14,7 @@
         </p>
       </div>
     </div>
-    <div ref="audio">
+    <div class="w-full flex-1" ref="audio">
     </div>
   </div>
 </template>

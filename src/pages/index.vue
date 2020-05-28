@@ -6,7 +6,7 @@
     <div v-else-if="songs.length === 0" class="text-center">
       Loading...
     </div>
-    <div v-else class="grid grid-cols-2 gap-3">
+    <div v-else class="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3">
       <router-link
         v-for="({ station, title }, index) in songs"
         :key="index"
@@ -54,8 +54,22 @@ export default {
 </script>
 
 <style scoped>
-.h-33vw {
-  height: 33vw;
+@media (max-width: 639px) {
+  .h-33vw {
+    height: 33vw;
+  }
+}
+
+@media (min-width: 640px) {
+  .h-33vw {
+    height: 22vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .h-33vw {
+    height: 16.6667vw;
+  }
 }
 
 .bg-gradient {
