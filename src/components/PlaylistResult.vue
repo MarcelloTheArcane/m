@@ -19,27 +19,27 @@
     <div v-if="expanded" class="mb-2 flex justify-around">
       <button
         @click="play" 
-        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
+        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100 text-gray-800"
       >
         Play
       </button>
       <button
         @click="remove" 
-        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
+        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100 text-gray-800"
       >
         Remove
       </button>
       <router-link
         @click.native="handleSelectOption()"
         :to="`/artist/${songData.artistId[0]}`" 
-        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
+        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100 text-gray-800"
       >
         Artist
       </router-link>
       <router-link
         @click.native="handleSelectOption()"
         :to="`/album/${songData.albumId}`" 
-        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100"
+        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100 text-gray-800"
       >
         Album
       </router-link>
