@@ -4,6 +4,11 @@
       {{ errorMessage }}
     </div>
     <div v-else class="flex flex-col items-center">
+      <img src="@/assets/defaultimage.png" class="h-32 w-32 m-5 rounded">
+      <h1 class="text-lg text-gray-800">
+        {{ this.$route.params.name }}
+      </h1>
+
       <div class="w-full bg-white rounded-t-lg p-3 mt-5">
         <button @click="playAll" class="float-right focus:outline-none">
           <svg viewBox="0 0 24 24" width="32" height="32" stroke-linecap="round" stroke-linejoin="round">
@@ -52,6 +57,11 @@ export default {
     playAll () {
       this.$store.dispatch('setPlaylist', this.results)
     },
+  },
+  metaInfo () {
+    return {
+      title: this.$route.params.name,
+    }
   },
 }
 </script>

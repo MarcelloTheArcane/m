@@ -68,5 +68,12 @@ export default {
       this.$store.dispatch('setPlaylist', this.results)
     },
   },
+  metaInfo () {
+    return {
+      title: this.albumData.album
+        ? `${this.albumData.album} | ${this.albumData.creator}`
+        : 'Loading...',
+    }
+  },
 }
 </script>
