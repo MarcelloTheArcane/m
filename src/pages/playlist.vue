@@ -16,6 +16,10 @@
     <h1 class="text-lg text-center">
       Playlist
     </h1>
+    <h2 class="text-base text-center">
+      Now playing:<br>
+      {{ $store.getters.nowPlaying.title }}
+    </h2>
 
     <div class="w-full bg-white rounded-t-lg p-3 mt-5">
       &nbsp;
