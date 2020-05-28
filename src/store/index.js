@@ -11,7 +11,6 @@ export default new Vuex.Store({
     return {
       playlist: [],
       playingIndex: -1,
-      isPlaying: false,
     }
   },
   mutations: {
