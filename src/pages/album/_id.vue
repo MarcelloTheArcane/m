@@ -115,7 +115,7 @@ export default {
         ? `${this.albumData.album} | ${this.albumData.creator}`
         : 'Loading...',
       meta: [
-        { name: 'theme-color', description: this.themeColour },
+        { name: 'theme-color', content: this.themeColour, vmid: 'theme' },
       ],
     }
   },
