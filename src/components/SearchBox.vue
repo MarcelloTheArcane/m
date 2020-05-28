@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 p-2">
+  <div class="bg-transparent p-2">
     <div v-if="!showingSearch" class="flex flex-row">
       <a 
         v-if="$route.fullPath !== '/'"
@@ -87,7 +87,7 @@
       <div v-if="errorMessage" class="text-center text-red-600 bg-white p-2 rounded-b-lg shadow-md">
         {{ errorMessage }}
       </div>
-      <div v-else-if="searching" class="text-center text-gray-700 rounded-b-lg p-2 bg-white shadow-md">
+      <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md">
         Loading...
       </div>
       <div v-else-if="results.length" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md">
@@ -139,9 +139,9 @@ export default {
     },
     clearSearch () {
       this.showingSearch = false
-      this.errorMessage = null
+      this.errorMessage = ''
       this.query = ''
-      this.results = null
+      this.results = []
     },
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 px-2 pb-4">
+  <div class="bg-transparent px-2 pb-4">
     <div v-if="errorMessage" class="text-center text-red-600">
       {{ errorMessage }}
     </div>
@@ -18,7 +18,7 @@
             <circle cx="12" cy="12" r="3"></circle>
           </svg>
         </div>
-        <p class="text-gray-900 text-center">
+        <p class="text-center">
           {{ title }}
         </p>
       </router-link>

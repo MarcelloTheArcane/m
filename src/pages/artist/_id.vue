@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-gray-200">
+  <div class="bg-transparent">
     <div v-if="errorMessage" class="text-center text-red-600">
       {{ errorMessage }}
     </div>
     <div v-else class="flex flex-col items-center h-full">
       <img v-lazy="artistData.image" class="h-32 w-32 m-5 rounded">
-      <h1 class="text-lg text-gray-800 text-center">
+      <h1 class="text-lg text-center">
         {{ artistData.creator }}
       </h1>
 

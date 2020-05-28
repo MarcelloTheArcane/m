@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "colorthief": "^2.3.0",
     "core-js": "^3.6.4",
     "dotenv": "^8.2.0",
     "tailwindcss": "^1.4.6",

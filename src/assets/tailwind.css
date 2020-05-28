@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --colour-one: #edf2f7;
+  --default-colour-one: #edf2f7;
+  --colour-two: #2d3748;
+  --default-colour-two: #2d3748;
+}
+
+body {
+  background-color: var(--colour-one);
+  color: var(--colour-two);
+}

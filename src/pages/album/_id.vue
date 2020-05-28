@@ -1,14 +1,19 @@
 <template>
-  <div class="bg-gray-200">
+  <div class="bg-transparent">
     <div v-if="errorMessage" class="text-center text-red-600">
       {{ errorMessage }}
     </div>
     <div v-else class="flex flex-col items-center h-full">
-      <img v-lazy="albumData.image" class="h-32 w-32 m-5 rounded">
-      <h1 class="text-lg text-gray-800 text-center">
+      <img
+        v-lazy="albumData.image"
+        ref="image"
+        class="h-32 w-32 m-5 rounded"
+        @load="getColour"
+      >
+      <h1 class="text-lg text-center">
         {{ albumData.album }}
       </h1>
-      <h2 class="text-sm text-gray-600 text-center">
+      <h2 class="text-sm text-center">
         {{ albumData.creator }}
       </h2>
 
@@ -30,6 +35,8 @@
 </template>
 
 <script>
+import ColourThief from 'colorthief/dist/color-thief.mjs'
+
 import SongResult from '@/components/SongResult.vue'
 import ButtonList from '@/components/ButtonList.vue'
 
@@ -75,6 +82,32 @@ export default {
         newList: this.results,
       })
     },
+    toHex (colourArray) {
+      return colourArray
+        .map(value => value.toString(16).padStart(2, '0'))
+        .join('')
+    },
+    getColour () {
+      const colourThief = new ColourThief()
+      const img = this.$refs.image
+      img.crossOrigin = 'Anonymous'
+
+      const colour = colourThief.getPalette(img, 2)
+
+      console.log(`#${this.toHex(colour[0])}`, `#${this.toHex(colour[1])}`)
+
+      document.documentElement.style.setProperty('--colour-one', `#${this.toHex(colour[0])}`)
+      document.documentElement.style.setProperty('--colour-two', `#${this.toHex(colour[1])}`)
+    },
+  },
+  beforeDestroy () {
+    const defaultColourOne = document.documentElement.style
+      .getPropertyValue('--default-colour-one')
+    const defaultColourTwo = document.documentElement.style
+      .getPropertyValue('--default-colour-two')
+
+    document.documentElement.style.setProperty('--colour-one', defaultColourOne)
+    document.documentElement.style.setProperty('--colour-two', defaultColourTwo)
   },
   metaInfo () {
     return {
