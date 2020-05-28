@@ -1,9 +1,7 @@
 import axios from 'axios'
 
-const baseURL = 'REDACTED'
-
 const proxy = axios.create({
-  baseURL,
+  baseURL: process.env.BASE_URL,
   params: {
     format: 'json',
     num_tracks: 25,
