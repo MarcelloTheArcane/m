@@ -226,8 +226,8 @@ export default new Vuex.Store({
         dispatch('audiocache/preload', nextSong)
       }
     },
-    addToPlaylist ({ commit, dispatch }, newList) {
-      commit('ADD_TO_PLAYLIST', newList)
+    addToPlaylist ({ commit, dispatch }, { index, newList }) {
+      commit('ADD_TO_PLAYLIST', { index, newList })
       dispatch('audiocache/preload', newList[0])
     },
     removeFromPlaylist ({ commit }, index) {
