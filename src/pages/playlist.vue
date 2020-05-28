@@ -35,6 +35,13 @@ export default {
   components: {
     PlaylistResult,
   },
+  metaInfo () {
+    return {
+      title: this.$store.getters.nowPlaying
+        ? this.$store.getters.nowPlaying.title
+        :'Playlist',
+    }
+  },
 }
 </script>
 
