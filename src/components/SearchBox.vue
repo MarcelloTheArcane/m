@@ -87,7 +87,7 @@
       <div v-if="errorMessage" class="text-center text-red-600 bg-white p-2 rounded-b-lg shadow-md">
         {{ errorMessage }}
       </div>
-      <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md">
+      <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md text-gray-800">
         Loading...
       </div>
       <div v-else-if="results.length" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md">
