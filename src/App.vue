@@ -11,7 +11,7 @@ export default {
     return {
       title: 'gmp',
       meta: [
-        { name: 'theme-color', description: '#fff' },
+        { name: 'theme-color', content: '#fff', vmid: 'theme' },
       ],
     }
   },
