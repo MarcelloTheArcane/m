@@ -69,7 +69,7 @@ export default {
 
       const colour = colourThief.getPalette(img, 2)
 
-      this.themeColour = #${this.toHex(colour[0])}`
+      this.themeColour = `#${this.toHex(colour[0])}`
 
       document.documentElement.style.setProperty('--colour-one', `#${this.toHex(colour[0])}`)
       document.documentElement.style.setProperty('--colour-two', `#${this.toHex(colour[1])}`)
