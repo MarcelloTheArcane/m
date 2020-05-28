@@ -241,7 +241,9 @@ export default new Vuex.Store({
       return playingIndex > 0
     },
     nowPlaying ({ playlist, playingIndex }) {
-      return playlist[playingIndex]
+      return playlist.length
+        ? playlist[playingIndex]
+        : null
     },
   },
   modules: {
