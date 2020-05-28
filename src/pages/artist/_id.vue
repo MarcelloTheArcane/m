@@ -66,5 +66,12 @@ export default {
       this.$store.dispatch('setPlaylist', this.results)
     },
   },
+  metaInfo () {
+    return {
+      title: this.artistData.creator
+        ? this.artistData.creator
+        : 'Loading...',
+    }
+  },
 }
 </script>
