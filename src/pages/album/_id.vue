@@ -50,6 +50,7 @@ export default {
     return {
       results: [],
       errorMessage: '',
+      themeColour: '#EDF2F7',
     }
   },
   async mounted () {
@@ -94,8 +95,7 @@ export default {
 
       const colour = colourThief.getPalette(img, 2)
 
-      console.log(`#${this.toHex(colour[0])}`, `#${this.toHex(colour[1])}`)
-
+      this.themeColour = `#${this.toHex(colour[0])}`
       document.documentElement.style.setProperty('--colour-one', `#${this.toHex(colour[0])}`)
       document.documentElement.style.setProperty('--colour-two', `#${this.toHex(colour[1])}`)
     },
@@ -114,6 +114,9 @@ export default {
       title: this.albumData.album
         ? `${this.albumData.album} | ${this.albumData.creator}`
         : 'Loading...',
+      meta: [
+        { name: 'theme-color', description: this.themeColour },
+      ],
     }
   },
 }
