@@ -1,8 +1,16 @@
 # gmp
 
+Front end for [google-music-proxy](https://gmusicproxy.github.io/).
+
 ## Project setup
 ```
-yarn install
+yarn
+```
+
+Create `.env`:
+
+```
+BASE_URL=<your proxy url>
 ```
 
 ### Compiles and hot-reloads for development
@@ -15,10 +23,6 @@ yarn serve
 yarn build
 ```
 
-### Lints and fixes files
-```
-yarn lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
