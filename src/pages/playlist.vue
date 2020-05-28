@@ -1,9 +1,10 @@
 <template>
   <div class="flex flex-col items-center h-full bg-transparent">
     <img
-      v-if="$store.getters.nowPlaying"
+      v-if="$store.getters.nowPlaying.image"
       v-lazy="$store.getters.nowPlaying.image"
       class="h-32 w-32 m-5 rounded"
+      ref="image"
       @load="getColour"
     >
     <img
