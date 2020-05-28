@@ -1,9 +1,12 @@
 <template>
   <div class="bg-gray-200 p-2">
     <div v-if="!showingSearch" class="flex flex-row">
-      <router-link to="/" class="focus:outline-none">
+      <a 
+        v-if="$route.fullPath !== '/'"
+        @click="$router.go(-1)"
+        class="focus:outline-none"
+      >
         <svg
-          v-if="$route.fullPath !== '/'"
           class="m-2"
           viewBox="0 0 24 24"
           width="24"
@@ -16,7 +19,7 @@
         >
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
-      </router-link>
+      </a>
 
       <span class="flex-1">
         &nbsp;
