@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center h-full bg-transparent">
     <img
-      v-if="$store.getters.nowPlaying.image"
+      v-if="$store.getters.nowPlaying"
       v-lazy="$store.getters.nowPlaying.image"
       class="h-32 w-32 m-5 rounded"
       ref="image"
@@ -16,7 +16,7 @@
     <h1 class="text-lg text-center">
       Playlist
     </h1>
-    <h2 class="text-base text-center">
+    <h2 v-if="$store.getters.nowPlaying" class="text-base text-center">
       Now playing:<br>
       {{ $store.getters.nowPlaying.title }}
     </h2>
@@ -92,7 +92,7 @@ export default {
     return {
       title: this.$store.getters.nowPlaying
         ? this.$store.getters.nowPlaying.title
-        :'Playlist',
+        : 'Playlist',
       meta: [
         { name: 'theme-color', content: this.themeColour, vmid: 'theme' },
       ],
@@ -100,7 +100,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-  
-</style>
