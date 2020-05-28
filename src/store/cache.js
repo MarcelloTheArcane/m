@@ -1,3 +1,4 @@
+require('dotenv').config()
 import axios from 'axios'
 
 const proxy = axios.create({
