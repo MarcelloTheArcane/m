@@ -1,9 +1,9 @@
 <template>
   <div class="bg-gray-200">
-    <div v-if="errorMessage">
+    <div v-if="errorMessage" class="text-center text-red-600">
       {{ errorMessage }}
     </div>
-    <div v-else class="flex flex-col items-center">
+    <div v-else class="flex flex-col items-center h-full">
       <img v-lazy="albumData.image" class="h-32 w-32 m-5 rounded">
       <h1 class="text-lg text-gray-800 text-center">
         {{ albumData.album }}
@@ -42,7 +42,7 @@ export default {
   data () {
     return {
       results: [],
-      errorMessage: null,
+      errorMessage: '',
     }
   },
   async mounted () {
