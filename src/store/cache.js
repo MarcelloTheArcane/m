@@ -2,7 +2,7 @@ require('dotenv').config()
 import axios from 'axios'
 
 const proxy = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: process.env.VUE_APP_PROXY_URL,
   params: {
     format: 'json',
     num_tracks: 25,
