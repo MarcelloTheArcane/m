@@ -10,7 +10,7 @@ yarn
 Create `.env`:
 
 ```
-BASE_URL=<your proxy url>
+VUE_APP_PROXY_URL=<your proxy url>
 ```
 
 ### Compiles and hot-reloads for development
