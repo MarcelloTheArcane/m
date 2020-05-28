@@ -1,9 +1,7 @@
 import axios from 'axios'
 
-const baseURL = 'http://ec2-34-247-52-128.eu-west-1.compute.amazonaws.com:9999'
-
 const proxy = axios.create({
-  baseURL,
+  baseURL: process.env.BASE_URL,
   params: {
     format: 'json',
     num_tracks: 25,
