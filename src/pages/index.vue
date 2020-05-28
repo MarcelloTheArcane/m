@@ -1,20 +1,28 @@
 <template>
-  <div class="bg-gray-200 grid grid-cols-2 gap-3 px-2 pb-4">
-    <router-link
-      v-for="({ station, title }, index) in songs"
-      :key="index"
-      :to="`/station/${station}/${title}`"
-    >
-      <div class="w-full flex items-center justify-center bg-gray-200 bg-gradient shadow rounded h-33vw">
-        <svg viewBox="0 0 24 24" width="42" height="42" stroke="#718096" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <circle cx="12" cy="12" r="3"></circle>
-        </svg>
-      </div>
-      <p class="text-gray-900 text-center">
-        {{ title }}
-      </p>
-    </router-link>
+  <div class="bg-gray-200 px-2 pb-4">
+    <div v-if="errorMessage" class="text-center text-red-600">
+      {{ errorMessage }}
+    </div>
+    <div v-else-if="songs.length === 0" class="text-center">
+      Loading...
+    </div>
+    <div v-else class="grid grid-cols-2 gap-3">
+      <router-link
+        v-for="({ station, title }, index) in songs"
+        :key="index"
+        :to="`/station/${station}/${title}`"
+      >
+        <div class="w-full flex items-center justify-center bg-gray-200 bg-gradient shadow rounded h-33vw">
+          <svg viewBox="0 0 24 24" width="42" height="42" stroke="#718096" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </div>
+        <p class="text-gray-900 text-center">
+          {{ title }}
+        </p>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -24,12 +32,18 @@ export default {
   data () {
     return {
       songs: [],
+      errorMessage: '',
     }
   },
   async mounted () {
     // this.songs = await this.$store.dispatch('getTopSongs')
     // this.songs = await this.$store.dispatch('getAllStations')
-    this.songs = await this.$store.dispatch('getListenNow')
+    try {
+      this.songs = await this.$store.dispatch('getListenNow')
+    } catch (err) {
+      console.error(err)
+      this.errorMessage = err.message
+    }
   },
   metaInfo () {
     return {

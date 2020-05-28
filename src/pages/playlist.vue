@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center bg-gray-200">
     <img src="@/assets/defaultimage.png" class="h-32 w-32 m-5 rounded">
-    <h1 class="text-lg text-gray-800">
+    <h1 class="text-lg text-gray-800 text-center">
       Playlist
     </h1>
 

@@ -5,10 +5,10 @@
     </div>
     <div v-else class="flex flex-col items-center">
       <img v-lazy="albumData.image" class="h-32 w-32 m-5 rounded">
-      <h1 class="text-lg text-gray-800">
+      <h1 class="text-lg text-gray-800 text-center">
         {{ albumData.album }}
       </h1>
-      <h2 class="text-sm text-gray-600">
+      <h2 class="text-sm text-gray-600 text-center">
         {{ albumData.creator }}
       </h2>
 

@@ -5,7 +5,7 @@
     </div>
     <div v-else class="flex flex-col items-center">
       <img src="@/assets/defaultimage.png" class="h-32 w-32 m-5 rounded">
-      <h1 class="text-lg text-gray-800">
+      <h1 class="text-lg text-gray-800 text-center">
         {{ this.$route.params.name }}
       </h1>
 
