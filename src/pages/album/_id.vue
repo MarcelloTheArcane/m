@@ -12,28 +12,11 @@
         {{ albumData.creator }}
       </h2>
 
-      <div class="w-full bg-white rounded-t-lg p-3 mt-5">
-        <button @click="playAll" class="float-right mx-1 focus:outline-none" title="Play album">
-          <svg viewBox="0 0 24 24" width="40" height="40" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10" fill="#e2e8f0"></circle>
-            <polygon points="10 8 16 12 10 16 10 8"  stroke="currentColor" stroke-width="2"></polygon>
-          </svg>
-        </button>
-        <button @click="playNext" class="float-right mx-1 focus:outline-none" title="Play album next">
-          <svg viewBox="0 0 24 24" width="40" height="40">
-            <circle cx="12" cy="12" r="10" fill="#e2e8f0" stroke="none"></circle>
-            <polygon points="7.5,8 13.5,12 7.5,16 7.5,8" stroke="currentColor" stroke-width="2" fill="currentColor" stroke-linecap="round" stroke-linejoin="round"></polygon>
-            <polygon points="12.5,8 18.5,12 12.5,16 12.5,8" stroke="currentColor" stroke-width="2" fill="currentColor" stroke-linecap="round" stroke-linejoin="round"></polygon>
-          </svg>
-        </button>
-        <button @click="appendQueue" class="float-right mx-1 focus:outline-none" title="Add to queue">
-          <svg viewBox="0 0 24 24" width="40" height="40" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10" fill="#e2e8f0"></circle>
-            <line x1="15" y1="7.5" x2="15" y2="16.5" stroke="currentColor" stroke-width="2" />
-            <polygon points="8,8 14,12 8,16 8,8" stroke="currentColor" stroke-width="2"></polygon>
-          </svg>
-        </button>
-      </div>
+      <button-list
+        @play-all="playAll"
+        @play-next="playNext"
+        @append-queue="appendQueue"
+      />
 
       <div class="w-full flex-1 bg-white">
         <song-result
@@ -48,11 +31,13 @@
 
 <script>
 import SongResult from '@/components/SongResult.vue'
+import ButtonList from '@/components/ButtonList.vue'
 
 export default {
   name: 'AlbumPage',
   components: {
     SongResult,
+    ButtonList,
   },
   data () {
     return {
