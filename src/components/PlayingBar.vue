@@ -42,6 +42,18 @@ export default {
       this.$refs.audio.innerHTML = ''
       this.$refs.audio.appendChild(element)
       element.play()
+
+      if ('MediaMetadata' in window) {
+        element.addEventListener('play', () => {
+          navigator.mediaSession.metadata = new window.MediaMetadata({
+            title: this.song.title,
+            artist: this.song.creator,
+            album: this.song.album,
+            artwork: [{ src: this.song.image }],
+          })
+        })
+      }
+
       element.addEventListener('ended', () => {
         this.$store.dispatch('nextSong')
       })
@@ -65,6 +77,16 @@ export default {
     if (this.song.location) {
       this.playCurrentSong()
       this.loadNextSong()
+    }
+
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.setActionHandler('previoustrack', () => {
+        this.$store.dispatch('previousSong')
+      })
+  
+      navigator.mediaSession.setActionHandler('nexttrack', () => {
+        this.$store.dispatch('nextSong')
+      })
     }
   },
 }
