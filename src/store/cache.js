@@ -18,7 +18,7 @@ export default {
     return {}
   },
   mutations: {
-    addToCache (state, [ key, value ]) {
+    ADD_TO_CACHE (state, [ key, value ]) {
       state[key] = value
     },
   },
@@ -27,7 +27,7 @@ export default {
       const cachePath = btoa(path + JSON.stringify(params))
       if (!state[cachePath]) {
         const { data } = await proxy.get(path, { params })
-        commit('addToCache', [ cachePath, data ])
+        commit('ADD_TO_CACHE', [ cachePath, data ])
       }
 
       return state[cachePath]

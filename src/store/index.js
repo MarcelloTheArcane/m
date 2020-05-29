@@ -55,7 +55,7 @@ export default new Vuex.Store({
       })
 
       data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track.location))
+        .forEach(track => dispatch('audiocache/add', track))
 
       return data.playlist.track
     },
@@ -69,7 +69,7 @@ export default new Vuex.Store({
       })
 
       data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track.location))
+        .forEach(track => dispatch('audiocache/add', track))
 
       return data.playlist.track
     },
@@ -83,7 +83,7 @@ export default new Vuex.Store({
       }, { root: true })
 
       data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track.location))
+        .forEach(track => dispatch('audiocache/add', track))
 
       return data.playlist.track
     },
@@ -93,7 +93,7 @@ export default new Vuex.Store({
       }, { root: true })
 
       data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track.location))
+        .forEach(track => dispatch('audiocache/add', track))
 
       return data.playlist.track
     },
@@ -106,7 +106,7 @@ export default new Vuex.Store({
       }, { root: true })
 
       data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track.location))
+        .forEach(track => dispatch('audiocache/add', track))
 
       return data.playlist.track
     },
@@ -129,7 +129,7 @@ export default new Vuex.Store({
       })
 
       data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track.location))
+        .forEach(track => dispatch('audiocache/add', track))
 
       return data.playlist.track
     },
@@ -139,7 +139,7 @@ export default new Vuex.Store({
       }, { root: true })
 
       data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track.location))
+        .forEach(track => dispatch('audiocache/add', track))
 
       return data.playlist.track
     },
@@ -149,7 +149,7 @@ export default new Vuex.Store({
       }, { root: true })
 
       data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track.location))
+        .forEach(track => dispatch('audiocache/add', track))
 
       return data.playlist.track
     },
@@ -169,7 +169,7 @@ export default new Vuex.Store({
       }, { root: true })
 
       data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track.location))
+        .forEach(track => dispatch('audiocache/add', track))
 
       return data.playlist.track
     },

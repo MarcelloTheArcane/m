@@ -4,7 +4,7 @@
       <img v-lazy="result.image" class="w-16 h-16">
       <div
         :class="{
-          'font-bold': index === $store.state.playingIndex,
+          'font-bold': isCurrentlyPlaying,
           'ml-2 border-t border-gray-500 px-1 py-5 h-full min-w-0 w-full': true,
         }"
       >
@@ -16,8 +16,19 @@
         </p>
       </div>
     </div>
+    <div v-if="loading" class="mb-2 flex justify-around text-gray-800">
+      Loading...
+    </div>
     <div v-if="expanded" class="mb-2 flex justify-around">
       <button
+        v-if="isCurrentlyPlaying"
+        @click="reload" 
+        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100 text-gray-800"
+      >
+        Reload
+      </button>
+      <button
+        v-else
         @click="play" 
         class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-100 text-gray-800"
       >
@@ -63,21 +74,33 @@ export default {
   data () {
     return {
       songData: null,
+      loading: false,
       expanded: false,
     }
   },
   methods: {
     async toggleExpanded () {
-      if (!this.songData) {
-        const id = this.result.location.slice(-27)
-        this.songData = await this.$store.dispatch('getSongInfo', { id })
+      try {
+        if (!this.songData) {
+          this.loading = true
+          const id = this.result.location.slice(-27)
+          this.songData = await this.$store.dispatch('getSongInfo', { id })
+        }
+
+        this.expanded = !this.expanded
+      } catch (err) {
+        console.error(err)
       }
 
-      this.expanded = !this.expanded
+      this.loading = false
     },
     play () {
       this.handleSelectOption()
       this.$store.dispatch('setPlaylistIndex', this.index)
+    },
+    reload () {
+      this.handleSelectOption()
+      this.$store.dispatch('audiocache/reload', this.result)
     },
     remove () {
       this.handleSelectOption()
@@ -86,6 +109,11 @@ export default {
     handleSelectOption () {
       this.expanded = false
       this.$emit('select-option')
+    },
+  },
+  computed: {
+    isCurrentlyPlaying () {
+      return this.index === this.$store.state.playingIndex
     },
   },
 }

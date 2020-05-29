@@ -11,6 +11,9 @@
         </p>
       </div>
     </div>
+    <div v-if="loading" class="mb-2 flex justify-around text-gray-800">
+      Loading...
+    </div>
     <div v-if="expanded" class="mb-2 flex justify-around">
       <button
         @click="play" 
@@ -55,16 +58,24 @@ export default {
     return {
       songData: null,
       expanded: false,
+      loading: false,
     }
   },
   methods: {
     async toggleExpanded () {
-      if (!this.songData) {
-        const id = this.result.location.slice(-27)
-        this.songData = await this.$store.dispatch('getSongInfo', { id })
+      try {
+        if (!this.songData) {
+          this.loading = true
+          const id = this.result.location.slice(-27)
+          this.songData = await this.$store.dispatch('getSongInfo', { id })
+        }
+  
+        this.expanded = !this.expanded
+      } catch (err) {
+        console.error(err)
       }
 
-      this.expanded = !this.expanded
+      this.loading = false
     },
     play () {
       this.handleSelectOption()
