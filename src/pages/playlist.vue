@@ -72,6 +72,7 @@ export default {
       img.crossOrigin = 'Anonymous'
 
       const colour = colourThief.getPalette(img, 2)
+      if (!colour) return
 
       this.themeColour = `#${this.toHex(colour[0])}`
 
