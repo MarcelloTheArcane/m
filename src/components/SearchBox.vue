@@ -137,7 +137,7 @@ export default {
           title: this.query,
         })
       } catch (err) {
-        if (err.statusCode === 500) {
+        if (err.response.status === 500) {
           this.noResults = true
           return
         }
