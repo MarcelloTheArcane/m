@@ -87,6 +87,9 @@
       <div v-if="errorMessage" class="text-center text-red-600 bg-white p-2 rounded-b-lg shadow-md">
         {{ errorMessage }}
       </div>
+      <div v-else-if="noResults" class="text-center text-gray-800 bg-white p-2 rounded-b-lg shadow-md">
+        No results
+      </div>
       <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md text-gray-800">
         Loading...
       </div>
@@ -113,6 +116,7 @@ export default {
   data () {
     return {
       showingSearch: false,
+      noResults: false,
       query: '',
       results: [],
       errorMessage: '',
@@ -124,7 +128,8 @@ export default {
       if (!this.query.length) {
         return
       }
-      
+
+      this.noResults = false
       this.searching = true
       try {
         this.results = await this.$store.dispatch('getBySearch', {
@@ -132,6 +137,10 @@ export default {
           title: this.query,
         })
       } catch (err) {
+        if (err.statusCode === 500) {
+          this.noResults = true
+          return
+        }
         console.error(err)
         this.errorMessage = err.message
       }
@@ -139,6 +148,7 @@ export default {
     },
     clearSearch () {
       this.showingSearch = false
+      this.noResults = false
       this.errorMessage = ''
       this.query = ''
       this.results = []
