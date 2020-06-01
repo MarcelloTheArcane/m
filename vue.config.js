@@ -3,5 +3,8 @@ module.exports = {
     autoRouting: {
       chunkNamePrefix: 'page-'
     }
+  },
+  devServer: {
+    disableHostCheck: true
   }
 }
