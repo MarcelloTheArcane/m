@@ -82,10 +82,14 @@ export default new Vuex.Store({
         },
       }, { root: true })
 
-      data.playlist.track
-        .forEach(track => dispatch('audiocache/add', track))
+      if (data) {
+        data.playlist.track
+          .forEach(track => dispatch('audiocache/add', track))
 
-      return data.playlist.track
+        return data.playlist.track
+      } else {
+        return null
+      }
     },
     async getIflStation ({ dispatch }) {
       const data = await dispatch('cache/get', {
