@@ -10,6 +10,9 @@ const proxy = axios.create({
   headers: {
     accept: 'application/json',
   },
+  validateStatus (status) {
+    return status < 300 || status === 500 // 500 is ok
+  },
 })
 
 export default {
