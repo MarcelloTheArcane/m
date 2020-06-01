@@ -136,11 +136,11 @@ export default {
           type: 'matches',
           title: this.query,
         })
-      } catch (err) {
-        if (err.response.status === 500) {
+
+        if (this.results.length === 0) {
           this.noResults = true
-          return
         }
+      } catch (err) {
         console.error(err)
         this.errorMessage = err.message
       }
