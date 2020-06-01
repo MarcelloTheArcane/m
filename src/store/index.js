@@ -88,7 +88,7 @@ export default new Vuex.Store({
 
         return data.playlist.track
       } else {
-        return null
+        return []
       }
     },
     async getIflStation ({ dispatch }) {
