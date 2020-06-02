@@ -251,6 +251,7 @@ export default {
   @apply px-1;
   @apply inline-block;
   @apply font-mono;
+  @apply whitespace-pre-wrap;
 }
 
 .h-8\/12 {
