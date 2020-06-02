@@ -73,13 +73,10 @@ export default new Vuex.Store({
 
       return data.playlist.track
     },
-    async getBySearch ({ dispatch }, { type, title }) {
+    async getBySearch ({ dispatch }, params) {
       const data = await dispatch('cache/get', {
         path: `/get_by_search`,
-        params: {
-          type,
-          title,
-        },
+        params,
       }, { root: true })
 
       if (data) {

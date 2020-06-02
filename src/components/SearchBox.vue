@@ -146,6 +146,38 @@ export default {
       searching: false,
     }
   },
+  computed: {
+    searchTerms () {
+      let title = this.query
+      const type = this.query.match(/(?:^| )type:(matches|artist|album|song)(?:$| )/)
+      const artist = this.query.match(/(?:^| )artist:\[(.+?)](?:$| )/)
+      const exact = this.query.match(/(?:^| )exact:(yes|no)(?:$| )/)
+
+      const terms = {
+        type: 'matches',
+        exact: 'no',
+      }
+
+      if (exact) {
+        terms.exact = exact[1]
+        title = title.replace(/exact:(yes|no)/g, '')
+      }
+
+      if (artist) {
+        terms.artist = artist[1]
+        title = title.replace(/artist:\[(.+?)]/g, '')
+      }
+
+      if (type) {
+        terms.type = type[1]
+        title = title.replace(/type:(matches|artist|album|song)/g, '')
+      }
+
+      terms.title = title.trim()
+
+      return terms
+    },
+  },
   methods: {
     showSearch () {
       this.clearSearch()
@@ -160,10 +192,7 @@ export default {
       this.searching = true
 
       try {
-        this.results = await this.$store.dispatch('getBySearch', {
-          type: 'matches',
-          title: this.query,
-        })
+        this.results = await this.$store.dispatch('getBySearch', this.searchTerms)
 
         if (this.results.length === 0) {
           this.noResults = true
