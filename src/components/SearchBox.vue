@@ -171,9 +171,9 @@ export default {
     clearSearch () {
       this.showingSearch = false
       this.noResults = false
-      this.errorMessage = ''
       this.query = ''
       this.results = []
+      this.errorMessage = ''
     },
   },
 }
