@@ -111,29 +111,12 @@
         Loading...
       </div>
 
-      <div v-else-if="!query.length" class="text-gray-800 bg-white px-4 py-2 rounded-b-lg shadow-md">
+      <div v-else-if="query !== oldQuery" class="text-gray-800 bg-white px-4 py-2 rounded-b-lg shadow-md">
         <pre class="bg-gray-200 code">Song name</pre><br />
         <pre class="bg-gray-200 code">Song name exact:yes</pre><br />
         <pre class="bg-gray-200 code">Song name artist:[Artist name]</pre><br />
         <pre class="bg-gray-200 code">Song name artist:[Artist name] exact:yes</pre><br />
         <pre class="bg-gray-200 code">Album name type:album</pre><br />
-      </div>
-
-      <div v-else-if="query !== oldQuery" class="text-gray-800 bg-white px-4 py-2 rounded-b-lg shadow-md">
-        <p>
-          <span v-show="searchTerms.artist" class="bg-gray-200 code">
-            artist:{{ searchTerms.artist }}
-          </span>
-          <span v-show="searchTerms.type === 'artist'" class="bg-gray-200 code">
-            artist:{{ searchTerms.title }}
-          </span>
-          <span v-show="searchTerms.type" class="bg-gray-200 code">
-            type:{{ searchTerms.type }}
-          </span>
-          <span v-show="searchTerms.exact" class="bg-gray-200 code">
-            exact:{{ searchTerms.exact }}
-          </span>
-        </p>
       </div>
 
       <div v-else-if="results.length" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md">
@@ -165,7 +148,7 @@ export default {
       showingSearch: false,
       noResults: false,
       query: '',
-      oldQuery: '',
+      oldQuery: null,
       results: [],
       errorMessage: '',
       searching: false,
@@ -233,6 +216,7 @@ export default {
       this.showingSearch = false
       this.noResults = false
       this.query = ''
+      this.oldQuery = null
       this.results = []
       this.errorMessage = ''
     },
