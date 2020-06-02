@@ -52,6 +52,8 @@
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
     </div>
+
+    <!-- Showing search -->
     <div v-else>
       <label :class="{
         'rounded-t-lg': results.length || errorMessage || searching,
