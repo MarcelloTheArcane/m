@@ -3,13 +3,54 @@
 @tailwind utilities;
 
 :root {
-  --colour-one: #edf2f7;
-  --default-colour-one: #edf2f7;
-  --colour-two: #2d3748;
-  --default-colour-two: #2d3748;
+  --colour-bg-light: #edf2f7;
+  --default-colour-bg-light: #edf2f7;
+  --colour-fg-light: #2d3748;
+  --default-colour-fg-light: #2d3748;
+
+  --colour-bg-dark: #2d3748;
+  --default-colour-bg-dark: #2d3748;
+  --colour-fg-dark: #edf2f7;
+  --default-colour-fg-dark: #edf2f7;
+
+  --bg-white-dark: #000000;
+  --bg-white-light: #ffffff;
 }
 
-body {
-  background-color: var(--colour-one);
-  color: var(--colour-two);
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: var(--colour-bg-light);
+    color: var(--colour-fg-light);
+    transition: background-color 0.2s ease;
+  }
+
+  .text-gray-800 {
+    color: var(--default-colour-fg-light);
+  }
+
+  .bg-white {
+    background-color: var(--bg-white-light);
+  }
+  .bg-gray-200 {
+    background-color: var(--default-colour-bg-light);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--colour-bg-dark);
+    color: var(--colour-fg-dark);
+    transition: background-color 0.2s ease;
+  }
+
+  .text-gray-800 {
+    color: var(--default-colour-fg-dark);
+  }
+
+  .bg-white {
+    background-color: var(--bg-white-dark);
+  }
+  .bg-gray-200 {
+    background-color: var(--default-colour-bg-dark);
+  }
 }

@@ -89,3 +89,24 @@ export default {
 }
 </script>
 
+<style scoped>
+@media (prefers-color-scheme: light) {
+  progress[value]::-webkit-progress-bar {
+    background-color: var(--colour-bg-light);
+  }
+
+  progress[value]::-webkit-progress-value {
+    background-color: var(--colour-fg-light);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  progress[value]::-webkit-progress-bar {
+    background-color: var(--colour-bg-dark);
+  }
+  
+  progress[value]::-webkit-progress-value {
+    background-color: var(--colour-fg-dark);
+  }
+}
+</style>

@@ -76,18 +76,26 @@ export default {
 
       this.themeColour = `#${this.toHex(colour[0])}`
 
-      document.documentElement.style.setProperty('--colour-one', `#${this.toHex(colour[0])}`)
-      document.documentElement.style.setProperty('--colour-two', `#${this.toHex(colour[1])}`)
+      document.documentElement.style.setProperty('--colour-fg-light', `#${this.toHex(colour[0])}`)
+      document.documentElement.style.setProperty('--colour-bg-light', `#${this.toHex(colour[1])}`)
+      document.documentElement.style.setProperty('--colour-fg-dark', `#${this.toHex(colour[1])}`)
+      document.documentElement.style.setProperty('--colour-bg-dark', `#${this.toHex(colour[0])}`)
     },
   },
   beforeDestroy () {
-    const defaultColourOne = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-one')
-    const defaultColourTwo = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-two')
+    const defaultColourOneLight = getComputedStyle(document.documentElement)
+      .getPropertyValue('--default-colour-fg-light')
+    const defaultColourTwoLight = getComputedStyle(document.documentElement)
+      .getPropertyValue('--default-colour-bg-light')
+    const defaultColourOneDark = getComputedStyle(document.documentElement)
+      .getPropertyValue('--default-colour-fg-dark')
+    const defaultColourTwoDark = getComputedStyle(document.documentElement)
+      .getPropertyValue('--default-colour-bg-dark')
 
-    document.documentElement.style.setProperty('--colour-one', defaultColourOne)
-    document.documentElement.style.setProperty('--colour-two', defaultColourTwo)
+    document.documentElement.style.setProperty('--colour-fg-light', defaultColourOneLight)
+    document.documentElement.style.setProperty('--colour-bg-light', defaultColourTwoLight)
+    document.documentElement.style.setProperty('--colour-fg-dark', defaultColourOneDark)
+    document.documentElement.style.setProperty('--colour-bg-dark', defaultColourTwoDark)
   },
   metaInfo () {
     return {

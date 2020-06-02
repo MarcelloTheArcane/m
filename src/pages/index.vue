@@ -72,7 +72,15 @@ export default {
   }
 }
 
-.bg-gradient {
-  background: linear-gradient(135deg, rgba(226,232,240,1) 0%, rgba(237,242,247,1) 35%, rgba(203,213,224,1) 100%);
+@media (prefers-color-scheme: light) {
+  .bg-gradient {
+    background: linear-gradient(135deg, rgb(226, 232, 240) 0%, rgb(237, 242, 247) 35%, rgb(203, 213, 224) 100%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .bg-gradient {
+    background: linear-gradient(135deg, rgb(45, 55, 72) 0%, rgb(74, 85, 104) 35%, rgb(26, 32, 44) 100%);
+  }
 }
 </style>
