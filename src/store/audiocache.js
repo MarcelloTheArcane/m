@@ -52,7 +52,7 @@ export default {
           }
         })
       
-      toRemove.forEach(location => commit('REMOVE_CACHE_ITEM', location))
+      // toRemove.forEach(location => commit('REMOVE_CACHE_ITEM', location))
     },
   },
 }
