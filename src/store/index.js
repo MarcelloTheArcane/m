@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import cache from './cache.js'
 import audiocache from './audiocache.js'
+import colourcache from './audiocache.js'
 
 Vue.use(Vuex)
 
@@ -257,5 +258,6 @@ export default new Vuex.Store({
   modules: {
     cache,
     audiocache,
+    colourcache,
   }
 })
