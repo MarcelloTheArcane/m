@@ -56,7 +56,7 @@
       </router-link>
 
       <svg
-        @click="showingSearch = true"
+        @click="showSearch"
         class="m-2"
         viewBox="0 0 24 24"
         width="24"
@@ -97,6 +97,8 @@
 
         <input
           id="search"
+          ref="search"
+          autocomplete="disabled"
           v-model="query"
           type="text"
           class="flex-1 bg-transparent focus:outline-none p-2 block"
@@ -154,9 +156,9 @@ export default {
         return
       }
 
-      this.noResults = false
       this.$refs.search.blur()
       this.searching = true
+
       try {
         this.results = await this.$store.dispatch('getBySearch', {
           type: 'matches',
