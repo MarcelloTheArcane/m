@@ -239,7 +239,7 @@ export default new Vuex.Store({
       dispatch('audiocache/preload', newList[0])
       dispatch('audiocache/runLRU')
     },
-    removeFromPlaylist ({ commit }, index) {
+    removeFromPlaylist ({ commit, dispatch }, index) {
       commit('REMOVE_FROM_PLAYLIST', index)
       dispatch('audiocache/runLRU')
     },
