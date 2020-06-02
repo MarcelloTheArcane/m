@@ -44,7 +44,7 @@ export default {
       // Whitelist every item in the playlist after
       // the current playlist index minus an offset
       rootState.playlist
-        .slice(rootState.playingIndex - 3)
+        .slice(Math.max(0, rootState.playingIndex - 3))
         .forEach(item => {
           const indexInToRemove = toRemove.indexOf(item.location)
           if (indexInToRemove !== -1) {
