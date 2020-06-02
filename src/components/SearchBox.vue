@@ -154,8 +154,12 @@ export default {
       searching: false,
     }
   },
-  computed: {
-    searchTerms () {
+  methods: {
+    showSearch () {
+      this.clearSearch()
+      this.showingSearch = true
+    },
+    generateSearchTerms () {
       let title = this.query
       const type = this.query.match(/(?:^| )type:(matches|artist|album|song)(?:$| )/)
       const artist = this.query.match(/(?:^| )artist:\[(.+?)](?:$| )/)
@@ -185,12 +189,6 @@ export default {
 
       return terms
     },
-  },
-  methods: {
-    showSearch () {
-      this.clearSearch()
-      this.showingSearch = true
-    },
     async search () {
       if (!this.query.length) {
         return
@@ -201,7 +199,7 @@ export default {
       this.searching = true
 
       try {
-        this.results = await this.$store.dispatch('getBySearch', this.searchTerms)
+        this.results = await this.$store.dispatch('getBySearch', this.generateSearchTerms())
 
         if (this.results.length === 0) {
           this.noResults = true
