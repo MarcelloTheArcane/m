@@ -17,6 +17,9 @@ export default {
     RESTART_SONG (state, location) {
       state[location].currentTime = 0
     },
+    REMOVE_CACHE_ITEM (state, location) {
+      delete state[location]
+    },
   },
   actions: {
     async add ({ state, commit }, { location }) {
@@ -34,6 +37,22 @@ export default {
     },
     restart ({ commit }, { location }) {
       commit('RESTART_SONG', location)
+    },
+    runLRU ({ state, rootState, commit }) {
+      const toRemove = Object.keys(state)
+
+      // Whitelist every item in the playlist after
+      // the current playlist index minus an offset
+      rootState.playlist
+        .slice(rootState.playingIndex - 3)
+        .forEach(item => {
+          const indexInToRemove = toRemove.indexOf(item.location)
+          if (indexInToRemove !== -1) {
+            toRemove.splice(indexInToRemove, 1)
+          }
+        })
+      
+      toRemove.forEach(location => commit('REMOVE_CACHE_ITEM', location))
     },
   },
 }
