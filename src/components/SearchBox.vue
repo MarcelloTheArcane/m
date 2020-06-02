@@ -145,6 +145,10 @@ export default {
     }
   },
   methods: {
+    showSearch () {
+      this.clearSearch()
+      this.showingSearch = true
+    },
     async search () {
       if (!this.query.length) {
         return
