@@ -38,7 +38,7 @@ export default {
     restart ({ commit }, { location }) {
       commit('RESTART_SONG', location)
     },
-    runLRU ({ state, rootState, commit }) {
+    runLRU ({ state, rootState }) {
       const toRemove = Object.keys(state)
 
       // Whitelist every item in the playlist after
