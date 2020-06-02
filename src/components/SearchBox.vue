@@ -97,7 +97,7 @@
           v-for="(result, index) in results"
           :key="index"
           :result="result"
-          @select-option="clearSearch"
+          @select-link="clearSearch"
         />
       </div>
       <div v-else-if="noResults" class="text-center text-gray-800 bg-white p-2 rounded-b-lg shadow-md">
