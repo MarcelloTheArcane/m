@@ -74,11 +74,7 @@
 
     <!-- Showing search -->
     <div v-else>
-      <label :class="{
-        'rounded-t-lg': results.length || errorMessage || searching,
-        'rounded-lg shadow': !(results.length || errorMessage || searching),
-        'flex flex-row w-full text-gray-800 bg-white px-3 inline-block': true,
-      }">
+      <label class="rounded-t-lg flex flex-row w-full text-gray-800 bg-white px-3 inline-block">
         <button @click="clearSearch" class="inline focus:outline-none">
           <svg
             class="inline"
@@ -110,9 +106,39 @@
       <div v-if="errorMessage" class="text-center text-red-600 bg-white p-2 rounded-b-lg shadow-md">
         {{ errorMessage }}
       </div>
+
       <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md text-gray-800">
         Loading...
       </div>
+
+      <div v-else-if="!query.length" class="text-gray-800 bg-white px-4 py-2 rounded-b-lg shadow-md">
+        <pre class="bg-gray-200 code">Song name</pre><br />
+        <pre class="bg-gray-200 code">Song name exact:yes</pre><br />
+        <pre class="bg-gray-200 code">Song name artist:[Artist name]</pre><br />
+        <pre class="bg-gray-200 code">Song name artist:[Artist name] exact:yes</pre><br />
+        <pre class="bg-gray-200 code">Album name type:album</pre><br />
+      </div>
+
+      <div v-else-if="query !== oldQuery" class="text-gray-800 bg-white px-4 py-2 rounded-b-lg shadow-md">
+        <p>
+          <span v-if="searchTerms.type !== 'artist'">
+            "{{ searchTerms.title }}"
+          </span>
+          <span v-if="searchTerms.artist" class="bg-gray-200 code">
+            artist:{{ searchTerms.artist }}
+          </span>
+          <span v-if="searchTerms.type === 'artist'" class="bg-gray-200 code">
+            artist:{{ searchTerms.title }}
+          </span>
+          <span v-if="searchTerms.type" class="bg-gray-200 code">
+            type:{{ searchTerms.type }}
+          </span>
+          <span v-if="searchTerms.exact" class="bg-gray-200 code">
+            exact:{{ searchTerms.exact }}
+          </span>
+        </p>
+      </div>
+
       <div v-else-if="results.length" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md">
         <song-result
           v-for="(result, index) in results"
@@ -121,6 +147,7 @@
           @select-link="clearSearch"
         />
       </div>
+
       <div v-else-if="noResults" class="text-center text-gray-800 bg-white p-2 rounded-b-lg shadow-md">
         No results
       </div>
@@ -141,6 +168,7 @@ export default {
       showingSearch: false,
       noResults: false,
       query: '',
+      oldQuery: '',
       results: [],
       errorMessage: '',
       searching: false,
@@ -173,7 +201,7 @@ export default {
         title = title.replace(/type:(matches|artist|album|song)/g, '')
       }
 
-      terms.title = title.trim()
+      terms.title = title.replace(/\s+/g, ' ').trim()
 
       return terms
     },
@@ -188,6 +216,7 @@ export default {
         return
       }
 
+      this.oldQuery = this.query
       this.$refs.search.blur()
       this.searching = true
 
@@ -215,6 +244,15 @@ export default {
 </script>
 
 <style scoped>
+.code {
+  @apply rounded;
+  @apply my-1;
+  @apply mx-1;
+  @apply px-1;
+  @apply inline-block;
+  @apply font-mono;
+}
+
 .h-8\/12 {
   max-height: 66.666vh;
 }
