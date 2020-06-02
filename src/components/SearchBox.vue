@@ -20,6 +20,25 @@
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </a>
+      <router-link v-if="$route.fullPath !== '/'"
+        to="/"
+        class="focus:outline-none block"
+      >
+        <svg
+          class="m-2"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          stroke="currentColor"
+          stroke-width="2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </router-link>
 
       <span class="flex-1">
         &nbsp;
