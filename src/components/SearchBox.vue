@@ -55,7 +55,7 @@
     <div v-else>
       <label :class="{
         'rounded-t-lg': results.length || errorMessage || searching,
-        'rounded-lg': !(results.length || errorMessage || searching),
+        'rounded-lg shadow': !(results.length || errorMessage || searching),
         'flex flex-row w-full text-gray-800 bg-white px-3 inline-block': true,
       }">
         <button @click="clearSearch" class="inline focus:outline-none">
