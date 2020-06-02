@@ -1,6 +1,15 @@
 <template>
-  <div class="p-2 flex md:flex-row flex-col" style="background-color: #f1f3f4;">
-    <div class="flex flex-row lg:flex-1 lg:pl-6 md:pl-3" v-if="song && song.location">
+  <div class="flex md:flex-row flex-col bg-gray-200">
+    <progress
+      v-if="song && song.location"
+      min="0"
+      max="1"
+      :value="songProgress"
+      class="w-full h-1"
+      ref="progress"
+    />
+
+    <div class="m-2 flex flex-row lg:flex-1 lg:pl-6 md:pl-3" v-if="song && song.location">
       <img v-lazy="song.image" class="w-12 h-12 my-1">
       <div class="mx-2 flex-1 min-w-0 text-gray-800">
         <p class="text-sm truncate w-full">
@@ -14,6 +23,43 @@
         </p>
       </div>
     </div>
+
+    <div v-if="song" class="w-full flex-1 flex flex-row text-gray-800 pb-2 px-2">
+      <button @click="playPreviousSong" class="p-2 focus:outline-none">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <polygon points="11 19 2 12 11 5 11 19"></polygon>
+          <polygon points="22 19 13 12 22 5 22 19"></polygon>
+        </svg>
+      </button>
+
+      <button @click="togglePlaying" class="py-2 focus:outline-none">
+        <svg v-if="paused" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <svg v-else viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
+
+      <button @click="playNextSong" class="p-2 focus:outline-none">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <polygon points="13 19 22 12 13 5 13 19"></polygon>
+          <polygon points="2 19 11 12 2 5 2 19"></polygon>
+        </svg>
+      </button>
+
+      <span class="flex-1">&nbsp;</span>
+
+      <a :href="song.location" class="p-2 focus:outline-none" target="_blank">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="8 17 12 21 16 17"></polyline>
+          <line x1="12" y1="12" x2="12" y2="21"></line>
+          <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+        </svg>
+      </a>
+    </div>
+
     <div class="w-full flex-1" ref="audio">
     </div>
   </div>
@@ -31,14 +77,28 @@ export default {
   data () {
     return {
       nextSong: null,
+      songProgress: 0,
+
+      paused: true,
     }
+  },
+  computed: {
+    currentSong () {
+      if (this.song && this.song.location) {
+        return this.$store.state.audiocache[this.song.location]
+      } else {
+        return {}
+      }
+    },
   },
   methods: {
     playCurrentSong () {
+      this.paused = true
       const element = this.$store.state.audiocache[this.song.location]
       this.$refs.audio.innerHTML = ''
       this.$refs.audio.appendChild(element)
       element.play()
+      this.paused = false
 
       if ('MediaMetadata' in window) {
         element.addEventListener('play', () => {
@@ -61,6 +121,30 @@ export default {
         this.$store.dispatch('audiocache/preload', nextSong)
       }
     },
+    togglePlaying () {
+      this.updateProgress()
+
+      if (this.currentSong.paused) {
+        this.currentSong.play()
+        this.paused = false
+      } else {
+        this.currentSong.pause()
+        this.paused = true
+      }
+    },
+    playNextSong () {
+      this.$store.dispatch('nextSong')
+      this.updateProgress()
+    },
+    playPreviousSong () {
+      this.$store.dispatch('previousSong')
+      this.updateProgress()
+    },
+    updateProgress () {
+      if (this.song && this.song.location) {
+        this.songProgress = this.currentSong.currentTime / this.currentSong.duration
+      }
+    },
   },
   watch: {
     song (newSong) {
@@ -71,6 +155,9 @@ export default {
     },
   },
   mounted () {
+    this.updateProgress()
+    setInterval(this.updateProgress, 750)
+
     if (this.song && this.song.location) {
       this.playCurrentSong()
       this.loadNextSong()
