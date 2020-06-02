@@ -25,12 +25,20 @@ export default {
   actions: {
     async get ({ state, commit }, { path, params }) {
       const cachePath = btoa(path + JSON.stringify(params))
-      if (!state[cachePath]) {
-        const { data } = await proxy.get(path, { params })
-        commit('ADD_TO_CACHE', [ cachePath, data ])
+      try {
+        if (!state[cachePath]) {
+          const { data } = await proxy.get(path, { params })
+          commit('ADD_TO_CACHE', [ cachePath, data ])
+        }
+  
+        return state[cachePath]
+      } catch (err) {
+        if (err.message === 'Network Error') {
+          return null
+        } else {
+          throw new Error(err.message)
+        }
       }
-
-      return state[cachePath]
     },
   },
 }
