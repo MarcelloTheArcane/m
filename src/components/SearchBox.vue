@@ -132,7 +132,7 @@
 import SongResult from '@/components/SongResult.vue'
 
 export default {
-  name: 'SearchPage',
+  name: 'SearchBox',
   components: {
     SongResult,
   },
