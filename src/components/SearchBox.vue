@@ -89,9 +89,6 @@
       <div v-if="errorMessage" class="text-center text-red-600 bg-white p-2 rounded-b-lg shadow-md">
         {{ errorMessage }}
       </div>
-      <div v-else-if="noResults" class="text-center text-gray-800 bg-white p-2 rounded-b-lg shadow-md">
-        No results
-      </div>
       <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md text-gray-800">
         Loading...
       </div>
@@ -102,6 +99,9 @@
           :result="result"
           @select-option="clearSearch"
         />
+      </div>
+      <div v-else-if="noResults" class="text-center text-gray-800 bg-white p-2 rounded-b-lg shadow-md">
+        No results
       </div>
     </div>
   </div>
