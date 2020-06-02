@@ -111,15 +111,7 @@
         Loading...
       </div>
 
-      <div v-else-if="query !== oldQuery" class="text-gray-800 bg-white px-4 py-2 rounded-b-lg shadow-md">
-        <pre class="bg-gray-200 code">Song name</pre><br />
-        <pre class="bg-gray-200 code">Song name exact:yes</pre><br />
-        <pre class="bg-gray-200 code">Song name artist:[Artist name]</pre><br />
-        <pre class="bg-gray-200 code">Song name artist:[Artist name] exact:yes</pre><br />
-        <pre class="bg-gray-200 code">Album name type:album</pre><br />
-      </div>
-
-      <div v-else-if="results.length" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md">
+      <div v-else-if="results.length && query === oldQuery" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md">
         <song-result
           v-for="(result, index) in results"
           :key="index"
@@ -130,6 +122,14 @@
 
       <div v-else-if="noResults" class="text-center text-gray-800 bg-white p-2 rounded-b-lg shadow-md">
         No results
+      </div>
+
+      <div v-else class="text-gray-800 bg-white px-4 py-2 rounded-b-lg shadow-md">
+        <pre class="bg-gray-200 code">Song name</pre><br />
+        <pre class="bg-gray-200 code">Song name exact:yes</pre><br />
+        <pre class="bg-gray-200 code">Song name artist:[Artist name]</pre><br />
+        <pre class="bg-gray-200 code">Song name artist:[Artist name] exact:yes</pre><br />
+        <pre class="bg-gray-200 code">Album name type:album</pre><br />
       </div>
     </div>
   </div>
