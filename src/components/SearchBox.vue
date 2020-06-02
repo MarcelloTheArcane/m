@@ -151,6 +151,7 @@ export default {
       }
 
       this.noResults = false
+      this.$refs.search.blur()
       this.searching = true
       try {
         this.results = await this.$store.dispatch('getBySearch', {
