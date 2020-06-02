@@ -22,10 +22,10 @@
     <div v-if="expanded" class="mb-2 flex justify-around">
       <button
         v-if="isCurrentlyPlaying"
-        @click="reload" 
+        @click="restart" 
         class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-200 text-gray-800"
       >
-        Reload
+        Play
       </button>
       <button
         v-else
@@ -98,9 +98,9 @@ export default {
       this.handleSelectOption()
       this.$store.dispatch('setPlaylistIndex', this.index)
     },
-    reload () {
+    restart () {
       this.handleSelectOption()
-      this.$store.dispatch('audiocache/reload', this.result)
+      this.$store.dispatch('audiocache/restart', this.result)
     },
     remove () {
       this.handleSelectOption()
