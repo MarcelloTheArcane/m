@@ -121,19 +121,19 @@
 
       <div v-else-if="query !== oldQuery" class="text-gray-800 bg-white px-4 py-2 rounded-b-lg shadow-md">
         <p>
-          <span v-if="searchTerms.type !== 'artist'">
+          <span v-show="searchTerms.type !== 'artist'">
             "{{ searchTerms.title }}"
           </span>
-          <span v-if="searchTerms.artist" class="bg-gray-200 code">
+          <span v-show="searchTerms.artist" class="bg-gray-200 code">
             artist:{{ searchTerms.artist }}
           </span>
-          <span v-if="searchTerms.type === 'artist'" class="bg-gray-200 code">
+          <span v-show="searchTerms.type === 'artist'" class="bg-gray-200 code">
             artist:{{ searchTerms.title }}
           </span>
-          <span v-if="searchTerms.type" class="bg-gray-200 code">
+          <span v-show="searchTerms.type" class="bg-gray-200 code">
             type:{{ searchTerms.type }}
           </span>
-          <span v-if="searchTerms.exact" class="bg-gray-200 code">
+          <span v-show="searchTerms.exact" class="bg-gray-200 code">
             exact:{{ searchTerms.exact }}
           </span>
         </p>
