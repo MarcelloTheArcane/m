@@ -12,8 +12,10 @@ export default {
       state[location].style.width = '100%'
     },
     RELOAD_SONG (state, location) {
-      console.log(state, location, state[location])
       state[location].load()
+    },
+    RESTART_SONG (state, location) {
+      state[location].currentTime = 0
     },
   },
   actions: {
@@ -27,9 +29,11 @@ export default {
         state[location].load()
       }
     },
-    async reload ({ commit }, { location }) {
-      console.log(arguments)
+    reload ({ commit }, { location }) {
       commit('RELOAD_SONG', location)
+    },
+    restart ({ commit }, { location }) {
+      commit('RESTART_SONG', location)
     },
   },
 }
