@@ -121,9 +121,6 @@
 
       <div v-else-if="query !== oldQuery" class="text-gray-800 bg-white px-4 py-2 rounded-b-lg shadow-md">
         <p>
-          <span v-show="searchTerms.type !== 'artist'">
-            "{{ searchTerms.title }}"
-          </span>
           <span v-show="searchTerms.artist" class="bg-gray-200 code">
             artist:{{ searchTerms.artist }}
           </span>
