@@ -130,6 +130,13 @@ export default {
         })
       })
 
+      element.addEventListener('progress', (event) => {
+        const audioElement = event.target
+        const buffered = (audioElement.buffered.end(0) * 100) / audioElement.duration
+        document.documentElement.style
+          .setProperty('--progress-buffered', buffered.toFixed(3) + '%')
+      })
+
       element.addEventListener('pause', () => {
         this.paused = true
       })
@@ -204,6 +211,7 @@ export default {
 <style scoped>
 @media (prefers-color-scheme: light) {
   progress[value]::-webkit-progress-bar {
+    background-image: linear-gradient(90deg, #FFFFFF00 0%, #FFFFFF var(--progress-buffered), #FFFFFFAA var(--progress-buffered), #FFFFFFAA 100%);
     background-color: var(--colour-bg-light);
   }
 
@@ -214,6 +222,7 @@ export default {
 
 @media (prefers-color-scheme: dark) {
   progress[value]::-webkit-progress-bar {
+    background-image: linear-gradient(90deg, #FFFFFF55 0%, #FFFFFF55 var(--progress-buffered), #FFFFFF00 var(--progress-buffered), #FFFFFF00 100%);
     background-color: var(--colour-bg-dark);
   }
   

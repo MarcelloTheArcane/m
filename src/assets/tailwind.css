@@ -15,6 +15,8 @@
 
   --bg-white-dark: #000000;
   --bg-white-light: #ffffff;
+
+  --progress-buffered: 0%;
 }
 
 @media (prefers-color-scheme: light) {
