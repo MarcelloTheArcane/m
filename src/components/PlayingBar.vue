@@ -119,16 +119,19 @@ export default {
       element.play()
       this.paused = false
 
-      if ('MediaMetadata' in window) {
-        element.addEventListener('play', () => {
-          navigator.mediaSession.metadata = new window.MediaMetadata({
-            title: this.song.title,
-            artist: this.song.creator,
-            album: this.song.album,
-            artwork: [{ src: this.song.image }],
-          })
+      element.addEventListener('play', () => {
+        this.paused = false
+        navigator.mediaSession.metadata = new window.MediaMetadata({
+          title: this.song.title,
+          artist: this.song.creator,
+          album: this.song.album,
+          artwork: [{ src: this.song.image }],
         })
-      }
+      })
+
+      element.addEventListener('pause', () => {
+        this.paused = true
+      })
 
       element.addEventListener('ended', () => {
         this.$store.dispatch('nextSong')
