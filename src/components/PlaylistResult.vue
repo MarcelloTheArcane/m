@@ -42,6 +42,12 @@
         Play
       </button>
       <button
+        @click="reload" 
+        class="block w-full px-2 py-2 text-left text-gray-800"
+      >
+        Reload
+      </button>
+      <button
         @click="remove" 
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
@@ -117,6 +123,10 @@ export default {
     play () {
       this.handleSelectOption()
       this.$store.dispatch('setPlaylistIndex', this.index)
+    },
+    reload () {
+      this.handleSelectOption()
+      this.$store.dispatch('audiocache/reload', this.result)
     },
     restart () {
       this.handleSelectOption()
