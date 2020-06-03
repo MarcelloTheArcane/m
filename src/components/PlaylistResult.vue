@@ -15,7 +15,7 @@
           {{ result.creator }}
         </p>
       </div>
-      <button @click="toggleExpanded" class="focus:outline-none p-3">
+      <button @click="toggleExpanded" class="focus:outline-none p-3 text-gray-800">
         <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="1"></circle>
           <circle cx="12" cy="5" r="1"></circle>
@@ -30,41 +30,41 @@
       <button
         v-if="isCurrentlyPlaying"
         @click="restart" 
-        class="block w-full px-2 py-2 text-left"
+        class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Play
       </button>
       <button
         v-else
         @click="play" 
-        class="block w-full px-2 py-2 text-left"
+        class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Play
       </button>
       <button
         @click="remove" 
-        class="block w-full px-2 py-2 text-left"
+        class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Remove
       </button>
       <router-link
         @click.native="handleSelectOption()"
         :to="`/artist/${songData.artistId[0]}`" 
-        class="block w-full px-2 py-2 text-left"
+        class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Artist
       </router-link>
       <router-link
         @click.native="handleSelectOption()"
         :to="`/album/${songData.albumId}`" 
-        class="block w-full px-2 py-2 text-left"
+        class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Album
       </router-link>
-      <button 
+      <button
         v-if="canShare"
         @click="shareSong"
-        class="block w-full px-2 py-2 text-left"
+        class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Share
       </button>
