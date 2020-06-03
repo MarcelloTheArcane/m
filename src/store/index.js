@@ -211,9 +211,9 @@ export default new Vuex.Store({
     },
     nextSong ({ commit, dispatch, getters, state }) {
       if (getters.hasNextSong) {
-        commit('NEXT_SONG')
         const nextSong = state.playlist[state.playingIndex + 1]
         dispatch('audiocache/preload', nextSong)
+        commit('NEXT_SONG')
       }
       dispatch('audiocache/runLRU')
     },
