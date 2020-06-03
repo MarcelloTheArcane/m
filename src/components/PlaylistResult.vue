@@ -78,6 +78,11 @@ export default {
       expanded: false,
     }
   },
+  computed: {
+    isCurrentlyPlaying () {
+      return this.index === this.$store.state.playingIndex
+    },
+  },
   methods: {
     async toggleExpanded () {
       try {
@@ -109,11 +114,6 @@ export default {
     handleSelectOption () {
       this.expanded = false
       this.$emit('select-option')
-    },
-  },
-  computed: {
-    isCurrentlyPlaying () {
-      return this.index === this.$store.state.playingIndex
     },
   },
 }
