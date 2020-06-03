@@ -51,7 +51,26 @@
 
       <span class="flex-1">&nbsp;</span>
 
-      <a :href="song.location" class="p-2 focus:outline-none" target="_blank">
+      <button
+        v-if="$store.getters['favourites/locations'].includes(song.location)"
+        @click="$store.dispatch('favourites/delete', song)"
+        class="p-2 focus:outline-none"
+      >
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </button>
+      <button
+        v-else
+        @click="$store.dispatch('favourites/add', song)"
+        class="p-2 focus:outline-none"
+      >
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </button>
+
+      <a :href="song.location" class="p-2 focus:outline-none" :download="song.title">
         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="8 17 12 21 16 17"></polyline>
           <line x1="12" y1="12" x2="12" y2="21"></line>
