@@ -11,6 +11,10 @@ export default {
       state[location].controls = false
     },
     RELOAD_SONG (state, location) {
+      state[location] = new Audio()
+      state[location].preload = 'none'
+      state[location].src = location
+      state[location].controls = false
       state[location].load()
     },
     RESTART_SONG (state, location) {
