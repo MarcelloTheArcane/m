@@ -16,6 +16,10 @@ export default {
       const cachePath = btoa(url)
       if (!state[cachePath]) {
         const data = colourThief.getPalette(image, 2)
+        if (!data) {
+          return
+        }
+
         const [light, dark] = data.map(calculateGreyscale).sort(byGreyscale)
 
         commit('ADD_TO_CACHE', [
@@ -53,6 +57,10 @@ export default {
       const cachePath = btoa(url)
       if (!state[cachePath]) {
         const data = colourThief.getPalette(image, 2)
+        if (!data) {
+          return '#EDF2F7'
+        }
+
         const [light, dark] = data.map(calculateGreyscale).sort(byGreyscale)
 
         commit('ADD_TO_CACHE', [
