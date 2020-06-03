@@ -1,6 +1,6 @@
 <template>
   <div :class="{
-    'bg-yellow-300': highlightIndex,
+    'bg-yellow': highlightIndex,
     'px-2 relative': true,
   }">
     <div class="flex flex-row items-center">
