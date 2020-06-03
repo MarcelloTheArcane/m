@@ -1,6 +1,6 @@
 <template>
-  <div class="mx-2">
-    <div class="flex flex-row items-center" @click="toggleExpanded">
+  <div class="px-2 relative">
+    <div class="flex flex-row items-center">
       <img v-lazy="result.image" class="w-16 h-16">
       <div
         :class="{
@@ -15,42 +15,49 @@
           {{ result.creator }}
         </p>
       </div>
+      <button @click="toggleExpanded" class="focus:outline-none p-3">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="1"></circle>
+          <circle cx="12" cy="5" r="1"></circle>
+          <circle cx="12" cy="19" r="1"></circle>
+        </svg>
+      </button>
     </div>
-    <div v-if="loading" class="mb-2 flex justify-around text-gray-800">
+    <div v-if="loading"  class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 pr-5 mt-1 mr-12 rounded z-20">
       Loading...
     </div>
-    <div v-if="expanded" class="mb-2 flex justify-around">
+    <div v-if="expanded" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
       <button
         v-if="isCurrentlyPlaying"
         @click="restart" 
-        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-200 text-gray-800"
+        class="block w-full px-2 py-2 text-left"
       >
         Play
       </button>
       <button
         v-else
         @click="play" 
-        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-200 text-gray-800"
+        class="block w-full px-2 py-2 text-left"
       >
         Play
       </button>
       <button
         @click="remove" 
-        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-200 text-gray-800"
+        class="block w-full px-2 py-2 text-left"
       >
         Remove
       </button>
       <router-link
         @click.native="handleSelectOption()"
         :to="`/artist/${songData.artistId[0]}`" 
-        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-200 text-gray-800"
+        class="block w-full px-2 py-2 text-left"
       >
         Artist
       </router-link>
       <router-link
         @click.native="handleSelectOption()"
         :to="`/album/${songData.albumId}`" 
-        class="flex-1 border-gray-500 border text-center mx-2 py-2 bg-gray-200 text-gray-800"
+        class="block w-full px-2 py-2 text-left"
       >
         Album
       </router-link>
