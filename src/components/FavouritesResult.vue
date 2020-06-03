@@ -2,7 +2,10 @@
   <div class="mx-2">
     <div class="flex flex-row items-center" @click="toggleExpanded">
       <img v-lazy="result.image" class="w-16 h-16">
-      <div class="ml-2 border-t border-gray-500 px-1 py-5 h-full min-w-0 w-full">
+      <div :class="{
+        'font-bold': isCurrentlyPlaying,
+        'ml-2 border-t border-gray-500 px-1 py-5 h-full min-w-0 w-full': true
+      }">
         <p class="text-sm text-gray-800 truncate">
           {{ result.title }}
         </p>
@@ -60,6 +63,15 @@ export default {
       expanded: false,
       loading: false,
     }
+  },
+  computed: {
+    isCurrentlyPlaying () {
+      if (!(this.result && this.$store.getters.nowPlaying)) {
+        return false
+      }
+
+      return this.result.location === this.$store.getters.nowPlaying.location
+    },
   },
   methods: {
     async toggleExpanded () {
