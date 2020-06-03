@@ -74,6 +74,20 @@
       >
         Share
       </button>
+      <button
+        v-if="index !== 0"
+        @click="moveUp"
+        class="block w-full px-2 py-2 text-left text-gray-800"
+      >
+        Move up
+      </button>
+      <button
+        v-if="index !== $store.state.playlist.length - 1"
+        @click="moveDown"
+        class="block w-full px-2 py-2 text-left text-gray-800"
+      >
+        Move down
+      </button>
     </div>
   </div>
 </template>
@@ -142,6 +156,14 @@ export default {
         title: this.songData.title,
         url: `http://ec2-34-247-52-128.eu-west-1.compute.amazonaws.com:8080/#/album/${this.songData.albumId}/${this.songData.trackNumber}`
       })
+    },
+    moveUp () {
+      this.handleSelectOption()
+      this.$store.dispatch('moveSongUp', this.index)
+    },
+    moveDown () {
+      this.handleSelectOption()
+      this.$store.dispatch('moveSongDown', this.index)
     },
     handleSelectOption () {
       this.expanded = false
