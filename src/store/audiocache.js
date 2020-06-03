@@ -9,7 +9,6 @@ export default {
       state[location].preload = 'none'
       state[location].src = location
       state[location].controls = false
-      state[location].style.width = '100%'
     },
     RELOAD_SONG (state, location) {
       state[location].load()
