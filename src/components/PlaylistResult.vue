@@ -61,6 +61,13 @@
       >
         Album
       </router-link>
+      <button 
+        v-if="canShare"
+        @click="shareSong"
+        class="block w-full px-2 py-2 text-left"
+      >
+        Share
+      </button>
     </div>
   </div>
 </template>
@@ -83,6 +90,7 @@ export default {
       songData: null,
       loading: false,
       expanded: false,
+      canShare: !!navigator.share,
     }
   },
   computed: {
@@ -117,6 +125,13 @@ export default {
     remove () {
       this.handleSelectOption()
       this.$store.dispatch('removeFromPlaylist', this.index)
+    },
+    shareSong () {
+      this.handleSelectOption()
+      navigator.share({
+        title: this.songData.title,
+        url: `http://ec2-34-247-52-128.eu-west-1.compute.amazonaws.com:8080/#/album/${this.songData.albumId}/${this.songData.trackNumber}`
+      })
     },
     handleSelectOption () {
       this.expanded = false
