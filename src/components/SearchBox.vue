@@ -161,7 +161,7 @@ export default {
     },
     generateSearchTerms () {
       let title = this.query
-      const type = this.query.match(/(?:^| )type:(matches|artist|album|song)(?:$| )/)
+      const type = this.query.match(/(?:^| )type:(matches|artist|album)(?:$| )/)
       const artist = this.query.match(/(?:^| )artist:\[(.+?)](?:$| )/)
       const exact = this.query.match(/(?:^| )exact:(yes|no)(?:$| )/)
 
@@ -182,7 +182,7 @@ export default {
 
       if (type) {
         terms.type = type[1]
-        title = title.replace(/type:(matches|artist|album|song)/g, '')
+        title = title.replace(/type:(matches|artist|album)/g, '')
       }
 
       terms.title = title.replace(/\s+/g, ' ').trim()
