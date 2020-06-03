@@ -287,6 +287,10 @@ export default new Vuex.Store({
         ? playlist[playingIndex]
         : null
     },
+    cannotSafelyReload ({ playlist }) {
+      return !!playlist.length &&
+        (window.location.origin !== 'http://localhost:8080')
+    },
   },
   modules: {
     cache,
