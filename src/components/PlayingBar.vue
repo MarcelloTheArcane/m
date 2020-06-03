@@ -32,7 +32,11 @@
         </svg>
       </button>
 
-      <button @click="togglePlaying" class="py-2 focus:outline-none">
+      <button
+        @click="togglePlaying"
+        class="py-2 focus:outline-none"
+        :style="`opacity: ${playDisabled ? 0.6 : 1}`"
+      >
         <svg v-if="paused" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
           <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>
@@ -99,6 +103,7 @@ export default {
       songProgress: 0,
 
       paused: true,
+      playDisabled: false,
     }
   },
   computed: {
@@ -112,13 +117,16 @@ export default {
   },
   methods: {
     playCurrentSong () {
-      this.paused = true
+      this.playDisabled = true
       const element = this.$store.state.audiocache[this.song.location]
       this.$refs.audio.innerHTML = ''
       this.$refs.audio.appendChild(element)
-      element.play()
-      this.updateProgress()
-      this.paused = false
+
+      element.play().then(() => {
+        this.playDisabled = false
+        this.paused = false
+        this.updateProgress()
+      })
 
       element.addEventListener('play', () => {
         this.paused = false
@@ -157,18 +165,18 @@ export default {
       if (this.currentSong.paused) {
         this.currentSong.play()
         this.paused = false
-      } else {
+      } else if (!this.playDisabled) {
         this.currentSong.pause()
         this.paused = true
       }
     },
     playNextSong () {
-      this.updateProgress()
+      this.paused = false
       this.$store.dispatch('nextSong')
       this.updateProgress()
     },
     playPreviousSong () {
-      this.updateProgress()
+      this.paused = false
       this.$store.dispatch('previousSong')
       this.updateProgress()
     },
