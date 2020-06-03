@@ -35,8 +35,6 @@
 </template>
 
 <script>
-import ColourThief from 'colorthief/dist/color-thief.mjs'
-
 import SongResult from '@/components/SongResult.vue'
 import ButtonList from '@/components/ButtonList.vue'
 
@@ -62,6 +60,14 @@ export default {
       console.error(err)
       this.errorMessage = err.message
     }
+
+    const image = this.$refs.image
+    image.crossOrigin = 'Anonymous'
+
+    this.themeColour = this.$store.dispatch('colourcache/getTheme', {
+      image,
+      path: this.albumData.image,
+    })
   },
   computed: {
     albumData () {
@@ -83,39 +89,17 @@ export default {
         newList: this.results,
       })
     },
-    toHex (colourArray) {
-      return colourArray
-        .map(value => value.toString(16).padStart(2, '0'))
-        .join('')
-    },
     getColour () {
-      const colourThief = new ColourThief()
-      const img = this.$refs.image
-      img.crossOrigin = 'Anonymous'
-
-      const colour = colourThief.getPalette(img, 2)
-
-      this.themeColour = `#${this.toHex(colour[0])}`
-      document.documentElement.style.setProperty('--colour-fg-light', `#${this.toHex(colour[0])}`)
-      document.documentElement.style.setProperty('--colour-bg-light', `#${this.toHex(colour[1])}`)
-      document.documentElement.style.setProperty('--colour-fg-dark', `#${this.toHex(colour[1])}`)
-      document.documentElement.style.setProperty('--colour-bg-dark', `#${this.toHex(colour[0])}`)
+      const image = this.$refs.image
+      image.crossOrigin = 'Anonymous'
+      this.$store.dispatch('colourcache/load', {
+        image,
+        url: this.albumData.image,
+      })
     },
   },
   beforeDestroy () {
-    const defaultColourOneLight = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-fg-light')
-    const defaultColourTwoLight = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-bg-light')
-    const defaultColourOneDark = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-fg-dark')
-    const defaultColourTwoDark = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-bg-dark')
-
-    document.documentElement.style.setProperty('--colour-fg-light', defaultColourOneLight)
-    document.documentElement.style.setProperty('--colour-bg-light', defaultColourTwoLight)
-    document.documentElement.style.setProperty('--colour-fg-dark', defaultColourOneDark)
-    document.documentElement.style.setProperty('--colour-bg-dark', defaultColourTwoDark)
+    this.$store.dispatch('colourcache/unload')
   },
   metaInfo () {
     return {

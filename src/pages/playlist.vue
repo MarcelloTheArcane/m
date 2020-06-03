@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import ColourThief from 'colorthief/dist/color-thief.mjs'
-
 import PlaylistResult from '@/components/PlaylistResult.vue'
 
 export default {
@@ -59,43 +57,21 @@ export default {
     }
   },
   methods: {
-    toHex (colourArray) {
-      return colourArray
-        .map(value => value.toString(16).padStart(2, '0'))
-        .join('')
-    },
     getColour () {
       if (!this.$store.getters.nowPlaying.image) return
 
-      const colourThief = new ColourThief()
-      const img = this.$refs.image
-      img.crossOrigin = 'Anonymous'
+      const image = this.$refs.image
+      image.crossOrigin = 'Anonymous'
+      this.$store.dispatch('colourcache/load', {
+        image,
+        url: this.$store.getters.nowPlaying.image,
+      })
 
-      const colour = colourThief.getPalette(img, 2)
-      if (!colour) return
-
-      this.themeColour = `#${this.toHex(colour[0])}`
-
-      document.documentElement.style.setProperty('--colour-fg-light', `#${this.toHex(colour[0])}`)
-      document.documentElement.style.setProperty('--colour-bg-light', `#${this.toHex(colour[1])}`)
-      document.documentElement.style.setProperty('--colour-fg-dark', `#${this.toHex(colour[1])}`)
-      document.documentElement.style.setProperty('--colour-bg-dark', `#${this.toHex(colour[0])}`)
+      this.themeColour = this.$store.dispatch('colourcache/getTheme')
     },
   },
   beforeDestroy () {
-    const defaultColourOneLight = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-fg-light')
-    const defaultColourTwoLight = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-bg-light')
-    const defaultColourOneDark = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-fg-dark')
-    const defaultColourTwoDark = getComputedStyle(document.documentElement)
-      .getPropertyValue('--default-colour-bg-dark')
-
-    document.documentElement.style.setProperty('--colour-fg-light', defaultColourOneLight)
-    document.documentElement.style.setProperty('--colour-bg-light', defaultColourTwoLight)
-    document.documentElement.style.setProperty('--colour-fg-dark', defaultColourOneDark)
-    document.documentElement.style.setProperty('--colour-bg-dark', defaultColourTwoDark)
+    this.$store.dispatch('colourcache/unload')
   },
   metaInfo () {
     return {
