@@ -117,6 +117,7 @@ export default {
       this.$refs.audio.innerHTML = ''
       this.$refs.audio.appendChild(element)
       element.play()
+      this.updateProgress()
       this.paused = false
 
       element.addEventListener('play', () => {
@@ -155,10 +156,12 @@ export default {
       }
     },
     playNextSong () {
+      this.updateProgress()
       this.$store.dispatch('nextSong')
       this.updateProgress()
     },
     playPreviousSong () {
+      this.updateProgress()
       this.$store.dispatch('previousSong')
       this.updateProgress()
     },
