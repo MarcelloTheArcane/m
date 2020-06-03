@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 import cache from './cache.js'
 import audiocache from './audiocache.js'
-import colourcache from './audiocache.js'
+import colourcache from './colourcache.js'
 
 Vue.use(Vuex)
 
