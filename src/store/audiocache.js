@@ -31,7 +31,7 @@ export default {
       const { location } = song
 
       if (!state[location]) {
-        dispatch('audiocache/add', song)
+        dispatch('add', song)
       }
 
       if (state[location].readyState === 0) {
