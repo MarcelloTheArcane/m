@@ -67,7 +67,10 @@ export default {
         url: this.$store.getters.nowPlaying.image,
       })
 
-      this.themeColour = this.$store.dispatch('colourcache/getTheme')
+      this.themeColour = this.$store.dispatch('colourcache/getTheme', {
+        image,
+        url: this.$store.getters.nowPlaying.image,
+      })
     },
   },
   beforeDestroy () {
