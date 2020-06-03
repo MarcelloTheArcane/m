@@ -45,6 +45,14 @@ export default new Vuex.Store({
     PREVIOUS_SONG (state) {
       state.playingIndex = state.playingIndex - 1
     },
+    MOVE_SONG_UP (state, index) {
+      const removed = state.playlist.splice(index, 1)
+      state.playlist.splice(index - 1, 0, ...removed)
+    },
+    MOVE_SONG_DOWN (state, index) {
+      const removed = state.playlist.splice(index, 1)
+      state.playlist.splice(index + 1, 0, ...removed)
+    },
   },
   actions: {
     async getNewStationBySearch ({ dispatch }, { type, title }) {
@@ -242,6 +250,18 @@ export default new Vuex.Store({
     removeFromPlaylist ({ commit, dispatch }, index) {
       commit('REMOVE_FROM_PLAYLIST', index)
       dispatch('audiocache/runLRU')
+    },
+    moveSongUp ({ commit }, index) {
+      if (index === 0) {
+        return
+      }
+      commit('MOVE_SONG_UP', index)
+    },
+    moveSongDown ({ state, commit }, index) {
+      if (index === state.playlist.length - 1) {
+        return
+      }
+      commit('MOVE_SONG_DOWN', index)
     },
   },
   getters: {
