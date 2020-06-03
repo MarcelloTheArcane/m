@@ -58,6 +58,12 @@
       >
         Share
       </button>
+      <button
+        @click="remove" 
+        class="block w-full px-2 py-2 text-left"
+      >
+        Remove
+      </button>
     </div>
   </div>
 </template>
@@ -111,6 +117,10 @@ export default {
     playNext () {
       this.handleSelectOption()
       this.$store.dispatch('setPlayNext', [this.result])
+    },
+    remove () {
+      this.handleSelectOption()
+      this.$store.dispatch('favourites/delete', this.result)
     },
     shareSong () {
       this.handleSelectOption()
