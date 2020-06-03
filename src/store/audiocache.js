@@ -27,7 +27,13 @@ export default {
         commit('ADD_TO_CACHE', location)
       }
     },
-    async preload ({ state }, { location }) {
+    async preload ({ state, dispatch }, song) {
+      const { location } = song
+
+      if (!state[location]) {
+        dispatch('audiocache/add', song)
+      }
+
       if (state[location].readyState === 0) {
         state[location].load()
       }
