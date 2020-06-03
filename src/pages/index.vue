@@ -36,8 +36,6 @@ export default {
     }
   },
   async mounted () {
-    // this.songs = await this.$store.dispatch('getTopSongs')
-    // this.songs = await this.$store.dispatch('getAllStations')
     try {
       this.songs = await this.$store.dispatch('getListenNow')
     } catch (err) {
