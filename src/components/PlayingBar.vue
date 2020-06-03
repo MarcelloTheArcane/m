@@ -70,7 +70,7 @@
         </svg>
       </button>
 
-      <a :href="song.location" class="p-2 focus:outline-none" :download="song.title" target="_blank">
+      <a :href="song.location" class="p-2 focus:outline-none" :download="song.title">
         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="8 17 12 21 16 17"></polyline>
           <line x1="12" y1="12" x2="12" y2="21"></line>
