@@ -201,6 +201,7 @@ export default new Vuex.Store({
     //   })
     // },
     setPlayNow ({ commit, dispatch }, newList) {
+      dispatch('audiocache/preload', newList[0])
       commit('SET_PLAY_NOW', newList)
       dispatch('audiocache/runLRU')
     },
