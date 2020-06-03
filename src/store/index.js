@@ -230,7 +230,7 @@ export default new Vuex.Store({
       }
       dispatch('audiocache/runLRU')
     },
-    previousSong ({ commit }) {
+    previousSong ({ commit, dispatch, state, getters }) {
       if (getters.hasPreviousSong) {
         const previousSong = state.playlist[state.playingIndex - 1]
         dispatch('audiocache/reload', previousSong)
