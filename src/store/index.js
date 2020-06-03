@@ -208,26 +208,34 @@ export default new Vuex.Store({
     //     },
     //   })
     // },
+
     setPlayNow ({ commit, dispatch }, newList) {
       dispatch('audiocache/preload', newList[0])
+      dispatch('audiocache/reload', newList[0])
       commit('SET_PLAY_NOW', newList)
       dispatch('audiocache/runLRU')
     },
     setPlayNext ({ commit, dispatch }, newList) {
       commit('SET_PLAY_NEXT', newList)
       dispatch('audiocache/preload', newList[0])
+      dispatch('audiocache/reload', newList[0])
       dispatch('audiocache/runLRU')
     },
     nextSong ({ commit, dispatch, getters, state }) {
       if (getters.hasNextSong) {
         const nextSong = state.playlist[state.playingIndex + 1]
         dispatch('audiocache/preload', nextSong)
+        dispatch('audiocache/reload', nextSong)
         commit('NEXT_SONG')
       }
       dispatch('audiocache/runLRU')
     },
     previousSong ({ commit }) {
-      commit('PREVIOUS_SONG')
+      if (getters.hasPreviousSong) {
+        const previousSong = state.playlist[state.playingIndex - 1]
+        dispatch('audiocache/reload', previousSong)
+        commit('PREVIOUS_SONG')
+      }
     },
     setPlaylist ({ commit, dispatch }, newList) {
       commit('SET_PLAYLIST', newList)
@@ -236,15 +244,18 @@ export default new Vuex.Store({
     },
     setPlaylistIndex ({ state, commit, dispatch }, index) {
       commit('SET_PLAYLIST_INDEX', index)
+      dispatch('audiocache/reload', state.playlist[index])
       const nextSong = state.playlist[index + 1]
       if (nextSong) {
         dispatch('audiocache/preload', nextSong)
+        dispatch('audiocache/reload', nextSong)
       }
       dispatch('audiocache/runLRU')
     },
     addToPlaylist ({ commit, dispatch }, { index, newList }) {
       commit('ADD_TO_PLAYLIST', { index, newList })
       dispatch('audiocache/preload', newList[0])
+      dispatch('audiocache/reload', newList[0])
       dispatch('audiocache/runLRU')
     },
     removeFromPlaylist ({ commit, dispatch }, index) {
