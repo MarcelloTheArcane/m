@@ -1,5 +1,5 @@
 <template>
-  <div class="flex md:flex-row flex-col bg-gray-200">
+  <div class="flex md:flex-row flex-col colour-theme">
     <progress
       v-if="song && song.location"
       min="0"
@@ -11,7 +11,7 @@
 
     <div class="m-2 flex flex-row lg:flex-1 lg:pl-6 md:pl-3" v-if="song && song.location">
       <img v-lazy="song.image" class="w-12 h-12 my-1">
-      <div class="mx-2 flex-1 min-w-0 text-gray-800">
+      <div class="mx-2 flex-1 min-w-0">
         <p class="text-sm truncate w-full">
           {{ song.title }}
         </p>
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div v-if="song" class="w-full flex-1 flex flex-row text-gray-800 pb-2 px-2">
+    <div v-if="song" class="w-full flex-1 flex flex-row pb-2 px-2">
       <button @click="playPreviousSong" class="p-2 focus:outline-none">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
           <polygon points="11 19 2 12 11 5 11 19"></polygon>

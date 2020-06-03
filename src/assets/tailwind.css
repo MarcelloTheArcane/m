@@ -18,7 +18,7 @@
 }
 
 @media (prefers-color-scheme: light) {
-  body {
+  body, .colour-theme {
     background-color: var(--colour-bg-light);
     color: var(--colour-fg-light);
     transition: background-color 0.2s ease;
@@ -37,7 +37,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
+  body, .colour-theme {
     background-color: var(--colour-bg-dark);
     color: var(--colour-fg-dark);
     transition: background-color 0.2s ease;
