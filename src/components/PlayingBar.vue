@@ -219,7 +219,7 @@ export default {
 <style scoped>
 @media (prefers-color-scheme: light) {
   progress[value]::-webkit-progress-bar {
-    background-image: linear-gradient(90deg, #FFFFFF00 0%, #FFFFFF var(--progress-buffered), #FFFFFFAA var(--progress-buffered), #FFFFFFAA 100%);
+    background-image: linear-gradient(90deg, #FFFFFF00 0%, #FFFFFF00 var(--progress-buffered), #FFFFFFAA var(--progress-buffered), #FFFFFFAA 100%);
     background-color: var(--colour-bg-light);
   }
 
