@@ -15,11 +15,6 @@ export default {
       ],
     }
   },
-  mounted () {
-    window.onbeforeunload = () => {
-      return this.$store.getters.cannotSafelyReload || undefined
-    }
-  },
 }
 </script>
 
