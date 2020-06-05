@@ -117,7 +117,7 @@
         Loading...
       </div>
 
-      <div v-else-if="results.length && query === oldQuery" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md">
+      <div v-else-if="results.length && query !== ''" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md">
         <song-result
           v-for="(result, index) in results"
           :key="index"
@@ -154,7 +154,6 @@ export default {
       showingSearch: false,
       noResults: false,
       query: '',
-      oldQuery: null,
       results: [],
       errorMessage: '',
       searching: false,
@@ -200,7 +199,6 @@ export default {
         return
       }
 
-      this.oldQuery = this.query
       this.$refs.search.blur()
       this.searching = true
 
@@ -220,7 +218,6 @@ export default {
       this.showingSearch = false
       this.noResults = false
       this.query = ''
-      this.oldQuery = null
       this.results = []
       this.errorMessage = ''
     },
