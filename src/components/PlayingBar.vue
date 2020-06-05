@@ -215,6 +215,7 @@ export default {
   watch: {
     song (newSong) {
       if (newSong && newSong.location) {
+        this.playDisabled = false
         this.playCurrentSong()
         this.loadNextSong()
       }
