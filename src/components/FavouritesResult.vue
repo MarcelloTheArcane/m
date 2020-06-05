@@ -57,13 +57,12 @@
       >
         Album
       </router-link>
-      <button 
-        v-if="canShare"
-        @click="shareSong"
+      <a 
+        :href="`whatsapp://send?text=${this.songData.title} http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Falbum%2F${this.songData.albumId}%2F${this.songData.trackNumber}`"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Share
-      </button>
+      </a>
       <button
         @click="remove" 
         class="block w-full px-2 py-2 text-left text-gray-800"
@@ -88,7 +87,6 @@ export default {
       songData: null,
       expanded: false,
       loading: false,
-      canShare: !!navigator.share,
     }
   },
   computed: {
@@ -134,13 +132,6 @@ export default {
     remove () {
       this.handleSelectOption()
       this.$store.dispatch('favourites/delete', this.result)
-    },
-    shareSong () {
-      this.handleSelectOption()
-      navigator.share({
-        title: this.songData.title,
-        url: `http://ec2-34-247-52-128.eu-west-1.compute.amazonaws.com:8080/#/album/${this.songData.albumId}/${this.songData.trackNumber}`
-      })
     },
     handleSelectOption () {
       this.expanded = false
