@@ -213,13 +213,11 @@ export default new Vuex.Store({
       dispatch('audiocache/preload', newList[0])
       dispatch('audiocache/restart', newList[0])
       commit('SET_PLAY_NOW', newList)
-      dispatch('audiocache/runLRU')
     },
     setPlayNext ({ commit, dispatch }, newList) {
       commit('SET_PLAY_NEXT', newList)
       dispatch('audiocache/preload', newList[0])
       dispatch('audiocache/restart', newList[0])
-      dispatch('audiocache/runLRU')
     },
     nextSong ({ commit, dispatch, getters, state }) {
       if (getters.hasNextSong) {
@@ -228,7 +226,6 @@ export default new Vuex.Store({
         dispatch('audiocache/restart', nextSong)
         commit('NEXT_SONG')
       }
-      dispatch('audiocache/runLRU')
     },
     previousSong ({ commit, dispatch, state, getters }) {
       if (getters.hasPreviousSong) {
@@ -238,9 +235,9 @@ export default new Vuex.Store({
       }
     },
     setPlaylist ({ commit, dispatch }, newList) {
+      dispatch('audiocache/clearCache')
       commit('SET_PLAYLIST', newList)
       dispatch('audiocache/preload', newList[0])
-      dispatch('audiocache/runLRU')
     },
     setPlaylistIndex ({ state, commit, dispatch }, index) {
       commit('SET_PLAYLIST_INDEX', index)
@@ -250,17 +247,15 @@ export default new Vuex.Store({
         dispatch('audiocache/preload', nextSong)
         dispatch('audiocache/restart', nextSong)
       }
-      dispatch('audiocache/runLRU')
     },
     addToPlaylist ({ commit, dispatch }, { index, newList }) {
       commit('ADD_TO_PLAYLIST', { index, newList })
       dispatch('audiocache/preload', newList[0])
       dispatch('audiocache/restart', newList[0])
-      dispatch('audiocache/runLRU')
     },
-    removeFromPlaylist ({ commit, dispatch }, index) {
+    removeFromPlaylist ({ store, commit, dispatch }, index) {
       commit('REMOVE_FROM_PLAYLIST', index)
-      dispatch('audiocache/runLRU')
+      dispatch('audiocache/removeCacheItem', store.playlist[index])
     },
     moveSongUp ({ state, commit }, index) {
       if (index === 0) {

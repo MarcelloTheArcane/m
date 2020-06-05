@@ -23,6 +23,11 @@ export default {
     REMOVE_CACHE_ITEM (state, location) {
       delete state[location]
     },
+    CLEAR_CACHE (state) {
+      for(const item in state) {
+        delete state[item]
+      }
+    },
   },
   actions: {
     async add ({ state, commit }, { location }) {
@@ -62,6 +67,12 @@ export default {
         })
       
       // toRemove.forEach(location => commit('REMOVE_CACHE_ITEM', location))
+    },
+    clearCache ({ commit }) {
+      commit('CLEAR_CACHE')
+    },
+    removeCacheItem ({ commit }, { location }) {
+      commit('REMOVE_CACHE_ITEM', location)
     },
   },
 }
