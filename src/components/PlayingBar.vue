@@ -24,9 +24,9 @@
       </div>
     </div>
 
-    <div v-if="song" class="w-full flex-1 flex flex-row pb-2 px-2">
+    <div v-if="song" class="w-full flex-1 flex flex-row items-center pb-2 px-2">
       <button @click="playPreviousSong" class="p-2 focus:outline-none">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+        <svg viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
           <polygon points="11 19 2 12 11 5 11 19"></polygon>
           <polygon points="22 19 13 12 22 5 22 19"></polygon>
         </svg>
@@ -34,20 +34,20 @@
 
       <button
         @click="togglePlaying"
-        class="py-2 focus:outline-none"
+        class="p-2 focus:outline-none"
         :style="`opacity: ${playDisabled ? 0.6 : 1}`"
       >
-        <svg v-if="paused" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+        <svg v-if="paused" viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
           <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>
-        <svg v-else viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+        <svg v-else viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
           <rect x="6" y="4" width="4" height="16"></rect>
           <rect x="14" y="4" width="4" height="16"></rect>
         </svg>
       </button>
 
       <button @click="playNextSong" class="p-2 focus:outline-none">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+        <svg viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
           <polygon points="13 19 22 12 13 5 13 19"></polygon>
           <polygon points="2 19 11 12 2 5 2 19"></polygon>
         </svg>
