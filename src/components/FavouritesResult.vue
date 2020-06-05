@@ -37,6 +37,12 @@
       >
         Play next
       </button>
+      <button
+        @click="queue" 
+        class="block w-full px-2 py-2 text-left text-gray-800"
+      >
+        Queue
+      </button>
       <router-link
         @click.native="handleSelectLink()"
         :to="`/artist/${songData.artistId[0]}`" 
@@ -117,6 +123,13 @@ export default {
     playNext () {
       this.handleSelectOption()
       this.$store.dispatch('setPlayNext', [this.result])
+    },
+    queue () {
+      this.handleSelectOption()
+      this.$store.dispatch('addToPlaylist', {
+        index: this.$store.state.playlist.length,
+        newList: [this.result],
+      })
     },
     remove () {
       this.handleSelectOption()
