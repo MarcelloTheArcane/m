@@ -1,7 +1,6 @@
 <template>
   <div class="flex md:flex-row flex-col colour-theme">
     <progress
-      v-if="song && song.location"
       min="0"
       max="1"
       :value="songProgress"
@@ -33,7 +32,7 @@
       </div>
     </div>
 
-    <div v-if="song" class="w-full flex-1 flex flex-row items-center pb-2 px-2">
+    <div class="w-full flex-1 flex flex-row items-center pb-2 px-2">
       <button
         @click="playPreviousSong"
         class="p-2 focus:outline-none"
@@ -125,11 +124,7 @@ export default {
   },
   computed: {
     currentSong () {
-      if (this.song && this.song.location) {
-        return this.$store.state.audiocache[this.song.location]
-      } else {
-        return {}
-      }
+      return this.$store.state.audiocache[this.song.location]
     },
   },
   methods: {
