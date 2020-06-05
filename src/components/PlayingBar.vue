@@ -108,7 +108,6 @@ export default {
   },
   data () {
     return {
-      nextSong: null,
       songProgress: 0,
       songTime: 0,
 
