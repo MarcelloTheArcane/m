@@ -23,7 +23,7 @@
         </svg>
       </button>
     </div>
-    <div v-if="loading"  class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 pr-5 mt-1 mr-12 rounded z-20">
+    <div v-if="loading"  class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 pr-5 mt-1 mr-12 rounded z-20 text-gray-800">
       Loading...
     </div>
     <div v-if="expanded" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">

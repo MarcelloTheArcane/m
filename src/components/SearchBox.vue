@@ -113,7 +113,7 @@
         {{ errorMessage }}
       </div>
 
-      <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md text-gray-800">
+      <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md text-gray-800 text-gray-800">
         Loading...
       </div>
 
