@@ -3,7 +3,7 @@
     <div v-if="errorMessage" class="text-center text-red-600">
       {{ errorMessage }}
     </div>
-    <div v-else-if="songs.length === 0" class="text-center">
+    <div v-else-if="songs.length === 0" class="text-center text-gray-800">
       Loading...
     </div>
     <div v-else class="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3">
