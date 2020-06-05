@@ -110,7 +110,7 @@ export default {
   props: {
     song: {
       type: Object,
-      required: false,
+      required: true,
     },
   },
   data () {
