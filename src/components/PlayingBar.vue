@@ -34,7 +34,11 @@
     </div>
 
     <div v-if="song" class="w-full flex-1 flex flex-row items-center pb-2 px-2">
-      <button @click="playPreviousSong" class="p-2 focus:outline-none">
+      <button
+        @click="playPreviousSong"
+        class="p-2 focus:outline-none"
+        :style="`opacity: ${playDisabled ? 0.6 : 1}`"
+      >
         <svg viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
           <polygon points="11 19 2 12 11 5 11 19"></polygon>
           <polygon points="22 19 13 12 22 5 22 19"></polygon>
@@ -55,7 +59,11 @@
         </svg>
       </button>
 
-      <button @click="playNextSong" class="p-2 focus:outline-none">
+      <button
+        @click="playNextSong"
+        class="p-2 focus:outline-none"
+        :style="`opacity: ${playDisabled ? 0.6 : 1}`"
+      >
         <svg viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
           <polygon points="13 19 22 12 13 5 13 19"></polygon>
           <polygon points="2 19 11 12 2 5 2 19"></polygon>
@@ -126,19 +134,13 @@ export default {
   },
   methods: {
     playCurrentSong () {
-      this.playDisabled = true
       const element = this.$store.state.audiocache[this.song.location]
       this.$refs.audio.innerHTML = ''
       this.$refs.audio.appendChild(element)
 
-      element.play().then(() => {
-        this.playDisabled = false
-        this.paused = false
-        this.updateProgress()
-      })
-
       element.addEventListener('play', () => {
         this.paused = false
+        this.playDisabled = false
         navigator.mediaSession.metadata = new window.MediaMetadata({
           title: this.song.title,
           artist: this.song.creator,
@@ -156,10 +158,19 @@ export default {
 
       element.addEventListener('pause', () => {
         this.paused = true
+        this.playDisabled = false
       })
 
       element.addEventListener('ended', () => {
         this.$store.dispatch('nextSong')
+      })
+
+      this.playDisabled = true
+
+      element.play().then(() => {
+        this.paused = false
+        this.playDisabled = false
+        this.updateProgress()
       })
     },
     loadNextSong () {
@@ -172,19 +183,36 @@ export default {
       this.updateProgress()
 
       if (this.currentSong.paused) {
-        this.currentSong.play()
-        this.paused = false
+        this.playDisabled = true
+        this.currentSong.play().then(() => {
+          this.paused = false
+          this.playDisabled = false
+          this.updateProgress()
+        })
       } else if (!this.playDisabled) {
         this.currentSong.pause()
-        this.paused = true
       }
     },
     playNextSong () {
+      if (this.playDisabled) {
+        return
+      }
+
       this.resetPlay()
       this.$store.dispatch('nextSong')
-      this.updateProgress()
+
+      this.playDisabled = true
+      this.currentSong.play().then(() => {
+        this.paused = false
+        this.playDisabled = false
+        this.updateProgress()
+      })
     },
     playPreviousSong () {
+      if (this.playDisabled) {
+        return
+      }
+
       if (this.currentSong.currentTime > 5) {
         this.resetPlay()
         this.currentSong.currentTime = 0
@@ -192,7 +220,6 @@ export default {
       } else {
         this.resetPlay()
         this.$store.dispatch('previousSong')
-        this.updateProgress()
       }
     },
     updateProgress () {
@@ -202,7 +229,7 @@ export default {
       }
     },
     resetPlay () {
-      this.paused = false
+      this.paused = true
       this.playDisabled = false
       this.songProgress = 0
       this.songTime = 0
@@ -231,19 +258,17 @@ export default {
   mounted () {
     this.updateProgress()
     setInterval(this.updateProgress, 750)
+    this.playCurrentSong()
+    this.loadNextSong()
 
-    if (this.song && this.song.location) {
-      this.playCurrentSong()
-      this.loadNextSong()
-    }
 
     if ('mediaSession' in navigator) {
       navigator.mediaSession.setActionHandler('previoustrack', () => {
-        this.$store.dispatch('previousSong')
+        this.playPreviousSong()
       })
   
       navigator.mediaSession.setActionHandler('nexttrack', () => {
-        this.$store.dispatch('nextSong')
+        this.playNextSong()
       })
     }
   },
