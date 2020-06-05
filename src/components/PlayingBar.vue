@@ -181,10 +181,8 @@ export default {
       }
     },
     playNextSong () {
-      this.paused = false
+      this.resetPlay()
       this.$store.dispatch('nextSong')
-      this.songProgress = 0
-      this.songTime = 0
       this.updateProgress()
     },
     playPreviousSong () {
@@ -199,6 +197,12 @@ export default {
         this.songTime = this.currentSong.currentTime
         this.songProgress = this.currentSong.currentTime / this.currentSong.duration
       }
+    },
+    resetPlay () {
+      this.paused = false
+      this.playDisabled = false
+      this.songProgress = 0
+      this.songTime = 0
     },
   },
   filters: {
