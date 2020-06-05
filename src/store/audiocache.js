@@ -12,7 +12,7 @@ export default {
     },
     RELOAD_SONG (state, location) {
       state[location] = new Audio()
-      state[location].preload = 'none'
+      state[location].preload = 'auto'
       state[location].src = location
       state[location].controls = false
       state[location].load()
