@@ -9,7 +9,16 @@
       ref="progress"
     />
 
-    <div class="m-2 flex flex-row lg:flex-1 lg:pl-6 md:pl-3" v-if="song && song.location">
+    <div class="flex flex-row justify-between mx-2 my-1 text-sm">
+      <p>
+        {{ songTime | minutes }}
+      </p>
+      <p>
+        {{ currentSong.duration | minutes }}
+      </p>
+    </div>
+
+    <div class="mx-2 flex flex-row lg:flex-1 lg:pl-6 md:pl-3">
       <img v-lazy="song.image" class="w-12 h-12 my-1">
       <div class="mx-2 flex-1 min-w-0">
         <p class="text-sm truncate w-full">
@@ -101,6 +110,7 @@ export default {
     return {
       nextSong: null,
       songProgress: 0,
+      songTime: 0,
 
       paused: true,
       playDisabled: false,
@@ -173,16 +183,32 @@ export default {
     playNextSong () {
       this.paused = false
       this.$store.dispatch('nextSong')
+      this.songProgress = 0
+      this.songTime = 0
       this.updateProgress()
     },
     playPreviousSong () {
       this.paused = false
       this.$store.dispatch('previousSong')
+      this.songProgress = 0
+      this.songTime = 0
       this.updateProgress()
     },
     updateProgress () {
       if (this.song && this.song.location) {
+        this.songTime = this.currentSong.currentTime
         this.songProgress = this.currentSong.currentTime / this.currentSong.duration
+      }
+    },
+  },
+  filters: {
+    minutes (time) {
+      if (!time) {
+        return '00:00'
+      } else {
+        const minutes = Math.floor(time / 60).toString()
+        const seconds = Math.floor(time % 60).toString()
+        return `${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`
       }
     },
   },
