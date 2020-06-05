@@ -128,14 +128,14 @@ export default {
     },
   },
   methods: {
-    playCurrentSong () {
+    async playCurrentSong () {
       const element = this.$store.state.audiocache[this.song.location]
       this.$refs.audio.innerHTML = ''
       this.$refs.audio.appendChild(element)
 
       element.addEventListener('play', () => {
         this.paused = false
-        this.playDisabled = false
+        this.updateProgress()
         navigator.mediaSession.metadata = new window.MediaMetadata({
           title: this.song.title,
           artist: this.song.creator,
@@ -151,22 +151,21 @@ export default {
           .setProperty('--progress-buffered', buffered.toFixed(3) + '%')
       })
 
-      element.addEventListener('pause', () => {
-        this.paused = true
-        this.playDisabled = false
+      element.addEventListener('pause', ({ target }) => {
+        // Maybe the pause event is fired on the old song
+        if (target.src === this.song.location) {
+          this.paused = true
+          this.playDisabled = false
+        }
       })
 
       element.addEventListener('ended', () => {
-        this.$store.dispatch('nextSong')
+        this.playNextSong()
       })
 
-      this.playDisabled = true
-
-      element.play().then(() => {
-        this.paused = false
-        this.playDisabled = false
-        this.updateProgress()
-      })
+      await element.play()
+      this.paused = false
+      this.playDisabled = false
     },
     loadNextSong () {
       const nextSong = this.$store.state.playlist[this.$store.state.playingIndex + 1]
@@ -174,21 +173,23 @@ export default {
         this.$store.dispatch('audiocache/preload', nextSong)
       }
     },
-    togglePlaying () {
+    async togglePlaying () {
       this.updateProgress()
 
       if (this.currentSong.paused) {
         this.playDisabled = true
-        this.currentSong.play().then(() => {
-          this.paused = false
-          this.playDisabled = false
-          this.updateProgress()
-        })
+        await this.currentSong.play()
+        this.paused = false
+        this.playDisabled = false
+        this.updateProgress()
+
       } else if (!this.playDisabled) {
         this.currentSong.pause()
+        this.paused = true
+        this.updateProgress()
       }
     },
-    playNextSong () {
+    async playNextSong () {
       if (this.playDisabled) {
         return
       }
@@ -197,22 +198,24 @@ export default {
       this.$store.dispatch('nextSong')
 
       this.playDisabled = true
-      this.currentSong.play().then(() => {
-        this.paused = false
-        this.playDisabled = false
-        this.updateProgress()
-      })
+      await this.currentSong.play()
+      this.playDisabled = false
+      this.paused = false
     },
-    playPreviousSong () {
+    async playPreviousSong () {
       if (this.playDisabled) {
         return
       }
 
       if (this.currentSong.currentTime > 5) {
+        this.paused = false
+        this.playDisabled = false
         this.resetPlay()
         this.currentSong.currentTime = 0
-        this.currentSong.play()
+        await this.currentSong.play()
       } else {
+        this.paused = false
+        this.playDisabled = false
         this.resetPlay()
         this.$store.dispatch('previousSong')
       }
@@ -224,8 +227,6 @@ export default {
       }
     },
     resetPlay () {
-      this.paused = true
-      this.playDisabled = false
       this.songProgress = 0
       this.songTime = 0
     },
