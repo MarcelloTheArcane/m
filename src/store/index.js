@@ -262,15 +262,25 @@ export default new Vuex.Store({
       commit('REMOVE_FROM_PLAYLIST', index)
       dispatch('audiocache/runLRU')
     },
-    moveSongUp ({ commit }, index) {
+    moveSongUp ({ state, commit }, index) {
       if (index === 0) {
         return
+      }
+      if (index === state.playingIndex + 1) {
+        commit('SET_PLAYLIST_INDEX', state.playingIndex + 1)
+      } else if (index === state.playingIndex) {
+        commit('SET_PLAYLIST_INDEX', state.playingIndex - 1)
       }
       commit('MOVE_SONG_UP', index)
     },
     moveSongDown ({ state, commit }, index) {
       if (index === state.playlist.length - 1) {
         return
+      }
+      if (index === state.playingIndex - 1) {
+        commit('SET_PLAYLIST_INDEX', state.playingIndex - 1)
+      } else if (index === state.playingIndex) {
+        commit('SET_PLAYLIST_INDEX', state.playingIndex + 1)
       }
       commit('MOVE_SONG_DOWN', index)
     },
