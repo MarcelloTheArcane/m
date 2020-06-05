@@ -186,11 +186,15 @@ export default {
       this.updateProgress()
     },
     playPreviousSong () {
-      this.paused = false
-      this.$store.dispatch('previousSong')
-      this.songProgress = 0
-      this.songTime = 0
-      this.updateProgress()
+      if (this.currentSong.currentTime > 5) {
+        this.resetPlay()
+        this.currentSong.currentTime = 0
+        this.currentSong.play()
+      } else {
+        this.resetPlay()
+        this.$store.dispatch('previousSong')
+        this.updateProgress()
+      }
     },
     updateProgress () {
       if (this.song && this.song.location) {
