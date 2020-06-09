@@ -22,17 +22,17 @@
       </button>
       <pre v-if="showingPlaylist">{{ $store.state.playlist }}</pre>
     </p>
-    <p>
+    <div>
       <button @click="showingAudioCache = !showingAudioCache">
         Toggle favourites
       </button>
-      <p v-if="showingFavourites">
-        <p v-for="item in $store.state.audiocache" :key="item">
-          <pre>{{ item }}</pre>
-          <pre>{{ item.readyState | audioReadyState }}</pre>
+      <div v-if="showingFavourites">
+        <p v-for="location in Object.keys($store.state.audiocache)" :key="location">
+          <pre>{{ location }}</pre>
+          <pre>{{ $store.state.audiocache[location].readyState | audioReadyState }}</pre>
         </p>
-      </p>
-    </p>
+      </div>
+    </div>
     <p>
       <button @click="showingFavourites = !showingFavourites">
         Toggle favourites
