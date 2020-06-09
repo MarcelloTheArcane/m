@@ -28,7 +28,7 @@
       </button>
       <p v-if="showingFavourites">
         <p v-for="item in $store.state.audiocache" :key="item">
-          <pre>{{ item }}<pre>
+          <pre>{{ item }}</pre>
           <pre>{{ item.readyState | audioReadyState }}</pre>
         </p>
       </p>
