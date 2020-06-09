@@ -225,6 +225,7 @@ export default new Vuex.Store({
         dispatch('audiocache/preload', nextSong)
         dispatch('audiocache/restart', nextSong)
         commit('NEXT_SONG')
+        dispatch('audiocache/runLRU')
       }
     },
     previousSong ({ commit, dispatch, state, getters }) {
@@ -238,6 +239,7 @@ export default new Vuex.Store({
       dispatch('audiocache/clearCache')
       commit('SET_PLAYLIST', newList)
       dispatch('audiocache/preload', newList[0])
+      dispatch('audiocache/runLRU')
     },
     setPlaylistIndex ({ state, commit, dispatch }, index) {
       commit('SET_PLAYLIST_INDEX', index)
@@ -246,6 +248,7 @@ export default new Vuex.Store({
       if (nextSong) {
         dispatch('audiocache/preload', nextSong)
         dispatch('audiocache/restart', nextSong)
+        dispatch('audiocache/runLRU')
       }
     },
     addToPlaylist ({ commit, dispatch }, { index, newList }) {
