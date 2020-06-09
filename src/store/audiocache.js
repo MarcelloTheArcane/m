@@ -52,21 +52,16 @@ export default {
     restart ({ commit }, { location }) {
       commit('RESTART_SONG', location)
     },
-    runLRU ({ state, rootState }) {
+    runLRU ({ commit, state, rootState }) {
       const toRemove = Object.keys(state)
 
-      // Whitelist every item in the playlist after
-      // the current playlist index minus an offset
-      rootState.playlist
+      const keepInPlaylist = rootState.playlist
         .slice(Math.max(0, rootState.playingIndex - 3))
-        .forEach(item => {
-          const indexInToRemove = toRemove.indexOf(item.location)
-          if (indexInToRemove !== -1) {
-            toRemove.splice(indexInToRemove, 1)
-          }
-        })
+        .map(({ location }) => location)
       
-      // toRemove.forEach(location => commit('REMOVE_CACHE_ITEM', location))
+      toRemove
+        .filter(location => keepInPlaylist.includes(location) === false)
+        .forEach(item => commit('ADD_TO_CACHE', item)) // 'ADD_TO_CACHE' will overwrite with unloaded audio element
     },
     clearCache ({ commit }) {
       commit('CLEAR_CACHE')
