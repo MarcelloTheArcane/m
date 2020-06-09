@@ -24,9 +24,9 @@
     </p>
     <div>
       <button @click="showingAudioCache = !showingAudioCache">
-        Toggle favourites
+        Toggle audiocache
       </button>
-      <div v-if="showingFavourites">
+      <div v-if="showingAudioCache">
         <p v-for="location in Object.keys($store.state.audiocache)" :key="location">
           <pre>{{ location }}</pre>
           <pre>{{ $store.state.audiocache[location].readyState | audioReadyState }}</pre>
