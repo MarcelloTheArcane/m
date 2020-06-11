@@ -10,10 +10,10 @@
         class="h-32 w-32 m-5 rounded"
         @load="getColour"
       >
-      <h1 class="text-lg text-center">
+      <h1 class="text-lg text-center px-6">
         {{ albumData.album }}
       </h1>
-      <h2 class="text-sm text-center">
+      <h2 class="text-lg text-center px-6">
         {{ albumData.creator }}
       </h2>
 
