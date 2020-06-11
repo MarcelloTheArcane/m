@@ -41,6 +41,9 @@ export default {
     delete ({ commit }, { location }) {
       commit('DELETE_FAVOURITE', location)
     },
+    setFolder ({ commit }, { location, folder }) {
+      commit('SET_FOLDER', location, folder)
+    },
     migrate ({ commit }) {
       if (localStorage.getItem(v1StorageKey)) {
         commit('MIGRATE')
@@ -48,6 +51,24 @@ export default {
     },
   },
   getters: {
+    byFolder (state) {
+      return state.reduce((final, item) => {
+        if (item.folder && final[item.folder]) {
+          final[item.folder].push(item)
+        } else if (item.folder) {
+          final[item.folder] = [item]
+        } else {
+          final['Uncategorised'].push(item)
+        }
+
+        return final
+      }, { Uncategorised: [] })
+    },
+    folders (state) {
+      const duplicatedFolders = state.map(item => item.folder || 'Uncategorised')
+      const foldersSet = new Set(duplicatedFolders)
+      return Array.from(foldersSet)
+    },
     locations (state) {
       return state.map(({ song }) => song.location)
     },
