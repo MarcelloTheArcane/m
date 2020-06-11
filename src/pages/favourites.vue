@@ -23,7 +23,7 @@
       <favourites-result
         v-for="(result, index) in $store.state.favourites"
         :key="index"
-        :result="result"
+        :result="result.song"
         :index="index"
       />
 
@@ -60,6 +60,9 @@ export default {
         newList: this.$store.state.favourites,
       })
     },
+  },
+  mounted () {
+    this.$store.dispatch('favourites/migrate')
   },
 }
 </script>
