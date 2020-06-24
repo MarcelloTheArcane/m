@@ -226,10 +226,13 @@ export default {
       }
     },
     updateProgress () {
-      if (this.song && this.song.location) {
-        this.songTime = this.currentSong.currentTime
-        this.songProgress = this.currentSong.currentTime / this.currentSong.duration
-      }
+      this.songTime = this.currentSong.currentTime
+      this.songProgress = this.currentSong.currentTime / this.currentSong.duration
+      navigator.mediaSession.setPositionState({
+        duration: this.currentSong.duration,
+        position: this.currentSong.currentTime,
+        playbackRate: this.currentSong.playbackRate,
+      })
     },
     resetPlay () {
       this.songProgress = 0
