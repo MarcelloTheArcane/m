@@ -30,7 +30,7 @@ export default {
           const { data } = await proxy.get(path, { params })
           commit('ADD_TO_CACHE', [ cachePath, data ])
         }
-  
+
         return state[cachePath]
       } catch (err) {
         if (err.message === 'Network Error') {

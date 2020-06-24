@@ -1,7 +1,7 @@
 <template>
   <div class="bg-transparent p-2">
     <div v-if="!showingSearch" class="flex flex-row">
-      <a 
+      <a
         v-if="$route.fullPath !== '/'"
         @click="$router.go(-1)"
         class="focus:outline-none"

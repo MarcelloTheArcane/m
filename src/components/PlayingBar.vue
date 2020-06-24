@@ -84,7 +84,7 @@
         </button>
         <button
           v-else
-          @click="$store.dispatch('favourites/add', song)"
+          @click="$store.dispatch('favourites/add', { song, folder: null })"
           class="p-2 focus:outline-none"
         >
           <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -270,7 +270,7 @@ export default {
       navigator.mediaSession.setActionHandler('previoustrack', () => {
         this.playPreviousSong()
       })
-  
+
       navigator.mediaSession.setActionHandler('nexttrack', () => {
         this.playNextSong()
       })
@@ -299,7 +299,7 @@ export default {
     background-image: linear-gradient(90deg, #FFFFFF55 0%, #FFFFFF55 var(--progress-buffered), #FFFFFF00 var(--progress-buffered), #FFFFFF00 100%);
     background-color: var(--colour-bg-dark);
   }
-  
+
   progress[value]::-webkit-progress-value {
     background-color: var(--colour-fg-dark);
   }

@@ -29,45 +29,45 @@
     <div v-if="expanded" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
       <button
         v-if="isCurrentlyPlaying"
-        @click="restart" 
+        @click="restart"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Play
       </button>
       <button
         v-else
-        @click="play" 
+        @click="play"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Play
       </button>
       <button
-        @click="reload" 
+        @click="reload"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Reload
       </button>
       <button
-        @click="remove" 
+        @click="remove"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Remove
       </button>
       <router-link
         @click.native="handleSelectOption()"
-        :to="`/artist/${songData.artistId[0]}`" 
+        :to="`/artist/${songData.artistId[0]}`"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Artist
       </router-link>
       <router-link
         @click.native="handleSelectOption()"
-        :to="`/album/${songData.albumId}`" 
+        :to="`/album/${songData.albumId}`"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Album
       </router-link>
-      <a 
+      <a
         :href="`whatsapp://send?text=${this.songData.title}, from http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Falbum%2F${this.songData.albumId}`"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
