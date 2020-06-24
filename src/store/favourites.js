@@ -68,14 +68,12 @@ export default {
           final[item.folder].push(item)
         } else if (item.folder) {
           final[item.folder] = [item]
-        } else if (final['Uncategorised']) {
-          final['Uncategorised'].push(item)
         } else {
-          final['Uncategorised'] = [item]
+          final['Uncategorised'].push(item)
         }
 
         return final
-      }, {})
+      }, { Uncategorised: [] })
     },
     folders (state) {
       const duplicatedFolders = state.map(item => item.folder || 'Uncategorised')
