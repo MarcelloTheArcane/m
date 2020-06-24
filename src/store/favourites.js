@@ -34,6 +34,16 @@ export default {
 
       state.splice(0, state.length, ...v2Data)
     },
+    SET_FOLDER (state, { location, folder }) {
+      const newState = state.map((songData) => {
+        if (songData.song.location === location) {
+          songData.folder = folder
+        }
+        return songData
+      })
+      state.splice(0, state.length, ...newState)
+      localStorage.setItem(v2StorageKey, JSON.stringify(state))
+    },
   },
   actions: {
     add ({ commit }, { song, folder }) {
@@ -43,7 +53,7 @@ export default {
       commit('DELETE_FAVOURITE', location)
     },
     setFolder ({ commit }, { location, folder }) {
-      commit('SET_FOLDER', location, folder)
+      commit('SET_FOLDER', { location, folder })
     },
     migrate ({ commit }) {
       if (localStorage.getItem(v1StorageKey)) {
