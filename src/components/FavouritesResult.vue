@@ -69,6 +69,28 @@
       >
         Remove
       </button>
+      <button
+        @click="startFolderAdd"
+        class="block w-full px-2 py-2 text-left text-gray-800"
+      >
+        Add to folder
+      </button>
+    </div>
+    <div v-if="folderAddExpanded" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
+      <button
+        v-for="(folder, index) in $store.getters['favourites/folders']"
+        :key="index"
+        class="block w-full px-2 py-2 text-left text-gray-800"
+        @click="addSongToFolder(folder)"
+      >
+        {{ folder }}
+      </button>
+      <input
+        placeholder="New folder..."
+        v-model="newFolderName"
+        class="block w-full px-2 py-2 text-left text-gray-800"
+        @keypress.enter="addSongToFolder(newFolderName)"
+      >
     </div>
   </div>
 </template>
@@ -87,6 +109,8 @@ export default {
       songData: null,
       expanded: false,
       loading: false,
+      folderAddExpanded: false,
+      newFolderName: '',
     }
   },
   computed: {
@@ -100,6 +124,8 @@ export default {
   },
   methods: {
     async toggleExpanded () {
+      this.folderAddExpanded = false
+
       try {
         if (!this.songData) {
           this.loading = true
@@ -140,6 +166,18 @@ export default {
     handleSelectLink () {
       this.expanded = false
       this.$emit('select-link')
+    },
+    startFolderAdd () {
+      this.expanded = false
+      this.folderAddExpanded = true
+    },
+    addSongToFolder (folder) {
+      this.$store.dispatch('favourites/setFolder', {
+        location: this.result.location,
+        folder,
+      })
+      this.newFolderName = ''
+      this.folderAddExpanded = false
     },
   },
 }
