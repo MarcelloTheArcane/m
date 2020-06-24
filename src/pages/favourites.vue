@@ -25,8 +25,11 @@
         :key="name"
         class="mb-6"
       >
-        <div class="mb-4 px-2 flex flex-row justify-between items-center">
-          <h2 class="text-xl">
+        <div
+          class="mb-4 px-2 flex flex-row justify-between items-center cursor-pointer"
+          @click="toggleFolder(name)"
+        >
+          <h2 class="text-xl select-none">
             {{ name }}
           </h2>
           <svg
@@ -38,7 +41,6 @@
             fill="none"
             stroke-linecap="round"
             stroke-linejoin="round"
-            @click="toggleFolder(name)"
             :style="{
               transition: 'transform 0.2s',
               transform: showingFolder.includes(name) ? 'rotate(-180deg)' : 'rotate(0)'

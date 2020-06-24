@@ -80,7 +80,7 @@
       <button
         v-for="(folder, index) in $store.getters['favourites/folders']"
         :key="index"
-        class="block w-full px-2 py-2 text-left text-gray-800"
+        class="block w-full px-2 py-2 text-left text-gray-800 select-none"
         @click="addSongToFolder(folder)"
       >
         {{ folder }}
