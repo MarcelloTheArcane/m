@@ -123,6 +123,8 @@ export default {
 
       paused: true,
       playDisabled: false,
+
+      intervalId: null,
     }
   },
   computed: {
@@ -256,7 +258,7 @@ export default {
   },
   mounted () {
     this.updateProgress()
-    setInterval(this.updateProgress, 750)
+    this.intervalId = setInterval(this.updateProgress, 750)
     this.playCurrentSong()
     this.loadNextSong()
 
@@ -270,6 +272,9 @@ export default {
         this.playNextSong()
       })
     }
+  },
+  beforeDestroy () {
+    clearInterval(this.intervalId)
   },
 }
 </script>
