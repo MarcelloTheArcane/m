@@ -58,7 +58,7 @@ export default {
       const keepInPlaylist = rootState.playlist
         .slice(Math.max(0, rootState.playingIndex - 3))
         .map(({ location }) => location)
-      
+
       toRemove
         .filter(location => keepInPlaylist.includes(location) === false)
         .forEach(item => commit('ADD_TO_CACHE', item)) // 'ADD_TO_CACHE' will overwrite with unloaded audio element

@@ -26,45 +26,45 @@
     </div>
     <div v-if="expanded" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
       <button
-        @click="play" 
+        @click="play"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Play
       </button>
       <button
-        @click="playNext" 
+        @click="playNext"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Play next
       </button>
       <button
-        @click="queue" 
+        @click="queue"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Queue
       </button>
       <router-link
         @click.native="handleSelectLink()"
-        :to="`/artist/${songData.artistId[0]}`" 
+        :to="`/artist/${songData.artistId[0]}`"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Artist
       </router-link>
       <router-link
         @click.native="handleSelectLink()"
-        :to="`/album/${songData.albumId}`" 
+        :to="`/album/${songData.albumId}`"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Album
       </router-link>
-      <a 
+      <a
         :href="`whatsapp://send?text=${this.songData.title}, from http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Falbum%2F${this.songData.albumId}`"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Share
       </a>
       <button
-        @click="remove" 
+        @click="remove"
         class="block w-full px-2 py-2 text-left text-gray-800"
       >
         Remove
@@ -132,7 +132,7 @@ export default {
           const id = this.result.location.slice(-27)
           this.songData = await this.$store.dispatch('getSongInfo', { id })
         }
-  
+
         this.expanded = !this.expanded
       } catch (err) {
         console.error(err)

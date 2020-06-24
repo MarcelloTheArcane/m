@@ -265,7 +265,7 @@ export default {
       navigator.mediaSession.setActionHandler('previoustrack', () => {
         this.playPreviousSong()
       })
-  
+
       navigator.mediaSession.setActionHandler('nexttrack', () => {
         this.playNextSong()
       })
@@ -291,7 +291,7 @@ export default {
     background-image: linear-gradient(90deg, #FFFFFF55 0%, #FFFFFF55 var(--progress-buffered), #FFFFFF00 var(--progress-buffered), #FFFFFF00 100%);
     background-color: var(--colour-bg-dark);
   }
-  
+
   progress[value]::-webkit-progress-value {
     background-color: var(--colour-fg-dark);
   }

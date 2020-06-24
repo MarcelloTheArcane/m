@@ -12,7 +12,7 @@ export default {
     ADD_FAVOURITE (state, { song, folder }) {
       state.push({
         song,
-        folder, 
+        folder,
       })
 
       localStorage.setItem(v2StorageKey, JSON.stringify(state))
