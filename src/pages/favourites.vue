@@ -20,7 +20,7 @@
         class="mb-6"
       >
         <div
-          class="mb-4 px-2 flex flex-row justify-between items-center cursor-pointer"
+          class="mb-2 px-2 flex flex-row justify-between items-center cursor-pointer"
           @click="toggleFolder(name)"
         >
           <h2 class="text-xl select-none">
