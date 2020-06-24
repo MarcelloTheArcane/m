@@ -9,9 +9,10 @@ export default {
       : []
   },
   mutations: {
-    ADD_FAVOURITE (state, data) {
+    ADD_FAVOURITE (state, { song, folder }) {
       state.push({
-        song: data,
+        song,
+        folder, 
       })
 
       localStorage.setItem(v2StorageKey, JSON.stringify(state))
@@ -35,8 +36,8 @@ export default {
     },
   },
   actions: {
-    add ({ commit }, data) {
-      commit('ADD_FAVOURITE', data)
+    add ({ commit }, { song, folder }) {
+      commit('ADD_FAVOURITE', { song, folder })
     },
     delete ({ commit }, { location }) {
       commit('DELETE_FAVOURITE', location)
