@@ -84,7 +84,7 @@
         </button>
         <button
           v-else
-          @click="$store.dispatch('favourites/add', song)"
+          @click="$store.dispatch('favourites/add', { song, folder: null })"
           class="p-2 focus:outline-none"
         >
           <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
