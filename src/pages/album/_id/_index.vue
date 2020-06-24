@@ -21,6 +21,7 @@
         @play-all="playAll"
         @play-next="playNext"
         @append-queue="appendQueue"
+        class="mt-5"
       />
 
       <div class="w-full flex-1 bg-white">

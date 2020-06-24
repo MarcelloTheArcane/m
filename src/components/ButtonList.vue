@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-white rounded-t-lg p-3 mt-5 flex flex-row">
+  <div class="w-full bg-white rounded-t-lg p-3 flex flex-row">
     <span class="flex-1">&nbsp;</span>
     <button
       @click="$emit('append-queue')"
