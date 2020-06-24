@@ -9,13 +9,7 @@
       Favourites
     </h1>
 
-    <button-list
-      v-if="$store.state.favourites.length"
-      @play-all="playAll"
-      @play-next="playNext"
-      @append-queue="appendQueue"
-    />
-    <div v-else class="w-full bg-white rounded-t-lg p-3 mt-5">
+    <div class="w-full bg-white rounded-t-lg p-3 mt-5">
       &nbsp;
     </div>
 
@@ -51,6 +45,13 @@
         </div>
 
         <div v-if="showingFolder.includes(name)">
+          <button-list
+            v-if="folder.length !== 0"
+            @play-all="playAll(folder)"
+            @play-next="playNext(folder)"
+            @append-queue="appendQueue(folder)"
+            class="mt-0 mb-4"
+          />
           <favourites-result
             v-for="(result, index) in folder"
             :key="index"
@@ -101,16 +102,16 @@ export default {
         this.showingFolder.splice(0, 0, name)
       }
     },
-    playAll () {
-      this.$store.dispatch('setPlaylist', this.$store.state.favourites)
+    playAll (songs) {
+      this.$store.dispatch('setPlaylist', songs.map(({ song }) => song))
     },
-    playNext () {
-      this.$store.dispatch('setPlayNext', this.$store.state.favourites)
+    playNext (songs) {
+      this.$store.dispatch('setPlayNext', songs.map(({ song }) => song))
     },
-    appendQueue () {
+    appendQueue (songs) {
       this.$store.dispatch('addToPlaylist', {
         index: this.$store.state.playlist.length,
-        newList: this.$store.state.favourites,
+        newList: songs.map(({ song }) => song),
       })
     },
   },
