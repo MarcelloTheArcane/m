@@ -77,6 +77,7 @@ export default {
     },
     folders (state) {
       const duplicatedFolders = state.map(item => item.folder || 'Uncategorised')
+      duplicatedFolders.push('Uncategorised')
       const foldersSet = new Set(duplicatedFolders)
       return Array.from(foldersSet)
     },
