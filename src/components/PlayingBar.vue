@@ -228,11 +228,14 @@ export default {
     updateProgress () {
       this.songTime = this.currentSong.currentTime
       this.songProgress = this.currentSong.currentTime / this.currentSong.duration
-      navigator.mediaSession.setPositionState({
-        duration: this.currentSong.duration,
-        position: this.currentSong.currentTime,
-        playbackRate: this.currentSong.playbackRate,
-      })
+
+      if (this.currentSong.duration) {
+        navigator.mediaSession.setPositionState({
+          duration: this.currentSong.duration,
+          position: this.currentSong.currentTime,
+          playbackRate: this.currentSong.playbackRate,
+        })
+      }
     },
     resetPlay () {
       this.songProgress = 0
