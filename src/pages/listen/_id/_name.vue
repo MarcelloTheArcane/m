@@ -6,7 +6,6 @@
     <div v-else class="flex flex-col items-center h-full relative">
       <img src="@/assets/defaultimage.png" class="h-32 w-32 m-5 rounded">
       <h1 class="text-lg text-center px-6">
-        Station from:<br>
         {{ this.$route.params.name }}
       </h1>
 
@@ -47,9 +46,8 @@ export default {
   },
   async mounted () {
     try {
-      this.results = await this.$store.dispatch('getNewStationById', {
-        id: this.$route.params.id,
-        type: 'song',
+      this.results = await this.$store.dispatch('getListenNowList', {
+        station: this.$route.params.id,
       })
     } catch (err) {
       console.error(err)

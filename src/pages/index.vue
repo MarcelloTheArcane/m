@@ -10,7 +10,7 @@
       <router-link
         v-for="({ station, title }, index) in songs"
         :key="index"
-        :to="`/station/${station}/${title}`"
+        :to="`/listen/${station}/${title}`"
       >
         <div class="w-full flex items-center justify-center bg-gray-200 bg-gradient shadow rounded h-33vw">
           <svg viewBox="0 0 24 24" width="42" height="42" stroke="#718096" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -45,7 +45,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: 'Stations',
+      title: 'Listen now',
     }
   },
 }
