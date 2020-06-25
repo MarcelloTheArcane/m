@@ -60,6 +60,12 @@
       >
         Share
       </a>
+      <p>
+        scrollbox_scrollTop: {{ scrollbox.scrollTop }}
+        toggleDimensions_bottom: {{ toggleDimensions.bottom }}
+        window_innerHeight: {{ window.innerHeight }}
+        scrollboxDimensions_bottom: {{ scrollboxDimensions.bottom }}
+      </p>
     </div>
   </div>
 </template>
@@ -85,6 +91,11 @@ export default {
       highlightIndex: this.$route.params.index
         ? this.result.trackNum === parseInt(this.$route.params.index)
         : false,
+
+      scrollbox: {},
+      toggleDimensions: {},
+      scrollboxDimensions: {},
+      window: {},
     }
   },
   computed: {
@@ -126,6 +137,11 @@ export default {
       const toggleDimensions = toggle.getBoundingClientRect()
       const menuDimensions = menu.getBoundingClientRect()
       const maxHeight = Math.min(window.innerHeight, scrollboxDimensions.bottom)
+
+      this.scrollbox = scrollbox
+      this.scrollboxDimensions = scrollboxDimensions
+      this.toggleDimensions = toggleDimensions
+      this.window = window
 
       if (toggleDimensions.top + menuDimensions.height < maxHeight) {
         const top = scrollbox.scrollTop + toggleDimensions.top - scrollboxDimensions.top - 4

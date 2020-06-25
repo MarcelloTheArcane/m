@@ -53,7 +53,7 @@ export default {
       showingPlaylist: false,
       showingFavourites: false,
       showingAudioCache: false,
-      version: 'Loading...'
+      version: 'Loading...',
     }
   },
   filters: {
