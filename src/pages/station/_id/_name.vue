@@ -3,7 +3,7 @@
     <div v-if="errorMessage" class="text-center text-red-600">
       {{ errorMessage }}
     </div>
-    <div v-else class="flex flex-col items-center h-full">
+    <div v-else class="flex flex-col items-center h-full relative">
       <img src="@/assets/defaultimage.png" class="h-32 w-32 m-5 rounded">
       <h1 class="text-lg text-center px-6">
         {{ this.$route.params.name }}

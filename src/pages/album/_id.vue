@@ -3,7 +3,7 @@
     <div v-if="errorMessage" class="text-center text-red-600">
       {{ errorMessage }}
     </div>
-    <div v-else class="flex flex-col items-center h-full">
+    <div v-else class="flex flex-col items-center h-full relative">
       <img
         v-lazy="albumData.image"
         ref="image"
