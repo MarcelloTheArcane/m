@@ -23,7 +23,7 @@
         </svg>
       </button>
     </div>
-    <div v-if="expanded" ref="menu" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
+    <div v-if="expanded" ref="menu" class="absolute right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
       <button
         v-if="isCurrentlyPlaying"
         @click="restart"
