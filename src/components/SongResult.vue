@@ -60,12 +60,6 @@
       >
         Share
       </a>
-      <p>
-        scrollbox_scrollTop: {{ scrollbox.scrollTop }}
-        toggleDimensions_bottom: {{ toggleDimensions.bottom }}
-        window_innerHeight: {{ window.innerHeight }}
-        scrollboxDimensions_bottom: {{ scrollboxDimensions.bottom }}
-      </p>
     </div>
   </div>
 </template>
