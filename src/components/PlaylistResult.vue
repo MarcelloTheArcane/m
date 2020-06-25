@@ -23,7 +23,12 @@
         </svg>
       </button>
     </div>
-    <div v-if="expanded" ref="menu" class="absolute right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
+    <context-menu
+      v-if="expanded"
+      scroll-id="pagebox"
+      :toggle-dimensions="$refs.toggle.getBoundingClientRect()"
+      class="absolute right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20"
+    >
       <button
         v-if="isCurrentlyPlaying"
         @click="restart"
@@ -97,8 +102,13 @@
       >
         Add to folder
       </button>
-    </div>
-    <div v-if="folderAddExpanded" class="absolute right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
+    </context-menu>
+    <context-menu
+      v-if="folderAddExpanded"
+      scroll-id="pagebox"
+      :toggle-dimensions="$refs.toggle.getBoundingClientRect()"
+      class="absolute right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20"
+    >
       <button
         v-for="(folder, index) in $store.getters['favourites/folders']"
         :key="index"
@@ -113,13 +123,18 @@
         class="block w-full px-2 py-2 text-left text-gray-800"
         @keypress.enter="addSongToFolder(newFolderName)"
       >
-    </div>
+    </context-menu>
   </div>
 </template>
 
 <script>
+import ContextMenu from './ContextMenu'
+
 export default {
   name: 'PlaylistResult',
+  components: {
+    ContextMenu,
+  },
   props: {
     result: {
       type: Object,
@@ -155,36 +170,13 @@ export default {
         if (this.folderAddExpanded) {
           this.folderAddExpanded = false
         } else if (this.expanded) {
-          this.$refs.menu.style.top = ''
           this.expanded = false
         } else {
           this.expanded = true
-          await this.$nextTick()
-          this.positionMenu()
         }
 
       } catch (err) {
         console.error(err)
-      }
-    },
-    positionMenu () {
-      const scrollbox = document.getElementById('pagebox')
-
-      const toggle = this.$refs.toggle
-      const menu = this.$refs.menu
-      const scrollboxDimensions = scrollbox.getBoundingClientRect()
-      const toggleDimensions = toggle.getBoundingClientRect()
-      const menuDimensions = menu.getBoundingClientRect()
-      const maxHeight = Math.min(window.innerHeight, scrollboxDimensions.bottom)
-
-      const topWithinBounds = toggleDimensions.top + menuDimensions.height > maxHeight
-
-      if (scrollboxDimensions.height < menuDimensions.height || !topWithinBounds) {
-        const top = scrollbox.scrollTop + toggleDimensions.top - scrollboxDimensions.top - 4
-        menu.style.top = `${top}px`
-      } else {
-        const bottom = maxHeight - scrollbox.scrollTop - toggleDimensions.bottom + 4
-        menu.style.bottom = `${bottom}px`
       }
     },
     play () {
