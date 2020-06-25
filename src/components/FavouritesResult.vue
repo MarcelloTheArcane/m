@@ -1,5 +1,5 @@
 <template>
-  <div class="px-2 relative">
+  <div class="px-2">
     <div class="flex flex-row items-center">
       <img v-lazy="result.image" class="w-16 h-16">
       <div :class="{
@@ -13,69 +13,72 @@
           {{ result.creator }}
         </p>
       </div>
-      <button @click="toggleExpanded" class="focus:outline-none p-3 text-gray-800">
+    </div>
+    <div v-if="loading" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 pr-5 mt-1 mr-12 rounded z-20 text-gray-800">
+      Loading...
+    </div>
+    <song-dropdown>
+      <template v-slot:toggle>
         <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="1"></circle>
           <circle cx="12" cy="5" r="1"></circle>
           <circle cx="12" cy="19" r="1"></circle>
         </svg>
-      </button>
-    </div>
-    <div v-if="loading" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 pr-5 mt-1 mr-12 rounded z-20 text-gray-800">
-      Loading...
-    </div>
-    <div v-if="expanded" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
-      <button
-        @click="play"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Play
-      </button>
-      <button
-        @click="playNext"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Play next
-      </button>
-      <button
-        @click="queue"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Queue
-      </button>
-      <router-link
-        @click.native="handleSelectLink()"
-        :to="`/artist/${songData.artistId[0]}`"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Artist
-      </router-link>
-      <router-link
-        @click.native="handleSelectLink()"
-        :to="`/album/${songData.albumId}`"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Album
-      </router-link>
-      <a
-        :href="`whatsapp://send?text=${this.songData.title}, from http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Falbum%2F${this.songData.albumId}`"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Share
-      </a>
-      <button
-        @click="remove"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Remove
-      </button>
-      <button
-        @click="startFolderAdd"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Add to folder
-      </button>
-    </div>
+      </template>
+
+      <template>
+        <button
+          @click="play"
+          class="block w-full px-2 py-2 text-left text-gray-800"
+        >
+          Play
+        </button>
+        <button
+          @click="playNext"
+          class="block w-full px-2 py-2 text-left text-gray-800"
+        >
+          Play next
+        </button>
+        <button
+          @click="queue"
+          class="block w-full px-2 py-2 text-left text-gray-800"
+        >
+          Queue
+        </button>
+        <router-link
+          @click.native="handleSelectLink()"
+          :to="`/artist/${songData.artistId[0]}`"
+          class="block w-full px-2 py-2 text-left text-gray-800"
+        >
+          Artist
+        </router-link>
+        <router-link
+          @click.native="handleSelectLink()"
+          :to="`/album/${songData.albumId}`"
+          class="block w-full px-2 py-2 text-left text-gray-800"
+        >
+          Album
+        </router-link>
+        <a
+          :href="`whatsapp://send?text=${this.songData.title}, from http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Falbum%2F${this.songData.albumId}`"
+          class="block w-full px-2 py-2 text-left text-gray-800"
+        >
+          Share
+        </a>
+        <button
+          @click="remove"
+          class="block w-full px-2 py-2 text-left text-gray-800"
+        >
+          Remove
+        </button>
+        <button
+          @click="startFolderAdd"
+          class="block w-full px-2 py-2 text-left text-gray-800"
+        >
+          Add to folder
+        </button>
+      </template>
+    </song-dropdown>
     <div v-if="folderAddExpanded" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
       <button
         v-for="(folder, index) in $store.getters['favourites/folders']"
@@ -96,8 +99,13 @@
 </template>
 
 <script>
+import SongDropdown from './SongDropdown'
+
 export default {
-  name: 'SongResult',
+  name: 'FavouritesResult',
+  components: {
+    SongDropdown,
+  },
   props: {
     result: {
       type: Object,
@@ -123,23 +131,23 @@ export default {
     },
   },
   methods: {
-    async toggleExpanded () {
-      this.folderAddExpanded = false
+    // async toggleExpanded () {
+    //   this.folderAddExpanded = false
 
-      try {
-        if (!this.songData) {
-          this.loading = true
-          const id = this.result.location.slice(-27)
-          this.songData = await this.$store.dispatch('getSongInfo', { id })
-        }
+    //   try {
+    //     if (!this.songData) {
+    //       this.loading = true
+    //       const id = this.result.location.slice(-27)
+    //       this.songData = await this.$store.dispatch('getSongInfo', { id })
+    //     }
 
-        this.expanded = !this.expanded
-      } catch (err) {
-        console.error(err)
-      }
+    //     this.expanded = !this.expanded
+    //   } catch (err) {
+    //     console.error(err)
+    //   }
 
-      this.loading = false
-    },
+    //   this.loading = false
+    // },
     play () {
       this.handleSelectOption()
       this.$store.dispatch('setPlayNow', [this.result])

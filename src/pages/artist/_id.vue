@@ -21,6 +21,7 @@
           v-for="(result, index) in results"
           :key="index"
           :result="result"
+          scroll-id="pagebox"
         />
       </div>
     </div>

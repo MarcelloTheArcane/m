@@ -1,8 +1,5 @@
 <template>
-  <div :class="{
-    'bg-yellow': highlightIndex,
-    'px-2 relative': true,
-  }">
+  <div class="px-2">
     <div class="flex flex-row items-center">
       <img v-lazy="result.image" class="w-16 h-16">
       <div :class="{
@@ -16,7 +13,7 @@
           {{ result.creator }}
         </p>
       </div>
-      <button @click="toggleExpanded" class="focus:outline-none p-3 text-gray-800">
+      <button @click="toggleExpanded" ref="toggle" class="focus:outline-none p-3 text-gray-800">
         <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="1"></circle>
           <circle cx="12" cy="5" r="1"></circle>
@@ -24,10 +21,7 @@
         </svg>
       </button>
     </div>
-    <div v-if="loading" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 pr-5 mt-1 mr-12 rounded z-20 text-gray-800">
-      Loading...
-    </div>
-    <div v-if="expanded" class="absolute top-0 right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
+    <div v-if="expanded" ref="menu" class="absolute right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
       <button
         @click="play"
         class="block w-full px-2 py-2 text-left text-gray-800"
@@ -78,6 +72,10 @@ export default {
       type: Object,
       required: true,
     },
+    scrollId: {
+      type: String,
+      required: true
+    },
   },
   data () {
     return {
@@ -102,17 +100,40 @@ export default {
     async toggleExpanded () {
       try {
         if (!this.songData) {
-          this.loading = true
           const id = this.result.location.slice(-27)
           this.songData = await this.$store.dispatch('getSongInfo', { id })
         }
 
-        this.expanded = !this.expanded
+        if (this.expanded) {
+          this.$refs.menu.style.top = ''
+          this.expanded = false
+        } else {
+          this.expanded = true
+          await this.$nextTick()
+          this.positionMenu()
+        }
+
       } catch (err) {
         console.error(err)
       }
+    },
+    positionMenu () {
+      const scrollbox = document.getElementById(this.scrollId)
+      
+      const toggle = this.$refs.toggle
+      const menu = this.$refs.menu
+      const scrollboxDimensions = scrollbox.getBoundingClientRect()
+      const toggleDimensions = toggle.getBoundingClientRect()
+      const menuDimensions = menu.getBoundingClientRect()
+      const maxHeight = Math.min(window.innerHeight, scrollboxDimensions.bottom)
 
-      this.loading = false
+      if (toggleDimensions.top + menuDimensions.height < maxHeight) {
+        const top = scrollbox.scrollTop + toggleDimensions.top - scrollboxDimensions.top - 4
+        menu.style.top = `${top}px`
+      } else {
+        const top = scrollbox.scrollTop + toggleDimensions.bottom - menuDimensions.height - scrollboxDimensions.top - 4
+        menu.style.top = `${top}px`
+      }
     },
     play () {
       this.handleSelectOption()

@@ -80,7 +80,7 @@
 
     <!-- Showing search -->
     <div v-else>
-      <label class="rounded-t-lg flex flex-row w-full text-gray-800 bg-white px-3 inline-block">
+      <label class="rounded-t-lg flex flex-row w-full text-gray-800 bg-white px-3">
         <button @click="clearSearch" class="inline focus:outline-none">
           <svg
             class="inline"
@@ -113,16 +113,17 @@
         {{ errorMessage }}
       </div>
 
-      <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md text-gray-800 text-gray-800">
+      <div v-else-if="searching" class="text-center rounded-b-lg p-2 bg-white shadow-md text-gray-800">
         Loading...
       </div>
 
-      <div v-else-if="results.length && query !== ''" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md">
+      <div v-else-if="results.length && query !== ''" id="searchbox" class="h-8/12 bg-white py-2 rounded-b-lg overflow-y-auto shadow-md relative">
         <song-result
           v-for="(result, index) in results"
           :key="index"
           :result="result"
           @select-link="clearSearch"
+          scroll-id="searchbox"
         />
       </div>
 
