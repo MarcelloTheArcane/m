@@ -148,8 +148,8 @@ export default {
         const top = scrollbox.scrollTop + toggleDimensions.top - scrollboxDimensions.top - 4
         menu.style.top = `${top}px`
       } else {
-        const top = scrollbox.scrollTop + toggleDimensions.bottom - menuDimensions.height - scrollboxDimensions.top - 4
-        menu.style.top = `${top}px`
+        const bottom = maxHeight - toggleDimensions.bottom + 4
+        menu.style.bottom = `${bottom}px`
       }
     },
     play () {
