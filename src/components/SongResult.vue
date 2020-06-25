@@ -162,8 +162,8 @@ export default {
       this.toggleDimensions = toggleDimensions
       this.window = window
 
-      const topWithinBounds = toggleDimensions.top + menuDimensions.height < maxHeight
-      const bottomWithinBounds = toggleDimensions.bottom + menuDimensions.height < maxHeight
+      const topWithinBounds = toggleDimensions.top + menuDimensions.height > maxHeight
+      const bottomWithinBounds = toggleDimensions.bottom + menuDimensions.height > maxHeight
 
       if (topWithinBounds && bottomWithinBounds) {
         const bottom = maxHeight - scrollbox.scrollTop - toggleDimensions.bottom + 4
