@@ -163,14 +163,13 @@ export default {
       this.window = window
 
       const topWithinBounds = toggleDimensions.top + menuDimensions.height > maxHeight
-      const bottomWithinBounds = toggleDimensions.bottom + menuDimensions.height > maxHeight
 
-      if (topWithinBounds && bottomWithinBounds) {
-        const bottom = maxHeight - scrollbox.scrollTop - toggleDimensions.bottom + 4
-        menu.style.bottom = `${bottom}px`
-      } else {
+      if (scrollboxDimensions.height < menuDimensions.height || !topWithinBounds) {
         const top = scrollbox.scrollTop + toggleDimensions.top - scrollboxDimensions.top - 4
         menu.style.top = `${top}px`
+      } else {
+        const bottom = maxHeight - scrollbox.scrollTop - toggleDimensions.bottom + 4
+        menu.style.bottom = `${bottom}px`
       }
     },
     play () {
