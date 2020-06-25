@@ -91,6 +91,28 @@
       >
         Move down
       </button>
+      <button
+        @click="startFolderAdd"
+        class="block w-full px-2 py-2 text-left text-gray-800"
+      >
+        Add to folder
+      </button>
+    </div>
+    <div v-if="folderAddExpanded" class="absolute right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20">
+      <button
+        v-for="(folder, index) in $store.getters['favourites/folders']"
+        :key="index"
+        class="block w-full px-2 py-2 text-left text-gray-800 select-none"
+        @click="addSongToFolder(folder)"
+      >
+        {{ folder }}
+      </button>
+      <input
+        placeholder="New folder..."
+        v-model="newFolderName"
+        class="block w-full px-2 py-2 text-left text-gray-800"
+        @keypress.enter="addSongToFolder(newFolderName)"
+      >
     </div>
   </div>
 </template>
@@ -113,6 +135,8 @@ export default {
       songData: null,
       loading: false,
       expanded: false,
+      folderAddExpanded: false,
+      newFolderName: '',
     }
   },
   computed: {
@@ -128,7 +152,9 @@ export default {
           this.songData = await this.$store.dispatch('getSongInfo', { id })
         }
 
-        if (this.expanded) {
+        if (this.folderAddExpanded) {
+          this.folderAddExpanded = false
+        } else if (this.expanded) {
           this.$refs.menu.style.top = ''
           this.expanded = false
         } else {
@@ -151,12 +177,15 @@ export default {
       const menuDimensions = menu.getBoundingClientRect()
       const maxHeight = Math.min(window.innerHeight, scrollboxDimensions.bottom)
 
-      if (toggleDimensions.top + menuDimensions.height < maxHeight) {
-        const top = scrollbox.scrollTop + toggleDimensions.top - scrollboxDimensions.top - 4
-        menu.style.top = `${top}px`
-      } else {
+      const topWithinBounds = toggleDimensions.top + menuDimensions.height < maxHeight
+      const bottomWithinBounds = toggleDimensions.bottom + menuDimensions.height < maxHeight
+
+      if (topWithinBounds && bottomWithinBounds) {
         const bottom = maxHeight - scrollbox.scrollTop - toggleDimensions.bottom + 4
         menu.style.bottom = `${bottom}px`
+      } else {
+        const top = scrollbox.scrollTop + toggleDimensions.top - scrollboxDimensions.top - 4
+        menu.style.top = `${top}px`
       }
     },
     play () {
@@ -186,6 +215,25 @@ export default {
     handleSelectOption () {
       this.expanded = false
       this.$emit('select-option')
+    },
+    startFolderAdd () {
+      this.expanded = false
+      this.folderAddExpanded = true
+    },
+    addSongToFolder (folder) {
+      if (this.$store.getters['favourites/locations'].includes(this.result.location)) {
+        this.$store.dispatch('favourites/setFolder', {
+          location: this.result.location,
+          folder,
+        })
+      } else {
+        this.$store.dispatch('favourites/add', {
+          song: this.result,
+          folder,
+        })
+      }
+      this.newFolderName = ''
+      this.folderAddExpanded = false
     },
   },
 }

@@ -160,12 +160,15 @@ export default {
       const menuDimensions = menu.getBoundingClientRect()
       const maxHeight = Math.min(window.innerHeight, scrollboxDimensions.bottom)
 
-      if (toggleDimensions.top + menuDimensions.height < maxHeight) {
-        const top = scrollbox.scrollTop + toggleDimensions.top - scrollboxDimensions.top - 4
-        menu.style.top = `${top}px`
-      } else {
+      const topWithinBounds = toggleDimensions.top + menuDimensions.height < maxHeight
+      const bottomWithinBounds = toggleDimensions.bottom + menuDimensions.height < maxHeight
+
+      if (topWithinBounds && bottomWithinBounds) {
         const bottom = maxHeight - scrollbox.scrollTop - toggleDimensions.bottom + 4
         menu.style.bottom = `${bottom}px`
+      } else {
+        const top = scrollbox.scrollTop + toggleDimensions.top - scrollboxDimensions.top - 4
+        menu.style.top = `${top}px`
       }
     },
     play () {
