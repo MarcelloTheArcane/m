@@ -27,101 +27,20 @@
       v-if="expanded"
       scroll-id="pagebox"
       :toggle-dimensions="$refs.toggle.getBoundingClientRect()"
+      :options="contextMenu"
       class="absolute right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20"
-    >
-      <button
-        v-if="isCurrentlyPlaying"
-        @click="restart"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Play
-      </button>
-      <button
-        v-else
-        @click="play"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Play
-      </button>
-      <button
-        @click="reload"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Reload
-      </button>
-      <button
-        @click="remove"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Remove
-      </button>
-      <router-link
-        @click.native="handleSelectOption()"
-        :to="`/artist/${songData.artistId[0]}`"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Artist
-      </router-link>
-      <router-link
-        @click.native="handleSelectOption()"
-        :to="`/album/${songData.albumId}`"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Album
-      </router-link>
-      <router-link
-        @click.native="handleSelectLink()"
-        :to="`/station/${songData.nid}/${songData.title}`"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Station
-      </router-link>
-      <a
-        :href="`whatsapp://send?text=${this.songData.title}, from http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Falbum%2F${this.songData.albumId}`"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-        @click="handleSelectOption()"
-      >
-        Share
-      </a>
-      <button
-        v-if="index !== 0"
-        @click="moveUp"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Move up
-      </button>
-      <button
-        v-if="index !== $store.state.playlist.length - 1"
-        @click="moveDown"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Move down
-      </button>
-      <button
-        @click="startFolderAdd"
-        class="block w-full px-2 py-2 text-left text-gray-800"
-      >
-        Add to folder
-      </button>
-    </context-menu>
+    />
     <context-menu
       v-if="folderAddExpanded"
       scroll-id="pagebox"
       :toggle-dimensions="$refs.toggle.getBoundingClientRect()"
+      :options="folderContextMenu"
       class="absolute right-0 bg-white shadow-lg border border-gray-200 p-2 mt-1 mr-12 rounded z-20"
     >
-      <button
-        v-for="(folder, index) in $store.getters['favourites/folders']"
-        :key="index"
-        class="block w-full px-2 py-2 text-left text-gray-800 select-none"
-        @click="addSongToFolder(folder)"
-      >
-        {{ folder }}
-      </button>
       <input
         placeholder="New folder..."
         v-model="newFolderName"
-        class="block w-full px-2 py-2 text-left text-gray-800 bg-transparent"
+        class="block w-full px-2 py-2 text-left text-gray-800 "
         @keypress.enter="addSongToFolder(newFolderName)"
       >
     </context-menu>
@@ -158,6 +77,99 @@ export default {
   computed: {
     isCurrentlyPlaying () {
       return this.index === this.$store.state.playingIndex
+    },
+    contextMenu () {
+      return [
+        {
+          text: 'Play',
+          el: 'button',
+          vOn: {
+            click: () => {
+              this.isCurrentlyPlaying ? this.restart() : this.play()
+            },
+          },
+        },
+        {
+          text: 'Reload',
+          el: 'button',
+          vOn: {
+            click: this.reload,
+          },
+        },
+        {
+          text: 'Remove',
+          el: 'button',
+          vOn: {
+            click: this.remove,
+          },
+        },
+        {
+          text: 'Artist',
+          el: 'router-link',
+          to: `/artist/${this.songData.artistId[0]}`,
+          vOn: {
+            click: this.handleSelectOption,
+          },
+        },
+        {
+          text: 'Album',
+          el: 'router-link',
+          to: `/album/${this.songData.albumId}`,
+          vOn: {
+            click: this.handleSelectOption,
+          },
+        },
+        {
+          text: 'Station',
+          el: 'router-link',
+          to: `/station/${this.songData.nid}/${this.songData.title}`,
+          vOn: {
+            click: this.handleSelectOption,
+          },
+        },
+        {
+          text: 'Share',
+          el: 'a',
+          href: `whatsapp://send?text=${this.songData.title}, from http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Falbum%2F${this.songData.albumId}`,
+          vOn: {
+            click: this.handleSelectOption,
+          },
+        },
+        {
+          text: 'Move up',
+          el: 'button',
+          vOn: {
+            click: this.moveUp,
+          },
+        },
+        {
+          text: 'Move down',
+          el: 'button',
+          vOn: {
+            click: this.moveDown,
+          },
+        },
+        {
+          text: 'Add to folder',
+          el: 'button',
+          vOn: {
+            click: this.startFolderAdd,
+          },
+        },
+      ]
+    },
+    folderContextMenu () {
+      return [
+        ...this.$store.getters['favourites/folders'].map(folder => ({
+          text: folder,
+          el: 'button',
+          vOn: {
+            click: () => {
+              this.addSongToFolder(folder)
+            },
+          },
+        })),
+      ]
     },
   },
   methods: {

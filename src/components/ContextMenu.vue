@@ -1,5 +1,16 @@
 <template>
   <div ref="menu">
+    <component
+      v-for="(item, index) in options"
+      :key="index"
+      :is="item.el"
+      v-on="item.vOn"
+      :to="item.to"
+      :href="item.href"
+      class="block w-full px-2 py-2 text-left text-gray-800 select-none bg-transparent"
+    >
+      {{ item.text }}
+    </component>
     <slot></slot>
   </div>
 </template>
@@ -15,6 +26,10 @@ export default {
     toggleDimensions: {
       type: DOMRect,
       required: true,
+    },
+    options: {
+      type: Array,
+      required: false,
     },
   },
   mounted () {
