@@ -169,7 +169,9 @@ export default {
       })
 
       element.addEventListener('ended', () => {
-        this.playNextSong()
+        if (this.$store.getters['hasNextSong']) {
+          this.playNextSong()
+        }
       })
 
       await element.play()
