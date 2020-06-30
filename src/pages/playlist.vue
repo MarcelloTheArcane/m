@@ -3,7 +3,7 @@
     <div class="flex h-full flex-col items-center relative">
       <img
         v-if="$store.getters.nowPlaying"
-        v-lazy="$store.getters.nowPlaying.image"
+        :src="$store.getters.nowPlaying.image"
         class="h-32 w-32 m-5 rounded"
         ref="image"
         @load="getColour"
