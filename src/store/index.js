@@ -256,9 +256,9 @@ export default new Vuex.Store({
       dispatch('audiocache/preload', newList[0])
       dispatch('audiocache/restart', newList[0])
     },
-    removeFromPlaylist ({ store, commit, dispatch }, index) {
+    removeFromPlaylist ({ state, commit, dispatch }, index) {
       commit('REMOVE_FROM_PLAYLIST', index)
-      dispatch('audiocache/removeCacheItem', store.playlist[index])
+      dispatch('audiocache/removeCacheItem', state.playlist[index])
     },
     clearPlaylist ({ state, commit, dispatch }) {
       state.playlist.forEach(item => dispatch('audiocache/removeCacheItem', item))
