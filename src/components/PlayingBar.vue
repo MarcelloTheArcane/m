@@ -164,6 +164,10 @@ export default {
         }
       })
 
+      element.addEventListener('error', () => {
+        setTimeout(this.playNextSong, 3000)
+      })
+
       element.addEventListener('ended', () => {
         this.playNextSong()
       })
