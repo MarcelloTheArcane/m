@@ -203,6 +203,10 @@ export default {
       this.handleSelectOption()
       this.$store.dispatch('moveSongDown', this.index)
     },
+    handleSelectLink () {
+      this.expanded = false
+      this.$emit('select-link')
+    },
     handleSelectOption () {
       this.expanded = false
       this.$emit('select-option')
