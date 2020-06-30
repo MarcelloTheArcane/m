@@ -120,7 +120,7 @@
       <input
         placeholder="New folder..."
         v-model="newFolderName"
-        class="block w-full px-2 py-2 text-left text-gray-800"
+        class="block w-full px-2 py-2 text-left text-gray-800 bg-transparent"
         @keypress.enter="addSongToFolder(newFolderName)"
       >
     </context-menu>
