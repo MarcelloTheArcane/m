@@ -79,6 +79,7 @@
       <a
         :href="`whatsapp://send?text=${this.songData.title}, from http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Falbum%2F${this.songData.albumId}`"
         class="block w-full px-2 py-2 text-left text-gray-800"
+        @click="handleSelectOption()"
       >
         Share
       </a>
