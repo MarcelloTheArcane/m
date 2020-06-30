@@ -17,7 +17,7 @@
       <h1 class="text-lg text-center">
         Playlist
       </h1>
-      <h2 v-if="$store.getters.nowPlaying" class="text-base text-center px-6">
+      <h2 v-if="$store.getters.nowPlaying" class="text-base text-center px-6 mb-4">
         Now playing:<br>
         {{ $store.getters.nowPlaying.title }}
       </h2>
