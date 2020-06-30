@@ -260,6 +260,10 @@ export default new Vuex.Store({
       commit('REMOVE_FROM_PLAYLIST', index)
       dispatch('audiocache/removeCacheItem', store.playlist[index])
     },
+    clearPlaylist ({ state, commit, dispatch }) {
+      state.playlist.forEach(item => dispatch('audiocache/removeCacheItem', item))
+      commit('SET_PLAYLIST', [])
+    },
     moveSongUp ({ state, commit }, index) {
       if (index === 0) {
         return
