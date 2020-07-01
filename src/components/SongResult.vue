@@ -129,10 +129,9 @@ export default {
         },
         {
           text: 'Share',
-          el: 'a',
-          href: `whatsapp://send?text=${this.songData.title}, from http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Falbum%2F${this.songData.albumId}`,
+          el: 'button',
           vOn: {
-            click: this.handleSelectOption,
+            click: this.shareSong,
           },
         },
         {
@@ -200,6 +199,18 @@ export default {
     handleSelectLink () {
       this.expanded = false
       this.$emit('select-link')
+    },
+    async shareSong () {
+      const id = await this.$store.dispatch('db/createList', {
+        name: this.songData.title,
+        songs: [this.result],
+      })
+
+      if (navigator.userAgent.match(/android/i)) {
+        window.open(`whatsapp://send?text=http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Flist%2F${id}`, '_blank')
+      } else {
+        this.$router.push(`/list/${id}`)
+      }
     },
     startFolderAdd () {
       this.expanded = false
