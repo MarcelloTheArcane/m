@@ -6,7 +6,7 @@
         class="h-32 w-32 m-5 rounded"
       >
 
-      <h1 class="text-lg text-center mb-4">
+      <h1 class="text-lg text-center">
         Favourites
       </h1>
 
