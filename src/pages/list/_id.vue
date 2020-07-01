@@ -1,6 +1,9 @@
 <template>
   <div class="bg-transparent">
-    <div v-if="!this.result.exists" class="text-center text-red-600">
+    <div v-if="loading" class="text-center text-gray-800">
+      Loading...
+    </div>
+    <div v-else-if="!this.result.exists" class="text-center text-red-600">
       This list can't be found.
     </div>
     <div v-else class="flex flex-col items-center h-full relative">
@@ -40,11 +43,13 @@ export default {
   },
   data () {
     return {
+      loading: true,
       result: {},
     }
   },
   async mounted () {
     this.result = await this.$store.dispatch('db/getList', this.$route.params.id)
+    this.loading = false
   },
   metaInfo () {
     return {
