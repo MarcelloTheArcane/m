@@ -10,9 +10,8 @@
       </h1>
 
       <button-list
-        @play-all="playAll"
-        @play-next="playNext"
-        @append-queue="appendQueue"
+        :list="results"
+        :list-name="artistData.creator"
         class="mt-5"
       />
 
@@ -60,20 +59,6 @@ export default {
       return this.results.length
         ? this.results[0]
         : {}
-    },
-  },
-  methods: {
-    playAll () {
-      this.$store.dispatch('setPlaylist', this.results)
-    },
-    playNext () {
-      this.$store.dispatch('setPlayNext', this.results)
-    },
-    appendQueue () {
-      this.$store.dispatch('addToPlaylist', {
-        index: this.$store.state.playlist.length,
-        newList: this.results,
-      })
     },
   },
   metaInfo () {

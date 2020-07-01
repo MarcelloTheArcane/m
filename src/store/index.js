@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import cache from './cache.js'
+import db from './db.js'
 import audiocache from './audiocache.js'
 import colourcache from './colourcache.js'
 import favourites from './favourites.js'
@@ -302,6 +303,7 @@ export default new Vuex.Store({
   },
   modules: {
     cache,
+    db,
     audiocache,
     colourcache,
     favourites,

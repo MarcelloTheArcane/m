@@ -6,7 +6,7 @@
         class="h-32 w-32 m-5 rounded"
       >
 
-      <h1 class="text-lg text-center">
+      <h1 class="text-lg text-center mb-4">
         Favourites
       </h1>
 
@@ -48,9 +48,8 @@
           <div v-if="showingFolder.includes(name)">
             <button-list
               v-if="folder.length !== 0"
-              @play-all="playAll(folder)"
-              @play-next="playNext(folder)"
-              @append-queue="appendQueue(folder)"
+              :list="folder"
+              :list-name="name"
               class="mt-0 mb-4"
             />
             <favourites-result
@@ -103,18 +102,6 @@ export default {
         // Add to the start, so removing is quicker
         this.showingFolder.splice(0, 0, name)
       }
-    },
-    playAll (songs) {
-      this.$store.dispatch('setPlaylist', songs.map(({ song }) => song))
-    },
-    playNext (songs) {
-      this.$store.dispatch('setPlayNext', songs.map(({ song }) => song))
-    },
-    appendQueue (songs) {
-      this.$store.dispatch('addToPlaylist', {
-        index: this.$store.state.playlist.length,
-        newList: songs.map(({ song }) => song),
-      })
     },
   },
   mounted () {

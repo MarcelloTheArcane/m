@@ -17,13 +17,21 @@
       <h1 class="text-lg text-center">
         Playlist
       </h1>
-      <h2 v-if="$store.getters.nowPlaying" class="text-base text-center px-6 mb-4">
+      <h2 v-if="$store.getters.nowPlaying" class="text-base text-center px-6">
         Now playing:<br>
         {{ $store.getters.nowPlaying.title }}
       </h2>
 
-      <div class="w-full bg-white rounded-t-lg p-3 flex flex-row">
+      <div class="w-full bg-white rounded-t-lg p-3 mt-5 flex flex-row">
         <span class="flex-1">&nbsp;</span>
+        <button
+          v-if="$store.state.playlist.length !== 0"
+          @click="shareList"
+          class="border-gray-500 border text-center text-sm ml-2 py-2 px-3 bg-gray-200 text-gray-800"
+          title="Share playlist"
+        >
+          Share
+        </button>
         <button
           v-if="$store.state.playlist.length !== 0"
           @click="$store.dispatch('clearPlaylist')"
@@ -81,6 +89,18 @@ export default {
         image,
         url: this.$store.getters.nowPlaying.image,
       })
+    },
+    async shareList () {
+      const id = await this.$store.dispatch('db/createList', {
+        name: 'My playlist',
+        songs: this.$store.state.playlist,
+      })
+
+      if (navigator.userAgent.match(/android/i)) {
+        window.open(`whatsapp://send?text=http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Flist%2F${id}`, '_blank')
+      } else {
+        this.$router.push(`/list/${id}`)
+      }
     },
   },
   beforeDestroy () {

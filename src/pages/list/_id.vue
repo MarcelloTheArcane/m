@@ -1,25 +1,25 @@
 <template>
   <div class="bg-transparent">
-    <div v-if="errorMessage" class="text-center text-red-600">
-      {{ errorMessage }}
+    <div v-if="!this.result.exists" class="text-center text-red-600">
+      This list can't be found.
     </div>
     <div v-else class="flex flex-col items-center h-full relative">
       <img src="@/assets/defaultimage.png" class="h-32 w-32 m-5 rounded">
       <h1 class="text-lg text-center px-6">
-        {{ this.$route.params.name }}
+        {{ this.result.name }}
       </h1>
 
       <button-list
         :list="results"
-        :list-name="this.$route.params.name"
+        :list-name="this.result.name"
         class="mt-5"
       />
 
       <div class="w-full flex-1 bg-white">
         <song-result
-          v-for="(result, index) in results"
+          v-for="(song, index) in result.songs"
           :key="index"
-          :result="result"
+          :result="song"
           scroll-id="pagebox"
         />
       </div>
@@ -28,34 +28,29 @@
 </template>
 
 <script>
-import SongResult from '@/components/SongResult.vue'
+// import uuid from 'uuid'
 import ButtonList from '@/components/ButtonList.vue'
+import SongResult from '@/components/SongResult.vue'
 
 export default {
-  name: 'StationPage',
+  name: 'TheList',
   components: {
-    SongResult,
     ButtonList,
+    SongResult,
   },
   data () {
     return {
-      results: [],
-      errorMessage: '',
+      result: {},
     }
   },
   async mounted () {
-    try {
-      this.results = await this.$store.dispatch('getListenNowList', {
-        station: this.$route.params.id,
-      })
-    } catch (err) {
-      console.error(err)
-      this.errorMessage = err.message
-    }
+    this.result = await this.$store.dispatch('db/getList', this.$route.params.id)
   },
   metaInfo () {
     return {
-      title: this.$route.params.name,
+      title: this.result.name
+        ? this.result.name
+        : 'Loading...',
     }
   },
 }

@@ -11,9 +11,8 @@
       </h1>
 
       <button-list
-        @play-all="playAll"
-        @play-next="playNext"
-        @append-queue="appendQueue"
+        :list="results"
+        :list-name="this.$route.params.name"
         class="mt-5"
       />
 
@@ -55,20 +54,6 @@ export default {
       console.error(err)
       this.errorMessage = err.message
     }
-  },
-  methods: {
-    playAll () {
-      this.$store.dispatch('setPlaylist', this.results)
-    },
-    playNext () {
-      this.$store.dispatch('setPlayNext', this.results)
-    },
-    appendQueue () {
-      this.$store.dispatch('addToPlaylist', {
-        index: this.$store.state.playlist.length,
-        newList: this.results,
-      })
-    },
   },
   metaInfo () {
     return {

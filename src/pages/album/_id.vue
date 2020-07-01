@@ -18,9 +18,8 @@
       </h2>
 
       <button-list
-        @play-all="playAll"
-        @play-next="playNext"
-        @append-queue="appendQueue"
+        :list="results"
+        :list-name="albumData.album"
         class="mt-5"
       />
 
@@ -79,18 +78,6 @@ export default {
     },
   },
   methods: {
-    playAll () {
-      this.$store.dispatch('setPlaylist', this.results)
-    },
-    playNext () {
-      this.$store.dispatch('setPlayNext', this.results)
-    },
-    appendQueue () {
-      this.$store.dispatch('addToPlaylist', {
-        index: this.$store.state.playlist.length,
-        newList: this.results,
-      })
-    },
     getColour () {
       const image = this.$refs.image
       image.crossOrigin = 'Anonymous'
