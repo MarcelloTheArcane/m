@@ -48,7 +48,7 @@
           <div v-if="showingFolder.includes(name)">
             <button-list
               v-if="folder.length !== 0"
-              :list="folder"
+              :list="$store.getters['favourites/byFolder'][name].map(({ song }) => song)"
               :list-name="name"
               class="mt-0 mb-4"
             />
