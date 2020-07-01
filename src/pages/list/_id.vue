@@ -13,7 +13,7 @@
       </h1>
 
       <button-list
-        :list="results"
+        :list="result.songs"
         :list-name="this.result.name"
         class="mt-5"
       />
