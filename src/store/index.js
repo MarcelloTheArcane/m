@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import storeSubscriptions from '@/plugins/storeSubscriptions.js'
+
 import cache from './cache.js'
 import db from './db.js'
 import audiocache from './audiocache.js'
@@ -10,6 +12,7 @@ import favourites from './favourites.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [storeSubscriptions],
   state () {
     return {
       playlist: [],

@@ -3,6 +3,7 @@ import Vue from 'vue'
 const v1StorageKey = 'gmp_favourites_v1'
 const v2StorageKey = 'gmp_favourites_v2'
 const v3StorageKey = 'gmp_favourites_v3'
+// remember to update ./plugins/storeSubscriptions.js
 
 export default {
   namespaced: true,
@@ -14,16 +15,12 @@ export default {
   mutations: {
     ADD_FAVOURITE (state, { folder = 'Uncategorised', song }) {
       state[folder].push(song)
-
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
     DELETE_FAVOURITE (state, { folder, index }) {
       state[folder].splice(index, 1)
       if (state[folder].length === 0) {
         delete state[folder]
       }
-
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
     MIGRATE (state) {
       const v1Data = JSON.parse(localStorage.getItem(v1StorageKey))
@@ -34,7 +31,6 @@ export default {
           Uncategorised: v1Data
         }
 
-        localStorage.setItem(v3StorageKey, JSON.stringify(newData))
         localStorage.removeItem(v1StorageKey)
         state.splice(0, state.length, ...newData)
       } else if (v2Data) {
@@ -49,8 +45,8 @@ export default {
           return final
         }, {})
 
+        localStorage.removeItem(v2StorageKey)
         localStorage.setItem(v3StorageKey, JSON.stringify(newData))
-        // localStorage.removeItem(v2StorageKey)
         state = newData
       }
     },
@@ -60,29 +56,19 @@ export default {
       } else {
         Vue.set(state, folder, [song])
       }
-
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
     MOVE_UP (state, { folder, index }) {
       state[folder].splice(index - 1, 0, ...state[folder].splice(index, 1))
-      
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
     MOVE_DOWN (state, { folder, index }) {
       state[folder].splice(index + 1, 0, ...state[folder].splice(index, 1))
-
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
     RENAME_FOLDER (state, { oldName, newName }) {
       delete Object.assign(state, {[newName]: state[oldName] })[oldName]
-
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
     MERGE_FOLDER (state, { oldName, newName }) {
       state[newName].push(...state[oldName])
       delete state[oldName]
-
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     }
   },
   actions: {
@@ -124,12 +110,12 @@ export default {
   },
   getters: {
     folders (state) {
-      return Object.keys(state)
+      return Object.keys(state.favourites)
     },
     locations (state) {
       const songListSet = new Set()
-      for (const index in state) {
-        state[index].forEach(({ location }) => songListSet.add(location))
+      for (const index in state.favourites) {
+        state.favourites[index].forEach(({ location }) => songListSet.add(location))
       }
       return Array.from(songListSet)
     },
