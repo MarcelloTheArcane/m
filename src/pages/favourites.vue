@@ -23,7 +23,7 @@
         />
 
         <p
-          v-if="$store.state.favourites.length === 0"
+          v-if="$store.getters['favourites/locations'].length === 0"
           class="text-center text-gray-800"
         >
           Your favourites list is empty
