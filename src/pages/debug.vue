@@ -39,6 +39,12 @@
       </button>
       <pre v-if="showingFavourites">{{ $store.state.favourites }}</pre>
     </p>
+    <p>
+      <button @click="showingOldFavourites = !showingOldFavourites">
+        Toggle old favourites
+      </button>
+      <pre v-if="showingOldFavourites">{{ oldFavourites }}</pre>
+    </p>
   </div>
 </template>
 
@@ -52,6 +58,7 @@ export default {
       showingStore: false,
       showingPlaylist: false,
       showingFavourites: false,
+      showingOldFavourites: false,
       showingAudioCache: false,
       version: 'Loading...',
     }
@@ -66,6 +73,20 @@ export default {
         4: 'Have enough data',
       }[state] || 'Unknown state: ' + state
     },
+  },
+  computed: {
+    oldFavourites () {
+      return `
+v1:
+${ JSON.stringify(JSON.parse(localStorage.getItem('gmp_favourites_v1')), null, 2) }
+
+v2:
+${ JSON.stringify(JSON.parse(localStorage.getItem('gmp_favourites_v2')), null, 2) }
+
+v3:
+${ JSON.stringify(JSON.parse(localStorage.getItem('gmp_favourites_v3')), null, 2) }
+      `
+    }
   },
   async mounted () {
     const { data } = await axios.get(`${process.env.VUE_APP_PROXY_URL}/get_version`)
