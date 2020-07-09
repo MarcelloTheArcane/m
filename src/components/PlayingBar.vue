@@ -269,7 +269,7 @@ export default {
   },
   mounted () {
     this.updateProgress()
-    this.intervalId = setInterval(this.updateProgress, 750)
+    this.intervalId = setInterval(this.updateProgress, 1000)
     this.playCurrentSong()
     this.loadNextSong()
 
