@@ -78,7 +78,7 @@ export default {
     },
     MERGE_FOLDER (state, { oldName, newName }) {
       state[newName].push(...state[oldName])
-      delete state[oldName]
+      Vue.delete(state, oldName)
     },
   },
   actions: {
