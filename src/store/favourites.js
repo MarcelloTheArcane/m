@@ -75,15 +75,11 @@ export default {
     },
     RENAME_FOLDER (state, { oldName, newName }) {
       delete Object.assign(state, {[newName]: state[oldName] })[oldName]
-
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
     MERGE_FOLDER (state, { oldName, newName }) {
       state[newName].push(...state[oldName])
       delete state[oldName]
-
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
-    }
+    },
   },
   actions: {
     add ({ commit }, { song, folder }) {
@@ -110,7 +106,7 @@ export default {
         commit('MIGRATE')
       }
     },
-    renameFolder ({ commit, getters }, { oldName, newName }) {
+    renameFolder ({ commit, getters, state }, { oldName, newName }) {
       if (oldName === newName || newName === '') {
         return
       }
@@ -120,6 +116,8 @@ export default {
       } else {
         commit('RENAME_FOLDER', { oldName, newName })
       }
+
+      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
   },
   getters: {
