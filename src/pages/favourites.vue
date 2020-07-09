@@ -15,57 +15,12 @@
       </div>
 
       <div class="w-full flex-1 bg-white">
-        <div
-          v-for="(folder, name) in $store.getters['favourites/byFolder']"
+        <favourites-folder
+          v-for="(folder, name) in $store.state.favourites"
           :key="name"
-          class="mb-6"
-        >
-          <div
-            class="mb-2 px-2 flex flex-row justify-between items-center cursor-pointer"
-            @click="toggleFolder(name)"
-          >
-            <h2 class="text-xl select-none">
-              {{ name }}
-            </h2>
-            <svg
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-              stroke="currentColor"
-              stroke-width="2"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              :style="{
-                transition: 'transform 0.2s',
-                transform: showingFolder.includes(name) ? 'rotate(-180deg)' : 'rotate(0)'
-              }"
-            >
-              <polyline points="18 15 12 9 6 15"></polyline>
-            </svg>
-          </div>
-
-          <div v-if="showingFolder.includes(name)">
-            <button-list
-              v-if="folder.length !== 0"
-              :list="$store.getters['favourites/byFolder'][name].map(({ song }) => song)"
-              :list-name="name"
-              class="mt-0 mb-4"
-            />
-            <favourites-result
-              v-for="(result, index) in folder"
-              :key="index"
-              :result="result.song"
-              :index="index"
-            />
-            <p
-              v-if="folder.length === 0"
-              class="text-center text-gray-800"
-            >
-              This folder is empty
-            </p>
-          </div>
-        </div>
+          :folder="folder"
+          :name="name"
+        />
 
         <p
           v-if="$store.state.favourites.length === 0"
@@ -79,30 +34,12 @@
 </template>
 
 <script>
-import FavouritesResult from '../components/FavouritesResult.vue'
-import ButtonList from '../components/ButtonList.vue'
+import FavouritesFolder from '../components/FavouritesFolder.vue'
 
 export default {
   name: 'FavouritesPage',
   components: {
-    FavouritesResult,
-    ButtonList,
-  },
-  data () {
-    return {
-      showingFolder: [],
-    }
-  },
-  methods: {
-    toggleFolder (name) {
-      if (this.showingFolder.includes(name)) {
-        const newShowingFolder = this.showingFolder.filter(folder => folder !== name)
-        this.showingFolder.splice(0, this.showingFolder.length, ...newShowingFolder)
-      } else {
-        // Add to the start, so removing is quicker
-        this.showingFolder.splice(0, 0, name)
-      }
-    },
+    FavouritesFolder,
   },
   mounted () {
     this.$store.dispatch('favourites/migrate')

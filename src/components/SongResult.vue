@@ -219,8 +219,8 @@ export default {
     addSongToFolder (folder) {
       if (this.$store.getters['favourites/locations'].includes(this.result.location)) {
         this.$store.dispatch('favourites/setFolder', {
-          location: this.result.location,
           folder,
+          song: this.result,
         })
       } else {
         this.$store.dispatch('favourites/add', {
