@@ -54,6 +54,15 @@ export default {
     ContextMenu,
   },
   props: {
+    folder: {
+      type: String,
+      required: false,
+      default: 'Uncategorised',
+    },
+    id: {
+      type: Number,
+      required: true,
+    },
     result: {
       type: Object,
       required: true,
@@ -137,6 +146,34 @@ export default {
             click: this.shareSong,
           },
         },
+        ... this.id !== 0 ? [{
+          text: 'Move up',
+          el: 'button',
+          vOn: {
+            click: () => {
+              this.$store.dispatch('favourites/moveUp', {
+                folder: this.folder,
+                index: this.id,
+              })
+
+              this.handleSelectOption()
+            },
+          },
+        }] : [],
+        ... this.id !== this.$store.state.favourites[this.folder].length - 1 ? [{
+          text: 'Move down',
+          el: 'button',
+          vOn: {
+            click: () => {
+              this.$store.dispatch('favourites/moveDown', {
+                folder: this.folder,
+                index: this.id,
+              })
+
+              this.handleSelectOption()
+            },
+          },
+        }] : [],
         {
           text: 'Add to folder',
           el: 'button',
@@ -197,7 +234,10 @@ export default {
     },
     remove () {
       this.handleSelectOption()
-      this.$store.dispatch('favourites/delete', this.result)
+      this.$store.dispatch('favourites/delete', {
+        folder: this.folder,
+        index: this.id,
+      })
     },
     handleSelectOption () {
       this.expanded = false
@@ -225,8 +265,8 @@ export default {
     },
     addSongToFolder (folder) {
       this.$store.dispatch('favourites/setFolder', {
-        location: this.result.location,
         folder,
+        song: this.result,
       })
       this.newFolderName = ''
       this.folderAddExpanded = false
