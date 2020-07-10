@@ -54,6 +54,7 @@ export default {
       })
 
       if (navigator.userAgent.match(/android/i)) {
+        this.$router.push(`/list/${id}`)
         window.open(`whatsapp://send?text=http%3A%2F%2Fec2-34-247-52-128.eu-west-1.compute.amazonaws.com%3A8080%2F%23%2Flist%2F${id}`, '_blank')
       } else {
         this.$router.push(`/list/${id}`)
