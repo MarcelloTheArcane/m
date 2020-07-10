@@ -14,7 +14,11 @@ export default {
   },
   mutations: {
     ADD_FAVOURITE (state, { folder = 'Uncategorised', song }) {
-      state[folder].push(song)
+      if (state[folder]) {
+        state[folder].push(song)
+      } else {
+        Vue.set(state, folder, [song])
+      }
     },
     DELETE_FAVOURITE (state, { folder, index }) {
       state[folder].splice(index, 1)
