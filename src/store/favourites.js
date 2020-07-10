@@ -29,7 +29,9 @@ export default {
     MIGRATE (state) {
       const v1Data = JSON.parse(localStorage.getItem(v1StorageKey))
       const v2Data = JSON.parse(localStorage.getItem(v2StorageKey))
-      if (v1Data) {
+      const v3Data = JSON.parse(localStorage.getItem(v3StorageKey))
+
+      if (v1Data && !v2Data) {
         console.info('Migrating v1 data')
         const newData = {
           Uncategorised: v1Data
@@ -37,7 +39,7 @@ export default {
 
         localStorage.removeItem(v1StorageKey)
         state.splice(0, state.length, ...newData)
-      } else if (v2Data) {
+      } else if (v2Data && !v3Data) {
         console.info('Migrating v2 data')
         const newData = v2Data.reduce((final, item) => {
           if (final[item.folder]) {
