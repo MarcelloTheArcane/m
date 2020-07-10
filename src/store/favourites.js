@@ -112,12 +112,12 @@ export default {
   },
   getters: {
     folders (state) {
-      return Object.keys(state.favourites)
+      return Object.keys(state)
     },
     locations (state) {
       const songListSet = new Set()
-      for (const index in state.favourites) {
-        state.favourites[index].forEach(({ location }) => songListSet.add(location))
+      for (const index in state) {
+        state[index].forEach(({ location }) => songListSet.add(location))
       }
       return Array.from(songListSet)
     },
