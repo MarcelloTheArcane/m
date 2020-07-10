@@ -68,8 +68,8 @@ export default {
     },
     MERGE_FOLDER (state, { oldName, newName }) {
       state[newName].push(...state[oldName])
-      delete state[oldName]
-    }
+      Vue.delete(state, oldName)
+    },
   },
   actions: {
     add ({ commit }, { song, folder }) {
@@ -96,7 +96,7 @@ export default {
         commit('MIGRATE')
       }
     },
-    renameFolder ({ commit, getters }, { oldName, newName }) {
+    renameFolder ({ commit, getters, state }, { oldName, newName }) {
       if (oldName === newName || newName === '') {
         return
       }
@@ -106,6 +106,8 @@ export default {
       } else {
         commit('RENAME_FOLDER', { oldName, newName })
       }
+
+      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
   },
   getters: {
