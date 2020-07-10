@@ -22,9 +22,7 @@
       <div class="mx-2 flex flex-row md:flex-1 pl-0">
         <img v-lazy="song.image" class="w-12 h-12 my-1">
         <div class="mx-2 flex-1 min-w-0">
-          <p class="text-sm truncate w-full">
-            {{ song.title }}
-          </p>
+          <marquee-text class="text-sm h-5" :text="song.title" />
           <p class="text-xs truncate w-full">
             {{ song.album }}
           </p>
@@ -107,8 +105,13 @@
 </template>
 
 <script>
+import MarqueeText from '@/components/MarqueeText.vue'
+
 export default {
   name: 'PlayingBar',
+  components: {
+    MarqueeText,
+  },
   props: {
     song: {
       type: Object,
