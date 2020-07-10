@@ -19,7 +19,7 @@ export default {
     DELETE_FAVOURITE (state, { folder, index }) {
       state[folder].splice(index, 1)
       if (state[folder].length === 0) {
-        delete state[folder]
+        Vue.delete(state, folder)
       }
     },
     MIGRATE (state) {
@@ -64,7 +64,7 @@ export default {
       state[folder].splice(index + 1, 0, ...state[folder].splice(index, 1))
     },
     RENAME_FOLDER (state, { oldName, newName }) {
-      delete Object.assign(state, {[newName]: state[oldName] })[oldName]
+      Vue.delete(Object.assign(state, {[newName]: state[oldName] }), oldName)
     },
     MERGE_FOLDER (state, { oldName, newName }) {
       state[newName].push(...state[oldName])
