@@ -45,6 +45,12 @@
       </button>
       <pre v-if="showingOldFavourites">{{ oldFavourites }}</pre>
     </p>
+    <p>
+      <button @click="showingNetworkData = !showingNetworkData">
+        Toggle network data
+      </button>
+      <pre v-if="showingNetworkData">{{ networkData }}</pre>
+    </p>
   </div>
 </template>
 
@@ -60,7 +66,16 @@ export default {
       showingFavourites: false,
       showingOldFavourites: false,
       showingAudioCache: false,
+      showingNetworkData: false,
       version: 'Loading...',
+      networkData: {
+        downlink: navigator.connection.downlink,
+        downlinkMax: navigator.connection.downlinkMax,
+        effectiveType: navigator.connection.effectiveType,
+        rtt: navigator.connection.rtt,
+        saveData: navigator.connection.saveData,
+        type: navigator.connection.type,
+      }
     }
   },
   filters: {
@@ -91,6 +106,10 @@ ${ JSON.stringify(JSON.parse(localStorage.getItem('gmp_favourites_v3')), null, 2
   async mounted () {
     const { data } = await axios.get(`${process.env.VUE_APP_PROXY_URL}/get_version`)
     this.version = data.version
+
+    navigator.connection.onchange = () => {
+      this.networkData = navigator.connection
+    }
   },
 }
 </script>
