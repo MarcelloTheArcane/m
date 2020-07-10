@@ -96,7 +96,7 @@ export default {
         commit('MIGRATE')
       }
     },
-    renameFolder ({ commit, getters, state }, { oldName, newName }) {
+    renameFolder ({ commit, getters }, { oldName, newName }) {
       if (oldName === newName || newName === '') {
         return
       }
@@ -106,8 +106,6 @@ export default {
       } else {
         commit('RENAME_FOLDER', { oldName, newName })
       }
-
-      localStorage.setItem(v3StorageKey, JSON.stringify(state))
     },
   },
   getters: {
