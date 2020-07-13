@@ -30,14 +30,14 @@ export default {
 
       await this.$nextTick()
 
-      const scroll = this.$refs.text1.offsetWidth + 'px'
-      const offset = this.$refs.container.offsetWidth + 'px'
+      const scroll = this.$refs.text1.offsetWidth
+      const offset = this.$refs.container.offsetWidth
 
       if (scroll >= offset) {
-        this.$refs.text1.style.setProperty('--scroll', scroll)
-        this.$refs.text1.style.setProperty('--offset', offset)
-        this.$refs.text2.style.setProperty('--scroll', scroll)
-        this.$refs.text2.style.setProperty('--offset', offset)
+        this.$refs.text1.style.setProperty('--scroll', scroll + 'px')
+        this.$refs.text1.style.setProperty('--offset', offset + 'px')
+        this.$refs.text2.style.setProperty('--scroll', scroll + 'px')
+        this.$refs.text2.style.setProperty('--offset', offset + 'px')
   
         this.$refs.text1.classList.add('animate')
         this.$refs.text2.classList.add('animate')
