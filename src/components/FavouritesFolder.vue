@@ -8,7 +8,7 @@
           v-model="newName"
           @blur="$store.dispatch('favourites/renameFolder', { oldName, newName })"
           type="text"
-          class="w-full"
+          class="w-full bg-transparent"
         >
       </h2>
       <button
