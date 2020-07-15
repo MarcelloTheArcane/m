@@ -248,7 +248,7 @@ export default {
       } else {
         this.$store.dispatch('favourites/add', {
           song: this.result,
-          folder,
+          folder: this.newFolderName,
         })
       }
       this.newFolderName = ''
