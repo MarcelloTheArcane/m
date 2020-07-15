@@ -66,6 +66,7 @@ export default {
 }
 
 .text-2.animate {
+  display: block;
   animation: scroll 16s linear infinite;
 }
 
@@ -79,6 +80,7 @@ export default {
   --scroll: 0;
   --offset: 0;
   margin-left: var(--offset);
+  display: none;
 }
 
 @keyframes scroll {
