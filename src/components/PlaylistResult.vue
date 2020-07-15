@@ -40,7 +40,7 @@
       <input
         placeholder="New folder..."
         v-model="newFolderName"
-        class="block w-full px-2 py-2 text-left text-gray-800 "
+        class="block w-full px-2 py-2 text-left text-gray-800"
         @keypress.enter="addSongToFolder(newFolderName)"
       >
     </context-menu>
@@ -248,7 +248,7 @@ export default {
       } else {
         this.$store.dispatch('favourites/add', {
           song: this.result,
-          folder: this.newFolderName,
+          folder,
         })
       }
       this.newFolderName = ''
