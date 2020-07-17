@@ -5,7 +5,7 @@
     </div>
     <div v-else class="flex flex-col items-center h-full relative">
       <img
-        v-lazy="albumData.image"
+        :src="albumData.image"
         class="h-32 w-32 m-5 rounded"
       >
       <h1 class="text-lg text-center px-6">

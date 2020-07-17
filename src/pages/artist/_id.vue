@@ -4,7 +4,7 @@
       {{ errorMessage }}
     </div>
     <div v-else class="flex flex-col items-center h-full relative">
-      <img v-lazy="artistData.image" class="h-32 w-32 m-5 rounded">
+      <img :src="artistData.image" class="h-32 w-32 m-5 rounded">
       <h1 class="text-lg text-center px-6">
         {{ artistData.creator }}
       </h1>
