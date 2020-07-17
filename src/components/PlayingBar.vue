@@ -163,7 +163,7 @@ export default {
       element.addEventListener('progress', (event) => {
         const audioElement = event.target
         const buffered = (audioElement.buffered.end(0) * 100) / audioElement.duration
-        document.documentElement.style
+        this.$refs.progress.style
           .setProperty('--progress-buffered', buffered.toFixed(3) + '%')
       })
 
@@ -306,6 +306,10 @@ export default {
 </script>
 
 <style scoped>
+progress {
+  --progress-buffered: 0%;
+}
+
 .playing-bar {
   --bar-colour-fg-light: #2d3748;
   --bar-colour-bg-light: #edf2f7;
