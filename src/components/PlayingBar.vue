@@ -253,10 +253,10 @@ export default {
       console.log(colours)
 
       const playingBar = this.$refs.playingBar
-      playingBar.style.setProperty('--colour-fg-light', `#${colours.dark}`)
-      playingBar.style.setProperty('--colour-bg-light', `#${colours.light}`)
-      playingBar.style.setProperty('--colour-fg-dark', `#${colours.light}`)
-      playingBar.style.setProperty('--colour-bg-dark', `#${colours.dark}`)
+      playingBar.style.setProperty('--bar-colour-fg-light', `#${colours.dark}`)
+      playingBar.style.setProperty('--bar-colour-bg-light', `#${colours.light}`)
+      playingBar.style.setProperty('--bar-colour-fg-dark', `#${colours.light}`)
+      playingBar.style.setProperty('--bar-colour-bg-dark', `#${colours.dark}`)
     },
     resetPlay () {
       this.songProgress = 0
@@ -307,16 +307,16 @@ export default {
 
 <style scoped>
 .playing-bar {
-  --bg-colour-fg-light: #2d3748;
-  --bg-colour-bg-light: #edf2f7;
-  --bg-colour-fg-dark: #edf2f7;
-  --bg-colour-bg-dark: #2d3748;
+  --bar-colour-fg-light: #2d3748;
+  --bar-colour-bg-light: #edf2f7;
+  --bar-colour-fg-dark: #edf2f7;
+  --bar-colour-bg-dark: #2d3748;
 }
 
 @media (prefers-color-scheme: light) {
   .playing-bar {
-    color: var(--bg-colour-fg-light);
-    background-color: var(--bg-colour-bg-light);
+    color: var(--bar-colour-fg-light);
+    background-color: var(--bar-colour-bg-light);
   }
 
   progress[value]::-webkit-progress-bar {
