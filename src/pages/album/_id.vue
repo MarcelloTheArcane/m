@@ -7,6 +7,8 @@
       <img
         :src="albumData.image"
         class="h-32 w-32 m-5 rounded"
+        crossorigin="Anonymous"
+        @load="$store.dispatch('colourcache/load')"
       >
       <h1 class="text-lg text-center px-6">
         {{ albumData.album }}
@@ -64,16 +66,6 @@ export default {
       return this.results.length
         ? this.results[0]
         : {}
-    },
-  },
-  methods: {
-    getColour () {
-      const image = this.$refs.image
-      image.crossOrigin = 'Anonymous'
-      this.$store.dispatch('colourcache/load', {
-        image,
-        url: this.albumData.image,
-      })
     },
   },
   beforeDestroy () {
