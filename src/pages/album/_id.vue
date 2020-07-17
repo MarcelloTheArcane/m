@@ -8,7 +8,8 @@
         :src="albumData.image"
         class="h-32 w-32 m-5 rounded"
         crossorigin="Anonymous"
-        @load="$store.dispatch('colourcache/load')"
+        ref="image"
+        @load="$store.dispatch('colourcache/load', { image: $refs.image })"
       >
       <h1 class="text-lg text-center px-6">
         {{ albumData.album }}
