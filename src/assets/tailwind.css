@@ -3,15 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --colour-bg-light: #edf2f7;
   --default-colour-bg-light: #edf2f7;
-  --colour-fg-light: #2d3748;
   --default-colour-fg-light: #2d3748;
+  --default-colour-bg-dark: #2d3748;
+  --default-colour-fg-dark: #edf2f7;
+}
+
+body {
+  --colour-bg-light: #edf2f7;
+  --colour-fg-light: #2d3748;
 
   --colour-bg-dark: #2d3748;
-  --default-colour-bg-dark: #2d3748;
   --colour-fg-dark: #edf2f7;
-  --default-colour-fg-dark: #edf2f7;
 
   --bg-white-dark: #000000;
   --bg-white-light: #ffffff;

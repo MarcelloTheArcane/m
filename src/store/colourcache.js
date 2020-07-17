@@ -8,10 +8,10 @@ export default {
       const colours = await dispatch('getTheme', { image })
       console.log(colours)
       // Set css properties with data
-      document.documentElement.style.setProperty('--colour-fg-light', `#${colours.dark}`)
-      document.documentElement.style.setProperty('--colour-bg-light', `#$colours.light}`)
-      document.documentElement.style.setProperty('--colour-fg-dark', `#${colours.light}`)
-      document.documentElement.style.setProperty('--colour-bg-dark', `#${colours.dark}`)
+      document.body.style.setProperty('--colour-fg-light', `#${colours.dark}`)
+      document.body.style.setProperty('--colour-bg-light', `#$colours.light}`)
+      document.body.style.setProperty('--colour-fg-dark', `#${colours.light}`)
+      document.body.style.setProperty('--colour-bg-dark', `#${colours.dark}`)
     },
     unload () {
       // Unset css properties
@@ -24,10 +24,10 @@ export default {
       const defaultColourTwoDark = getComputedStyle(document.documentElement)
         .getPropertyValue('--default-colour-bg-dark')
 
-      document.documentElement.style.setProperty('--colour-fg-light', defaultColourOneLight)
-      document.documentElement.style.setProperty('--colour-bg-light', defaultColourTwoLight)
-      document.documentElement.style.setProperty('--colour-fg-dark', defaultColourOneDark)
-      document.documentElement.style.setProperty('--colour-bg-dark', defaultColourTwoDark)
+      document.body.style.setProperty('--colour-fg-light', defaultColourOneLight)
+      document.body.style.setProperty('--colour-bg-light', defaultColourTwoLight)
+      document.body.style.setProperty('--colour-fg-dark', defaultColourOneDark)
+      document.body.style.setProperty('--colour-bg-dark', defaultColourTwoDark)
     },
     async getTheme (_, { image }) {
       const data = await colourThief.getPalette(image, 2)
