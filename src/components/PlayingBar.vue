@@ -250,7 +250,6 @@ export default {
       const colours = await this.$store.dispatch('colourcache/getTheme', {
         image: this.$refs.image,
       })
-      console.log(colours)
 
       const playingBar = this.$refs.playingBar
       playingBar.style.setProperty('--bar-colour-fg-light', `#${colours.dark}`)
