@@ -5,13 +5,12 @@ export default {
   namespaced: true,
   actions: {
     async load ({ dispatch }, { image }) {
-      const colours = await dispatch('getTheme', { image })
-      console.log(colours)
+      const { light, dark } = await dispatch('getTheme', { image })
       // Set css properties with data
-      document.body.style.setProperty('--colour-fg-light', `#${colours.dark}`)
-      document.body.style.setProperty('--colour-bg-light', `#$colours.light}`)
-      document.body.style.setProperty('--colour-fg-dark', `#${colours.light}`)
-      document.body.style.setProperty('--colour-bg-dark', `#${colours.dark}`)
+      document.body.style.setProperty('--colour-fg-light', `#${dark}`)
+      document.body.style.setProperty('--colour-bg-light', `#$light}`)
+      document.body.style.setProperty('--colour-fg-dark', `#${light}`)
+      document.body.style.setProperty('--colour-bg-dark', `#${dark}`)
     },
     unload () {
       // Unset css properties
