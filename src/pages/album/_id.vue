@@ -6,9 +6,7 @@
     <div v-else class="flex flex-col items-center h-full relative">
       <img
         v-lazy="albumData.image"
-        ref="image"
         class="h-32 w-32 m-5 rounded"
-        @load="getColour"
       >
       <h1 class="text-lg text-center px-6">
         {{ albumData.album }}
@@ -49,7 +47,6 @@ export default {
     return {
       results: [],
       errorMessage: '',
-      themeColour: '#EDF2F7',
     }
   },
   async mounted () {
@@ -61,14 +58,6 @@ export default {
       console.error(err)
       this.errorMessage = err.message
     }
-
-    const image = this.$refs.image
-    image.crossOrigin = 'Anonymous'
-
-    this.themeColour = this.$store.dispatch('colourcache/getTheme', {
-      image,
-      path: this.albumData.image,
-    })
   },
   computed: {
     albumData () {
@@ -95,9 +84,6 @@ export default {
       title: this.albumData.album
         ? `${this.albumData.album} | ${this.albumData.creator}`
         : 'Loading...',
-      meta: [
-        { name: 'theme-color', content: this.themeColour, vmid: 'theme' },
-      ],
     }
   },
 }

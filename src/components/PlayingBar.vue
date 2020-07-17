@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col colour-theme">
+  <div
+    class="flex flex-col playing-bar"
+    ref="playingBar"
+  >
     <progress
       min="0"
       max="1"
@@ -20,7 +23,13 @@
     <div class="flex md:flex-row flex-col">
 
       <div class="mx-2 flex flex-row md:flex-1 pl-0">
-        <img v-lazy="song.image" class="w-12 h-12 my-1">
+        <img
+          :src="song.image"
+          class="w-12 h-12 my-1"
+          ref="image"
+          @load="updateColours"
+          crossorigin="Anonymous"
+        >
         <div class="mx-2 flex-1 min-w-0">
           <marquee-text class="text-sm h-5" :text="song.title" />
           <p class="text-xs truncate w-full">
@@ -237,6 +246,18 @@ export default {
       this.songTime = this.currentSong.currentTime
       this.songProgress = this.currentSong.currentTime / this.currentSong.duration
     },
+    async updateColours () {
+      const colours = await this.$store.dispatch('colourcache/getTheme', {
+        image: this.$refs.image,
+      })
+      console.log(colours)
+
+      const playingBar = this.$refs.playingBar
+      playingBar.style.setProperty('--colour-fg-light', `#${colours.dark}`)
+      playingBar.style.setProperty('--colour-bg-light', `#${colours.light}`)
+      playingBar.style.setProperty('--colour-fg-dark', `#${colours.light}`)
+      playingBar.style.setProperty('--colour-bg-dark', `#${colours.dark}`)
+    },
     resetPlay () {
       this.songProgress = 0
       this.songTime = 0
@@ -268,7 +289,6 @@ export default {
     this.playCurrentSong()
     this.loadNextSong()
 
-
     if ('mediaSession' in navigator) {
       navigator.mediaSession.setActionHandler('previoustrack', () => {
         this.playPreviousSong()
@@ -286,25 +306,42 @@ export default {
 </script>
 
 <style scoped>
+.playing-bar {
+  --bg-colour-fg-light: #2d3748;
+  --bg-colour-bg-light: #edf2f7;
+  --bg-colour-fg-dark: #edf2f7;
+  --bg-colour-bg-dark: #2d3748;
+}
+
 @media (prefers-color-scheme: light) {
+  .playing-bar {
+    color: var(--bg-colour-fg-light);
+    background-color: var(--bg-colour-bg-light);
+  }
+
   progress[value]::-webkit-progress-bar {
     background-image: linear-gradient(90deg, #FFFFFF00 0%, #FFFFFF00 var(--progress-buffered), #FFFFFFAA var(--progress-buffered), #FFFFFFAA 100%);
-    background-color: var(--colour-bg-light);
+    background-color: var(--bar-colour-bg-light);
   }
 
   progress[value]::-webkit-progress-value {
-    background-color: var(--colour-fg-light);
+    background-color: var(--bar-colour-fg-light);
   }
 }
 
 @media (prefers-color-scheme: dark) {
+  .playing-bar {
+    color: var(--bar-colour-fg-dark);
+    background-color: var(--bar-colour-bg-dark);
+  }
+
   progress[value]::-webkit-progress-bar {
     background-image: linear-gradient(90deg, #FFFFFF55 0%, #FFFFFF55 var(--progress-buffered), #FFFFFF00 var(--progress-buffered), #FFFFFF00 100%);
-    background-color: var(--colour-bg-dark);
+    background-color: var(--bar-colour-bg-dark);
   }
 
   progress[value]::-webkit-progress-value {
-    background-color: var(--colour-fg-dark);
+    background-color: var(--bar-colour-fg-dark);
   }
 }
 </style>

@@ -3,39 +3,17 @@ const colourThief = new ColourThief()
 
 export default {
   namespaced: true,
-  state () {
-    return {}
-  },
-  mutations: {
-    ADD_TO_CACHE (state, [ key, value ]) {
-      state[key] = value
-    },
-  },
   actions: {
-    load ({ state, commit }, { image, url }) {
-      const cachePath = btoa(url)
-      if (!state[cachePath]) {
-        const data = colourThief.getPalette(image, 2)
-        if (!data) {
-          return
-        }
+    load (_, { image }) {
+      const data = colourThief.getPalette(image, 2)
 
-        const [light, dark] = data.map(calculateGreyscale).sort(byGreyscale)
-
-        commit('ADD_TO_CACHE', [
-          cachePath,
-          {
-            light: light.colour,
-            dark: dark.colour,
-          },
-        ])
-      }
+      const [light, dark] = data.map(calculateGreyscale).sort(byGreyscale)
 
       // Set css properties with data
-      document.documentElement.style.setProperty('--colour-fg-light', `#${state[cachePath].dark}`)
-      document.documentElement.style.setProperty('--colour-bg-light', `#${state[cachePath].light}`)
-      document.documentElement.style.setProperty('--colour-fg-dark', `#${state[cachePath].light}`)
-      document.documentElement.style.setProperty('--colour-bg-dark', `#${state[cachePath].dark}`)
+      document.documentElement.style.setProperty('--colour-fg-light', `#${dark}`)
+      document.documentElement.style.setProperty('--colour-bg-light', `#$light}`)
+      document.documentElement.style.setProperty('--colour-fg-dark', `#${light}`)
+      document.documentElement.style.setProperty('--colour-bg-dark', `#${dark}`)
     },
     unload () {
       // Unset css properties
@@ -53,26 +31,14 @@ export default {
       document.documentElement.style.setProperty('--colour-fg-dark', defaultColourOneDark)
       document.documentElement.style.setProperty('--colour-bg-dark', defaultColourTwoDark)
     },
-    getTheme ({ state, commit }, { image, url }) {
-      const cachePath = btoa(url)
-      if (!state[cachePath]) {
-        const data = colourThief.getPalette(image, 2)
-        if (!data) {
-          return '#EDF2F7'
-        }
-
-        const [light, dark] = data.map(calculateGreyscale).sort(byGreyscale)
-
-        commit('ADD_TO_CACHE', [
-          cachePath,
-          {
-            light: light.colour,
-            dark: dark.colour,
-          },
-        ])
+    getTheme (_, { image }) {
+      const data = colourThief.getPalette(image, 2)
+      const [light, dark] = data.map(calculateGreyscale).sort(byGreyscale)
+      
+      return {
+        light: light.colour,
+        dark: dark.colour,
       }
-
-      return state[cachePath].light
     },
   },
 }

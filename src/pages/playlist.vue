@@ -5,8 +5,6 @@
         v-if="$store.getters.nowPlaying"
         :src="$store.getters.nowPlaying.image"
         class="h-32 w-32 m-5 rounded"
-        ref="image"
-        @load="getColour"
       >
       <img
         v-else
@@ -69,27 +67,7 @@ export default {
   components: {
     PlaylistResult,
   },
-  data () {
-    return {
-      themeColour: '#EDF2F7',
-    }
-  },
   methods: {
-    getColour () {
-      if (!this.$store.getters.nowPlaying.image) return
-
-      const image = this.$refs.image
-      image.crossOrigin = 'Anonymous'
-      this.$store.dispatch('colourcache/load', {
-        image,
-        url: this.$store.getters.nowPlaying.image,
-      })
-
-      this.themeColour = this.$store.dispatch('colourcache/getTheme', {
-        image,
-        url: this.$store.getters.nowPlaying.image,
-      })
-    },
     async shareList () {
       const id = await this.$store.dispatch('db/createList', {
         name: 'My playlist',
@@ -111,9 +89,6 @@ export default {
       title: this.$store.getters.nowPlaying
         ? this.$store.getters.nowPlaying.title
         : 'Playlist',
-      meta: [
-        { name: 'theme-color', content: this.themeColour, vmid: 'theme' },
-      ],
     }
   },
 }
