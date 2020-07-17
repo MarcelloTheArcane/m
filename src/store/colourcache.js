@@ -13,20 +13,10 @@ export default {
       document.body.style.setProperty('--colour-bg-dark', `#${dark}`)
     },
     unload () {
-      // Unset css properties
-      const defaultColourOneLight = getComputedStyle(document.documentElement)
-        .getPropertyValue('--default-colour-fg-light')
-      const defaultColourTwoLight = getComputedStyle(document.documentElement)
-        .getPropertyValue('--default-colour-bg-light')
-      const defaultColourOneDark = getComputedStyle(document.documentElement)
-        .getPropertyValue('--default-colour-fg-dark')
-      const defaultColourTwoDark = getComputedStyle(document.documentElement)
-        .getPropertyValue('--default-colour-bg-dark')
-
-      document.body.style.setProperty('--colour-fg-light', defaultColourOneLight)
-      document.body.style.setProperty('--colour-bg-light', defaultColourTwoLight)
-      document.body.style.setProperty('--colour-fg-dark', defaultColourOneDark)
-      document.body.style.setProperty('--colour-bg-dark', defaultColourTwoDark)
+      document.body.style.removeProperty('--colour-fg-light')
+      document.body.style.removeProperty('--colour-bg-light')
+      document.body.style.removeProperty('--colour-fg-dark')
+      document.body.style.removeProperty('--colour-bg-dark')
     },
     async getTheme (_, { image }) {
       const data = await colourThief.getPalette(image, 2)
