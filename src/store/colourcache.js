@@ -8,7 +8,7 @@ export default {
       const { light, dark } = await dispatch('getTheme', { image })
       // Set css properties with data
       document.body.style.setProperty('--colour-fg-light', `#${dark}`)
-      document.body.style.setProperty('--colour-bg-light', `#$light}`)
+      document.body.style.setProperty('--colour-bg-light', `#${light}`)
       document.body.style.setProperty('--colour-fg-dark', `#${light}`)
       document.body.style.setProperty('--colour-bg-dark', `#${dark}`)
     },
