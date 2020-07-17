@@ -4,8 +4,8 @@ const colourThief = new ColourThief()
 export default {
   namespaced: true,
   actions: {
-    load ({ dispatch }, { image }) {
-      const colours = dispatch('getTheme', { image })
+    async load ({ dispatch }, { image }) {
+      const colours = await dispatch('getTheme', { image })
       console.log(colours)
       // Set css properties with data
       document.documentElement.style.setProperty('--colour-fg-light', `#${colours.dark}`)
@@ -29,8 +29,8 @@ export default {
       document.documentElement.style.setProperty('--colour-fg-dark', defaultColourOneDark)
       document.documentElement.style.setProperty('--colour-bg-dark', defaultColourTwoDark)
     },
-    getTheme (_, { image }) {
-      const data = colourThief.getPalette(image, 2)
+    async getTheme (_, { image }) {
+      const data = await colourThief.getPalette(image, 2)
       const [light, dark] = data.map(calculateGreyscale).sort(byGreyscale)
       
       return {
