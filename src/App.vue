@@ -7,6 +7,9 @@
 <script>
 export default {
   name: 'App',
+  mounted () {
+    this.$store.dispatch('tracking/session')
+  },
   metaInfo () {
     return {
       title: 'gmp',
