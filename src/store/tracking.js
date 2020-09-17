@@ -65,6 +65,12 @@ export default {
         data,
       })
     },
+    async download ({ dispatch }, data) {
+      await dispatch('track', {
+        type: 'download',
+        data,
+      })
+    },
     async navigate ({ dispatch }, data) {
       await dispatch('track', {
         type: 'navigate',
