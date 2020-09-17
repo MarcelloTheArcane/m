@@ -9,7 +9,7 @@ const graphql = axios.create({
 })
 
 if (!sessionStorage.getItem('session')) {
-  sessionStorage.setItem('session', uuidv4())
+  sessionStorage.setItem('session', `${uuidv4()}|${new Date().toJSON()}`)
 }
 
 export default {
