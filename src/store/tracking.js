@@ -8,11 +8,15 @@ const graphql = axios.create({
   },
 })
 
+if (!sessionStorage.getItem('session')) {
+  sessionStorage.setItem('session', uuidv4())
+}
+
 export default {
   namespaced: true,
   state () {
     return {
-      session: uuidv4(),
+      session: sessionStorage.getItem('session'),
     }
   },
   actions: {
