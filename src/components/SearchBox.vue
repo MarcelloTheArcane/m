@@ -204,7 +204,9 @@ export default {
       this.searching = true
 
       try {
-        this.results = await this.$store.dispatch('getBySearch', this.generateSearchTerms())
+        const searchTerms = this.generateSearchTerms()
+        this.$store.dispatch('tracking/search', {query: searchTerms})
+        this.results = await this.$store.dispatch('getBySearch', searchTerms)
 
         if (this.results.length === 0) {
           this.noResults = true
