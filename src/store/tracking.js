@@ -65,5 +65,11 @@ export default {
         data,
       })
     },
+    async navigate ({ dispatch }, data) {
+      await dispatch('track', {
+        type: 'navigate',
+        data,
+      })
+    },
   },
 }
