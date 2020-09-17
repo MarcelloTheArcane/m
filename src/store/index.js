@@ -8,6 +8,7 @@ import db from './db.js'
 import audiocache from './audiocache.js'
 import colourcache from './colourcache.js'
 import favourites from './favourites.js'
+import tracking from './tracking.js'
 
 Vue.use(Vuex)
 
@@ -310,5 +311,6 @@ export default new Vuex.Store({
     audiocache,
     colourcache,
     favourites,
-  }
+    tracking,
+  },
 })
