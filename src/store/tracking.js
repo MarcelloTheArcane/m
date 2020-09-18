@@ -77,5 +77,14 @@ export default {
         data,
       })
     },
+    async favourite ({ dispatch }, data) {
+      await dispatch('track', {
+        type: 'favourite',
+        data: {
+          new: data,
+          favourites: JSON.parse(localStorage.getItem('gmp_favourites_v3'))
+        },
+      })
+    },
   },
 }

@@ -78,14 +78,17 @@ export default {
     },
   },
   actions: {
-    add ({ commit }, { song, folder }) {
+    add ({ commit, dispatch }, { song, folder }) {
+      dispatch('tracking/favourite', { type: 'add', song, folder }, { root: true })
       commit('ADD_FAVOURITE', { song, folder })
     },
-    delete ({ commit }, { folder, index }) {
+    delete ({ commit, dispatch }, { folder, index }) {
+      dispatch('tracking/favourite', { type: 'delete', song: folder[index] }, { root: true })
       commit('DELETE_FAVOURITE', { folder, index })
     },
-    setFolder ({ commit }, { folder, song }) {
-      commit('SET_FOLDER', { folder, song })
+    setFolder ({ commit, dispatch }, { song, folder }) {
+      dispatch('tracking/favourite', { type: 'setFolder', song, folder }, { root: true })
+      commit('SET_FOLDER', { song, folder })
     },
     moveUp ({ commit }, { folder, index }) {
       if (index > 0) {
@@ -102,10 +105,12 @@ export default {
         commit('MIGRATE')
       }
     },
-    renameFolder ({ commit, getters }, { oldName, newName }) {
+    renameFolder ({ commit, dispatch, getters }, { oldName, newName }) {
       if (oldName === newName || newName === '') {
         return
       }
+
+      dispatch('tracking/favourite', { type: 'rename', oldName, newName }, { root: true })
 
       if (getters.folders.includes(newName)) {
         commit('MERGE_FOLDER', { oldName, newName })
