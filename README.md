@@ -1,3 +1,6 @@
+> **Archived**  
+> Google killed it, so this is out of date.
+
 # gmp
 
 Front end for [google-music-proxy](https://gmusicproxy.github.io/).
